@@ -1,0 +1,11 @@
+/*NOTEPAD*/
+
+#notepad textarea {
+    border: 1px solid #aaa;
+    height: 100%;
+    width: 100%;
+}
+
+#notepad input {
+	margin: 5px 0;
+}

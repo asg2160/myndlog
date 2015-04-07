@@ -1,0 +1,11 @@
+.ui-dialog .ui-dialog-titlebar-close {
+	display: none;
+}
+
+.ui-dialog .ui-dialog-title {
+	color: maroon;
+}
+
+#dialog-confirm {
+	font-weight: bold;
+}

@@ -1,0 +1,11 @@
+#article_page #articles .article {
+	width: 620px;
+}
+
+#article_page #articles .text_container {
+	height: 550px;
+}
+
+#article_page #tabs li {
+	padding: 6px 10px;
+}

@@ -1,0 +1,9 @@
+#mashup_page #register_wrapper,
+#mashup_page #sign_in_wrapper {
+	display: none;
+}
+
+#mashup_page #register_wrapper .close,
+#mashup_page #sign_in_wrapper .close {
+	display: inline;
+}
