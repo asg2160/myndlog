@@ -29,7 +29,7 @@ foreach (glob("Controller/*.php") as $filename) {
 
 // parse url
 if($GLOBALS['isDev']) {
-	$url = explode('thought/index.php/',$_SERVER['REQUEST_URI']);
+	$url = explode('myndlog/index.php/',$_SERVER['REQUEST_URI']);
 } else {
 	if(strpos($_SERVER['REQUEST_URI'], "/index.php/") === false) {
 		$url = explode('/',$_SERVER['REQUEST_URI']);
