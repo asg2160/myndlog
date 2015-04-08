@@ -33,13 +33,19 @@ if($GLOBALS['isDev']) {
 } else {
 	if(strpos($_SERVER['REQUEST_URI'], "/index.php/") === false) {
 		$url = explode('/',$_SERVER['REQUEST_URI']);
+		foreach($url as $key=>$val) {
+			if($key > 1) {
+				$url[1] = $url[1].'/'.$val;
+			}	
+		}
+		$url = array($url[0],$url[1]);
 	} else	
 		$url = explode('/index.php/',$_SERVER['REQUEST_URI']);
 }
 
 $pageString = count($url) > 1 ? $url[1] : '';
 $pageString = strtok($pageString,'?');
-$pageArray = explode("/",$pageString);
+$pageArray = array_filter(explode("/",$pageString));
 
 if(!in_array(ucfirst($pageArray[0]), $controllerNames)) {
 	if(User::nameExists($pageArray[0])) {
