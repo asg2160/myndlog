@@ -40,7 +40,15 @@ if($GLOBALS['isDev']) {
 $GLOBALS['Page'] = count($url) > 1 ? $url[1] : '';
 $GLOBALS['Page'] = str_replace("/","",strtok($GLOBALS['Page'],'?'));
 $GLOBALS['Page'] = $GLOBALS['Page'];
-if(!in_array($GLOBALS['Page'], $controllerNames)) $GLOBALS['Page'] = $GLOBALS['DefaultPage'];
+
+if(!in_array($GLOBALS['Page'], $controllerNames)) {
+	if(User::nameExists($GLOBALS['Page'])) {
+		$_GET['name'] = $GLOBALS['Page'];
+		$GLOBALS['Page'] = 'Page';
+	} else {
+		loadURL($GLOBALS['DefaultPage']);
+	}
+}
 
 // load page
 $args = array();

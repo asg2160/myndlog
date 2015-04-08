@@ -63,7 +63,7 @@ class User extends Model {
 	}
 	
 	function getPublicPageURL() {
-		return getURL('Page',array('name'=>urlencode($this->userName)));
+		return getURL(urlencode($this->userName));
 	}
 	
 	public static function exists($email, $password) {
