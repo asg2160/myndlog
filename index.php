@@ -45,7 +45,7 @@ if($GLOBALS['isDev']) {
 
 $pageString = count($url) > 1 ? $url[1] : '';
 $pageString = strtok($pageString,'?');
-$pageArray = array_filter(explode("/",$pageString));
+$pageArray = explode("/",$pageString);
 
 if(!in_array(ucfirst($pageArray[0]), $controllerNames)) {
 	if(User::nameExists($pageArray[0])) {
