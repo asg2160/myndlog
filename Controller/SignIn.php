@@ -22,11 +22,11 @@ class SignInController extends Controller {
 				$error = 'sign_in_invalid';
 			}
 			
-			$args['selectedTagName'] = 'Show All';
+			$args['selectedTagName'] = 'Show-All';
 			
 			$args['userID'] = 1;
 			
-			if($args['get']['tag'] && $args['get']['tag']!='Show All') {
+			if($args['get']['tag'] && $args['get']['tag']!='Show-All') {
 				$args['selectedTagName'] = $args['get']['tag'];
 				$args['thoughtIDs'] = Thought::getByUserAndTag($args['userID'],null,$args['get']['tag'],$GLOBALS['ThoughtsPerQuery']);
 			} else {

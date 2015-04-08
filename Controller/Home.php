@@ -66,10 +66,10 @@ class HomeController extends Controller {
 				loadURL($GLOBALS['DefaultPage']);
 			}
 			
-			$args['selectedTagName'] = 'Show All';
+			$args['selectedTagName'] = 'Show-All';
 			$projectID = User::getDefaultProject($_SESSION['UserID']);
 			
-			if($args['get']['tag'] && $args['get']['tag']!='Show All') {
+			if($args['get']['tag'] && $args['get']['tag']!='Show-All') {
 				$args['selectedTagName'] = $args['get']['tag'];
 				$args['thoughtIDs'] = Thought::getByUserAndTag($_SESSION['UserID'], $projectID, $args['get']['tag'], null, $GLOBALS['ThoughtsPerQuery']);
 				if(!count($args['thoughtIDs'])) loadUrl('Home');

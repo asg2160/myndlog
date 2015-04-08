@@ -12,15 +12,15 @@
 				$selectedClass = ($args['selectedTagName'] == $tagName['Name']) ? 'selected' : '';
 		?>
 				<li class="tab menu_tag <?php echo $selectedClass; ?>">
-					<a href="<?php echo replaceParamInURL('tag', urlencode($tagName['Name'])); ?>">
+					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['user_name'].'/'.urlencode($tagName['Name'])) : replaceParamInURL('tag', urlencode($tagName['Name'])); ?>">
 						<?php echo $tagName['Name']; ?>
 					</a>
 				</li>
 		<?php
 			}
 		?>
-				<li class="tab menu_tag show_all_tags <?php echo ($args['selectedTagName'] == 'Show All') ? 'selected' : '' ?>">
-					<a href="<?php echo replaceParamInURL('tag', urlencode('Show All')); ?>">
+				<li class="tab menu_tag show_all_tags <?php echo ($args['selectedTagName'] == 'Show-All') ? 'selected' : '' ?>">
+					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['user_name'].'/Show-All') : replaceParamInURL('tag', urlencode('Show-All')); ?>">
 						Show All
 					</a>
 				</li>

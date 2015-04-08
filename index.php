@@ -37,17 +37,33 @@ if($GLOBALS['isDev']) {
 		$url = explode('/index.php/',$_SERVER['REQUEST_URI']);
 }
 
-$GLOBALS['Page'] = count($url) > 1 ? $url[1] : '';
-$GLOBALS['Page'] = str_replace("/","",strtok($GLOBALS['Page'],'?'));
-$GLOBALS['Page'] = $GLOBALS['Page'];
+$pageString = count($url) > 1 ? $url[1] : '';
+$pageString = strtok($pageString,'?');
+$pageArray = explode("/",$pageString);
 
-if(!in_array($GLOBALS['Page'], $controllerNames)) {
-	if(User::nameExists($GLOBALS['Page'])) {
-		$_GET['name'] = $GLOBALS['Page'];
+if(!in_array(ucfirst($pageArray[0]), $controllerNames)) {
+	if(User::nameExists($pageArray[0])) {
 		$GLOBALS['Page'] = 'Page';
+		
+		// myndlog.com/abhi
+		$_GET['user_name'] = $pageArray[0];		
 	} else {
 		loadURL($GLOBALS['DefaultPage']);
 	}
+} else {
+	$GLOBALS['Page'] = ucfirst($pageArray[0]);
+}
+
+switch($GLOBALS['Page']) {
+	case 'Page':
+		// myndlog.com/abhi/tag/2do
+		if($pageArray[1]) $_GET['tag'] = $pageArray[1];
+	break;
+	
+	case 'Thought':
+		// myndlog.com/thought/130
+		if($pageArray[1]) $_GET['tid'] = $pageArray[1];
+	break;
 }
 
 // load page

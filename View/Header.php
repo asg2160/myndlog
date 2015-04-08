@@ -51,7 +51,7 @@ if($GLOBALS['isDev']) {
 <div id="header">
 
 	<div class="contents">
-	<?php if(!in_array($GLOBALS['Page'],array('Page','Article'))) { ?>
+	<?php if(!in_array($GLOBALS['Page'],array('Page','Thought'))) { ?>
 		<a class="nds" href="<?php echo getURL('Home');?>">
 			<?php echo $GLOBALS['Name']; ?>.
 		</a>
@@ -92,7 +92,7 @@ if($GLOBALS['isDev']) {
 			<?php } ?>
 		</div>
 	<?php } else { ?>
-		<?php $user = new User(User::getIDByUsername(urldecode($args['get']['name']))); ?>
+		<?php $user = new User(User::getIDByUsername(urldecode($args['user_name']))); ?>
 		<a class="nds" href="<?php echo $user->getPublicPageURL();?>">
 			<?php echo $user->userName; ?>
 		</a>

@@ -30,7 +30,7 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 		<?php endif; ?>
 		
 		<?php if($isPage): ?>
-			<a href="<?php echo getUrl('Article',array('name'=>$args['get']['name'],'tid'=>$thought->ID)); ?>" class="open">
+			<a href="<?php echo getURL('thought/'.$thought->ID); ?>" class="open">
 				open
 			</a>
 		<?php endif; ?>

@@ -171,7 +171,7 @@ $(function() {
 	
 	function getTabURL(tag) {
 		var delimiter = (window.location.search.replace(/&?(\?|&)tag=([^&]$|[^&]*)/i, "")) ? '&' : '?';
-		return window.location.href.replace(/&?(\?|&)tag=([^&]$|[^&]*)/i, "") + delimiter + "tag=" + tag;
+		return window.location.href.replace(/&?(\?|&)tag=([^&]$|[^&]*)/i, "") + delimiter + "tag=" + tag.replace(' ','-');
 	}
 	
 	function loadOlder(){
@@ -254,7 +254,7 @@ $(function() {
 		$("#toggle_write").click(function() {
 			$(this).hide();
 			$('#thought_log').fadeIn(function(){				
-				if($('#tabs').length && ($('#selected_tag').val() != 'Show All')) {
+				if($('#tabs').length && ($('#selected_tag').val() != 'Show-All')) {
 					if(!$('#tags').val()) $('#tags').val($('#selected_tag').val() + ',');
 				}
 			});

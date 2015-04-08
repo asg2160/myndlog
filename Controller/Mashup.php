@@ -7,9 +7,9 @@ function load($args) {
 			loadUrl('Home');
 		}
 		
-		$args['selectedTagName'] = 'Show All';
+		$args['selectedTagName'] = 'Show-All';
 		
-		if($args['get']['tag'] && $args['get']['tag']!='Show All') {
+		if($args['get']['tag'] && $args['get']['tag']!='Show-All') {
 			$args['selectedTagName'] = $args['get']['tag'];
 			$args['thoughtIDs'] = Thought::getByTag($args['get']['tag'], true, $GLOBALS['ThoughtsPerQuery']);
 		} else {
