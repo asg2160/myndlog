@@ -10,7 +10,7 @@ class EditProfileController extends Controller {
 		if($args['post']['edit']) {
 			$userData = array();
 		
-			if($args['post']['user_name']) $userData['UserName'] = $args['post']['user_name'];
+			if($args['post']['user_name']) $userData['UserName'] = str_replace(" ","-",$args['post']['user_name']);
 			if($args['post']['new_password']) $userData['Password'] = $args['post']['new_password'];
 			User::updateByID($userData,$_SESSION['UserID']);
 		}

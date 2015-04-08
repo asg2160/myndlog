@@ -31,7 +31,7 @@ class User extends Model {
 		$user['Password'] = crypt($args['password']);
 		$user['Status'] =  $args['status'] ? $args['status'] : 1;
 		$user['DateAdded'] = time();
-		$user['UserName'] = $args['user_name'];
+		$user['UserName'] = str_replace(" ","-",$args['user_name']);
 		
 		if(User::exists($user['Email'],$user['Password'])) return false;
 		if(User::nameExists($user['UserName'])) return false;
