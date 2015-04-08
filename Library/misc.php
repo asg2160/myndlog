@@ -78,8 +78,8 @@ function die_dump($chars) {
 
 function cleanupTags($tags) {
 	$tags = trim(str_replace(array(", ",",,"),array(",",","),$tags));
+	$tags = str_replace(" ","-",$tags);
 	if(substr($tags,-1) == ",") $tags = substr($tags,0,strlen($tags)-1);
-	
 	return $tags;
 }
 
