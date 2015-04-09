@@ -33,21 +33,20 @@ class RegisterController extends Controller {
 		} 
 
 		if(!$args['post']['submit'] || $error) {
-			// load register view
-			// show articles : 
 			
 			$args['selectedTagName'] = 'Show-All';
-												
-			$args['userID'] = 1;
-			
+			$args['userID'] = 1;	
+			$projectID = User::getDefaultProject($args['userID']);
+
+			$args['get']['tag'] = urldecode($args['get']['tag']);	
 			if($args['get']['tag'] && $args['get']['tag']!='Show-All') {
 				$args['selectedTagName'] = $args['get']['tag'];
-				$args['thoughtIDs'] = Thought::getByUserAndTag($args['userID'],null,$args['get']['tag'],$GLOBALS['ThoughtsPerQuery']);
+				$args['thoughtIDs'] = Thought::getByUserAndTag($args['userID'],$projectID,$args['get']['tag'], true, $GLOBALS['ThoughtsPerQuery']);
 			} else {
-				$args['thoughtIDs'] = Thought::getByUser($args['userID'],null,$GLOBALS['ThoughtsPerQuery']);
+				$args['thoughtIDs'] = Thought::getByUser($args['userID'],$projectID, true, $GLOBALS['ThoughtsPerQuery']);
 			}
 			
-			$args['tagNames'] = Tag::getAllNamesByUser($args['userID']);
+			$args['tagNames'] = Tag::getAllNamesByUser($args['userID'], true);
 							
 			$this->view($args,'View/Register/Main.php');
 		}
