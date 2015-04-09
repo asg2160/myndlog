@@ -7,7 +7,7 @@ class ThoughtController extends Controller {
 			$thought = new Thought($thoughtID);
 			
 			$user = new User($thought->userID);
-			$args['user_name'] = $user->userName;
+			$args['public_user_name'] = $user->userName;
 			
 			if(!$thought->visible) loadUrl('Home');
 			

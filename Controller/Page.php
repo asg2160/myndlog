@@ -2,11 +2,11 @@
 class PageController extends Controller {
 	
 	function load($args) {
-		$args['user_name'] = urldecode($args['get']['user_name']);
+		$args['public_user_name'] = urldecode($args['get']['user_name']);
 		
 		if($args['get']['user_name']) {
 		
-			$args['userID'] = User::getIDByUsername($args['user_name']);
+			$args['userID'] = User::getIDByUsername($args['public_user_name']);
 			$projectID = User::getDefaultProject($args['userID']);
 					
 			$args['selectedTagName'] = 'Show-All';
@@ -24,7 +24,7 @@ class PageController extends Controller {
 			$args['tagNames'] = Tag::getAllNamesByUser($args['userID'], true);
 			
 			if(!isAuth() || $args['userID'] != $_SESSION['UserID']) {
-				$args['message'] = $args['user_name']." has not made any thoughts".$withTag."public.";
+				$args['message'] = $args['public_user_name']." has not made any thoughts".$withTag."public.";
 			} else {
 				$args['message'] = "You have not made any thoughts".$withTag."public.";
 			}

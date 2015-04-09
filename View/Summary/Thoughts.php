@@ -22,6 +22,19 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 	$monthClass = strtolower(date("F",$thought->dateAdded));
 	$isVisible = $thought->visible;	
 ?>
+	<?php if($isArticle): ?>
+		<div id="thought_tags">
+			<?php if(!$isPublicPage): ?><span>tags:</span><?php endif; ?>
+			<?php
+				$tags = explode(",",$thought->tags);
+				$tagCount = 0;
+				foreach($tags as $tag) {
+					echo getTagLinkForPublicPage($args['public_user_name'],$tag);
+				}
+			?>
+		</div>
+	<?php endif; ?>
+		
 	<div tags="<?php echo $classTags;?>" month="<?php echo $monthClass;?>" class="article thought" id=<?php echo "thought_".$thought->ID; ?>>
 		<?php if(!$isPublicPage): ?>
 			<p class="edit_thought data_action">
@@ -38,7 +51,7 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 		<p class="article_date">
 			<?php echo date("F j, Y",$thought->dateAdded); ?>
 		</p>
-			
+		
 		<div class="text_container">
 			<?php if($thought->title): ?>
 				<p class="title"><?php echo $thought->title;?></p>
@@ -46,19 +59,30 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 			<p><?php echo nl2br($thought->text);?></p>
 		</div>
 		
-		<p class="para_tags">
-			<?php if(!$isPublicPage): ?><span>tags:</span><?php endif; ?>
-			<span class="list"><?php echo str_replace(",",", ",strtoupper($thought->tags)); ?></span>
-		</p>
+		<?php if(!$isArticle): ?>
+			<p class="para_tags">
+				<?php if(!$isPublicPage): ?><span>tags:</span><?php endif; ?>
+				<span class="list">
+					<?php
+						$tags = explode(",",$thought->tags);
+						$tagCount = 0;
+						foreach($tags as $tag) {
+							$delimeter = ($tagCount++) ? ", " : "";
+							echo $delimeter.getTagLinkForPublicPage($args['public_user_name'],$tag);
+						}
+					?>
+				</span>
+			</p>
+		<?php endif; ?>
 
 		<?php if(!$isPublicPage): ?>
 			<p class="delete_thought data_action" tid=<?php echo $thought->ID?>>x</p>
 		<?php endif; ?>
 		
-		<div class="bottom">
-			<?php if(!$isPublicPage): ?>
+		<?php if(!$isPublicPage): ?>
+			<div class="bottom">
 				make public<input type="checkbox" <?php echo ($isVisible ? 'checked' : '');?> class="visibility">
-			<?php endif; ?>
-		</div>
+			</div>
+		<?php endif; ?>
 	</div>
 <?php } ?>

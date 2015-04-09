@@ -83,19 +83,24 @@ function cleanupTags($tags) {
 	return $tags;
 }
 
-function simple_encrypt($text)
-{
+function simple_encrypt($text) {
 	$my_key = "12345678abcdefgh";
 	return base64_encode(mcrypt_encrypt(MCRYPT_3DES, $my_key, $text, MCRYPT_MODE_CBC, $iv));
 }
 
-function simple_decrypt($text)
-{
+function simple_decrypt($text) {
 	$my_key = "12345678abcdefgh";
 	return (int)mcrypt_decrypt(MCRYPT_3DES, $my_key, base64_decode($text), MCRYPT_MODE_CBC, $iv);
 }
 
 function rand_color() {
     return '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+}
+
+function getTagLinkForPublicPage($userName, $tagName) {
+	if($userName)
+		return "<a href='".getURL($userName.'/'.urlencode($tagName))."'>".strtoupper($tagName)."</a>";
+	else
+		return strtoupper($tagName);
 }
 ?>
