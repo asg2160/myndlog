@@ -1,4 +1,9 @@
 <?php
+$isPush = 0;
+if($isPush) {
+	echo("<p style='padding: 5px; background: none repeat scroll 0% 0% black; text-align: center; font-family: arial; box-shadow: 0px 0px 2px black; text-shadow: 0px 0px 1px #000; border-radius: 0.4em; color: #eff;font-size: 14px;'><span style='color:hotpink;'>MyndLog</span> is under maintanence. Back in 5-ish minutes...</p>"); die();
+}
+
 session_start();
 
 include_once "Globals.php";
