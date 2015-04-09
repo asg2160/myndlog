@@ -20,7 +20,7 @@ if($GLOBALS['isDev']) {
 	$cssFiles = array(
 		"Library/CSS/Colors/Light.css",
 		"Library/CSS/Notepad.css",
-		"Library/CSS/ArticlePage.css",
+		"Library/CSS/Thought.css",
 		"Library/CSS/Dialog.css",
 		"Library/CSS/EditProfile.css",
 		"Library/CSS/Footer.css",
@@ -41,7 +41,7 @@ if($GLOBALS['isDev']) {
 	} 
 } else {
 	echo "<style>";
-	include_once "Library/CSS/all.min.04.06.15.css";
+	include_once "Library/CSS/all.min.04.08.15.1.css";
 	echo "</style>";
 }
 ?>

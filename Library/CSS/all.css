@@ -1,336 +1,20 @@
-/* SIGN IN */
-
-#articles .contact {
-	font-size: 11px;
+#article_page #articles .article {
+	width: 620px;
 }
 
-#sign_in_about {
-	text-transform: uppercase;
+#article_page #articles .text_container {
+	height: 600px;
 }
 
-#sign_in_box .sign_up {
-    bottom: 10px;
-    position: absolute;
-    right: 10px;
+#article_page #tabs li {
+	padding: 6px 10px;
 }
 
-#sign_in_box .error_message,
-#register_box .error_message {
-    display: none;
+#thought_tags {
+	margin-bottom: 5px;
 }
 
-/* REGISTER */
-
-#register,
-#sign_in {
-	margin: 0;
-	text-align: center;
-}
-
-#register .submit:hover,
-#sign_in .submit:hover {
-	cursor: pointer;
-}
-
-#register label {
-	margin-top: 0px;
-}
-
-#register label,
-#sign_in label {
-    display: inline-block;
-    min-width: 100px;
-    white-space: nowrap;
-}
-
-#sign_in label {
-	margin-top: 5px;
-}
-
-#sign_in .remember_me {
-	color: #bbb;
-	text-shadow: 0 0 1px black;
-}
-
-#sign_in .remember_me,
-#register_box .login,
-#sign_in_box .sign_up {
-    color: #ddd;
-    font-size: 11px;
-}
-
-
-#register .submit {
-	margin: 7px;
-}
-
-#sign_in .submit {
-	margin: 10px;
-}
-
-#register .submit,
-#sign_in .submit {
-    min-width: 50px;
-}
-
-#register_box .login {
-    left: 5px;
-    position: absolute;
-    top: 2px;
-}
-
-/* VALIDATE */
-
-#sign_in label.error,
-#register label.error {
-	margin: 2px;
-    position: absolute;
-}
-
-#home #sign_in .error_symbol,
-#home #register .error_symbol {
-	color: #e00;
-	cursor: pointer;
-}
-
-#home #sign_in .success_symbol,
-#home #register .success_symbol {
-	color: #0e0;
-}
-
-#home #sign_in .success_symbol,
-#home #register .success_symbol,
-#home #sign_in .error_symbol,
-#home #register .error_symbol {
-	font-size: 20px;
-	margin: 0px 5px;
-	position: absolute;
-	vertical-align: middle;
-	left: 0;
-}
-
-/* HEADER AND BLACK BOXES*/
-
-#header #sign_in_register a {
-	color: #90ee90;
-}
-
-#register_wrapper .close:hover,
-#sign_in_wrapper .close:hover {
-	cursor: pointer;	
-}
-
-#register_wrapper .close,
-#sign_in_wrapper .close {
-	position: absolute;
-	right: -5px;
-	color: #000;
-	display: none;
-}
-
-#header #show_sign_in.disabled,
-#header #show_register.disabled {
-	color: #5a5;
-}
-
-#page_page .open:hover {
-	cursor: pointer;
-}
-
-#page_page .open {
-	position:absolute; 
-	top: 7px; 
-	right: 10px;
-}
-
-/*NOTEPAD*/
-
-#notepad textarea {
-    border: 1px solid #aaa;
-    height: 100%;
-    width: 100%;
-}
-
-#notepad input {
-	margin: 5px 0;
-}
-
-body {
-	background: #ddd;
-    color: #fff;
-    font-family: lucida grande,helvetica,arial,sans-serif;
-    font-size: 12px;
-    line-height: 1.6em;
-    margin: 0;
-    min-width: 1024px;
-    min-height: 768px;
-}
-
-a:link,
-a:visited,
-a:active {
-	color: #424242;
-	text-decoration: none;
-}
-
-a:hover {
-	cursor: pointer;
-}
-
-.hidden {
-	display: none
-}
-
-.clear_both {
-	clear: both;
-    display: block;
-    margin: 10px;
-}
-
-.unklog {
-	color: hotpink;
-}
-
-#container {
-	height: 100%;
-    width: 100%;
-    margin: 0 auto;
-}
-
-#wrapper {
-	margin: 10px 0;
-}
-
-/*HOME PAGE*/
-
-#home {
-    margin: 0 auto;
-    min-height: 690px;
-    padding: 10px;
-    position: relative;
-    width: 1156px;
-	border-radius: 0.4em;
-}
-
-#home .project_name {
-	color: black;
-	font-size: 14px;
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
-}
-	
-#home .delete_thought:hover {
-	cursor: pointer;
-}
-
-/*ARTICLE CSS*/
-
-#articles {
-    position: relative;
-	min-height: 200px;
-}
-
-#articles .text_container {
-	height: 150px;
-	overflow: hidden;
-}
-
-#articles .text_container,
-#articles .text_container p{
-	padding: 0;
-	margin: 0;
-}
-
-#articles .text_container .title {
-    font-weight: bold;
-    margin: 0 0 10px;
-}
-
-#articles .edit_thought:hover {
-	cursor: pointer;
-}
-	
-#articles .edit_thought {
-	margin: 10px;
-	padding: 0;
-	position: absolute;
-	right: -5px;
-	top: -10px;
-}
-
-#articles .article {
-	min-height: 200px;
-	display: inline-block;
-	list-style: outside none none;
-	margin: 5px;
-	overflow: hidden;
-	padding: 15px 9px 0px;
-	width: 200px;
-	position: relative;
-}
-
-#articles .bottom {
-	margin: 5px 0 0;
-}
-
-#articles .para_tags {
-	margin: 15px 0 0;
-    padding: 0;
-    width: 180px;
-    white-space: nowrap;
-}
-
-#articles .para_tags span {
-	margin-right: 3px;
-	font-size: 10px;
-}
-
-#articles .article_date {
-    margin: -5px 0 5px;
-    font-size: 10px;
-}
-
-#articles .delete_thought {
-    bottom: 3px;
-    font-size: 14px;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 5px;
-    width: 10px;
-}
-
-#more {
-	clear: both;
-	display: block;
-	margin: 5px;
-	background: #424242;
-	color: pink;
-	border: 1px solid pink;
-}
-
-#more:hover {
-	cursor: pointer;
-}
-
-/* TABS */
-
-#tabs li:hover {
-	cursor: pointer;
-}
-
-#month_tags {
-	display: none;
-}
-
-#month_tags, #menu_tags {
-  margin:0;
-  padding:0 0 5px;
-}
-
-#tabs li {
+#thought_tags a {
     display: inline-block;
     font-size: 14px;
     margin: 5px;
@@ -338,103 +22,374 @@ a:hover {
     text-align: center;
     text-transform: uppercase;
     position: relative;
+    padding: 5px 10px;
+}
+#home {
+    background: #fff;
 }
 
+#articles .article_date {
+    color: #888;
+    text-shadow: 0 0 1px #fff;
+}
+
+#articles .para_tags,
+#articles .para_tags a {
+	color: navy;
+}
+
+#tabs li.selected {
+    background: #3a5795;
+	background: -moz-linear-gradient(top, #3a5795 0%, #1a3775 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #3a5795), color-stop(100%, #1a3775));
+	background: -webkit-linear-gradient(top, #3a5795 0%, #1a3775 100%);
+	background: -o-linear-gradient(top, #3a5795 0%, #1a3775 100%);
+	background: -ms-linear-gradient(top, #3a5795 0%, #1a3775 100%);
+	background: linear-gradient(to bottom, #3a5795 0%, #1a3775 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a5795', endColorstr='#1a3775', GradientType=0 );
+}
+
+#tabs li.selected,
+#tabs li.selected a {
+    color: #eee;
+}
+
+#thought_tags a,
+#tabs li {
+	background: #eee;
+	background: -moz-linear-gradient(top, #eee 0%, #fff 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #eee), color-stop(100%, #fff));
+	background: -webkit-linear-gradient(top, #eee 0%, #fff 100%);
+	background: -o-linear-gradient(top, #eee 0%, #fff 100%);
+	background: -ms-linear-gradient(top, #eee 0%, #fff 100%);
+	background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#fff', GradientType=0 );
+	box-shadow: 0 0 2px #aaa;
+}
+
+#thought_tags a,
+#tabs li,
 #tabs li a {
-    padding: 6px 10px;
-    display: block;
+	color: #3a5795;
 }
 
-/* WRITE BOX */
-#thought_log {
-    margin: 0;
-    padding: 5px;
-    position: fixed;
-    right: 70px;
-    top: 60px;
-    width: 450px;
+#articles .article {
+	background: #eee;
+	background: -moz-linear-gradient(top, #eee 0%, #fff 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #eee), color-stop(100%, #fff));
+	background: -webkit-linear-gradient(top, #eee 0%, #fff 100%);
+	background: -o-linear-gradient(top, #eee 0%, #fff 100%);
+	background: -ms-linear-gradient(top, #eee 0%, #fff 100%);
+	background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#fff', GradientType=0 );
+	color: #333;
+	text-shadow: 0 0 1px #ddd;
+	box-shadow: 0 0 6px #aaa;
+}
+
+#articles .delete_thought {
+	color: darkred;
+}
+
+#custom_css {
+    background: none repeat scroll 0 0 black;
+    left: 0;
+    margin: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 0;
 	z-index: 100;
-	display: none;
 }
 
-#thought_log .keep_write_open {
-	float: right;
+#custom_css li {
+	display: block;
 }
 
-#thought_log .hide:hover {
-	cursor: pointer;
+#custom_css ul {
+	margin: 0;
+	padding: 0;
 }
 
-#thought_log .hide {
-    background: none repeat scroll 0 0 #ff666e;
-    border-radius: 0.3em;
-    float: right;
-    font-size: 12px;
-    margin: 2px;
-    padding: 0 5px;
-    vertical-align: middle;
+#tags {
+	color: navy;
 }
 
-#thought_log .tag:hover {
-	cursor: pointer;
-}
-
-#thought_log p {
-	margin: 3px;
-}
-
-#moodLog {
-	color: lightBlue;
-	display: none;
-}
-
-#toggleMoodLog {
-	color: lightgreen;
-	font-weight: bold;
-}
-
-#toggleMoodLog:hover {
-	text-shadow: 0 0 5px #aaa;
-	cursor: pointer;
+#text,
+#title {
+	color: #333;
 }
 
 #tags,
 #title,
 #text {
-    border: none;
-    width: 100%;
-}
-    
-#tags {
-    margin-top: 3px;
+	background: #fafafa;
 }
 
-#text {
-	overflow: auto;
-	height: 320px;
-	resize: none;
+#page_page .open,
+#articles .edit_thought {
+	color: darkred;
 }
 
-#text,
-#title {
-	border: none;
-    margin: 5px 0;
-	font-family: lucida grande;
-	font-size: 12px;
+#home #articles .editing {
+	background: #fff;
 }
 
-#tags,
-#title {
-	height: 20px;
+#thought_log {
+    border: 1px solid #808080;
+	background: -moz-linear-gradient(0pt 100% 90deg, #444, #111) repeat scroll 0 0 #333333;
+	background: #444;
+	background: -moz-linear-gradient(top, #444 0%, #111 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #444), color-stop(100%, #111));
+	background: -webkit-linear-gradient(top, #444 0%, #111 100%);
+	background: -o-linear-gradient(top, #444 0%, #111 100%);
+	background: -ms-linear-gradient(top, #444 0%, #111 100%);
+	background: linear-gradient(to bottom, #444 0%, #111 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444', endColorstr='#111', GradientType=0 );
 }
 
-/* Body */
+.green {
+	color: lightgreen;
+}
 
-div.hr {
+.brightblue {
+	color: #88ffff;
+}
+
+.lightyellow {
+	color: #ffff88;
+}
+
+.pink {
+	color: pink;
+}
+
+.lightgreen {
+	color: #cbf4c6;
+}
+
+#home #articles .black,
+#home #edit_profile,
+#home #register_box,
+#home #sign_in_box {
+	background: -moz-linear-gradient(0pt 100% 90deg, #333, #111) repeat scroll 0 0 #333333;
+	background: #333;
+	background: -moz-linear-gradient(top, #333 0%, #111 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #333), color-stop(100%, #111));
+	background: -webkit-linear-gradient(top, #333 0%, #111 100%);
+	background: -o-linear-gradient(top, #333 0%, #111 100%);
+	background: -ms-linear-gradient(top, #333 0%, #111 100%);
+	background: linear-gradient(to bottom, #333 0%, #111 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333', endColorstr='#111', GradientType=0 );
+	text-shadow: none;
+	color: #eee;
+	text-shadow: 0 0 1px #000;
+}
+
+#edit_profile .submit,
+#register .submit,
+#sign_in .submit {
+    border: 1px solid pink;
+    background: #424242;
+    color: pink;
+}
+
+#edit_profile .submit:hover,
+#register .submit:hover,
+#sign_in .submit:hover {
+	text-shadow: 0 0 7px pink;
+}
+
+#edit_profile label.selected,
+#register label,
+#sign_in label {
+    color: lightblue;
+}
+
+#edit_profile label {
+    color: lightgray;
+}
+
+#edit_profile span.selected {
+	color: orange;
+}
+
+#register_box .login,
+#sign_in_box .sign_up {
+    color: #ddd;
+}
+
+#notepad {
+	color: black;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
 	display: none;
-    background: none no-repeat scroll center center #fff;
-    height: 1px;
-    margin-bottom: 10px;
+}
+
+.ui-dialog .ui-dialog-title {
+	color: maroon;
+}
+
+#dialog-confirm {
+	font-weight: bold;
+}
+
+/* Profile */
+
+#edit_profile {
+	margin: 0;
+	text-align: center;
+}
+
+#edit_profile .submit:hover {
+	cursor: pointer;
+}
+
+#edit_profile label {
+    display: inline-block;
+	min-width: 100px;
+    white-space: nowrap;
+    margin-top: 5px;
+}
+
+#edit_profile .submit {
+    margin: 15px;
+    min-width: 50px;
+}
+
+#edit_profile .edit_me:hover {
+	cursor: pointer;
+}
+
+#edit_profile .edit_me {
+	font-size: 25px;
+}
+
+#edit_profile .confirm_new_password {
+	display: none;
+}
+
+.edit_me {
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
+}
+
+/* VALIDATE */
+
+#edit_profile label.error {
+	margin: 2px;
+    position: absolute;
+}
+
+#edit_profile .success_symbol {
+	color: #0e0;
+}
+
+#edit_profile .error_symbol {
+	color: #e00;
+	cursor: pointer;
+}
+
+#edit_profile .success_symbol,
+#edit_profile .error_symbol {
+	font-size: 20px;
+	margin: 0px 5px;
+	position: absolute;
+	vertical-align: middle;
+	left: 0;
+}
+
+#footer .contact{
+	color: #333;
+    font-size: 11px;
+    margin: 0;
+    text-align: center;
+    text-shadow: 0 0 1px #fff;
+}
+
+/* HEADER */
+
+#header {
+	width: 100%;
+    min-width: 1176px;
+}
+
+#header .powered_by {
+    float: right;
+    margin: 0 10px;
+}
+
+#header .powered_by a {
+	color: #ddd;
+}
+
+#header .contents{
+	background: #444;
+	background: -moz-linear-gradient(top, #444 0%, #111 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #444), color-stop(100%, #111));
+	background: -webkit-linear-gradient(top, #444 0%, #111 100%);
+	background: -o-linear-gradient(top, #444 0%, #111 100%);
+	background: -ms-linear-gradient(top, #444 0%, #111 100%);
+	background: linear-gradient(to bottom, #444 0%, #111 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444', endColorstr='#111', GradientType=0 );
+    border-color: #000000;
+    box-shadow: 0 0 3px #000;
+    height:20px;
+	padding:10px 0;
+}
+
+#header .tabs {
+    display: inline;
+   	float: right;
+}
+
+#header .nds {
+    clear: both;
+    color: hotpink;
+    font-family: trebuchet ms;
+    font-size: 21px;
+    font-weight: bold;
+    padding: 0 10px;
+    width: 200px;
+}
+
+#header .nds:link,
+#header .nds:visited,
+#header .nds:hover,
+#header .nds:active {
+	text-decoration:none;
+}
+
+#header .user_links {
+    float: right;
+}
+
+#header #toggle_write {
+	color: lightgreen;
+}
+
+#header .user_links a {
+    color: #55aa55;
+    display: inline-block;
+    height: 100%;
+    min-width: 40px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+#header a:link,
+#header a:visited {
+	text-decoration:none;
+}
+
+#header .user_links a:hover,
+#header .user_links a:active {
+}
+
+#header .contents {
+	padding-top: 10px;
 }
 /*! jQuery UI - v1.11.4 - 2015-03-29
 * http://jqueryui.com
@@ -1170,376 +1125,286 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=20); /* support: IE8 */
 	border-radius: 5px;
 }
-/* HEADER */
-
-#header {
-	width: 100%;
-    min-width: 1176px;
-}
-
-#header .powered_by {
-    float: right;
-    margin: 0 10px;
-}
-
-#header .powered_by a {
-	color: #ddd;
-}
-
-#header .contents{
-	background: #444;
-	background: -moz-linear-gradient(top, #444 0%, #111 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #444), color-stop(100%, #111));
-	background: -webkit-linear-gradient(top, #444 0%, #111 100%);
-	background: -o-linear-gradient(top, #444 0%, #111 100%);
-	background: -ms-linear-gradient(top, #444 0%, #111 100%);
-	background: linear-gradient(to bottom, #444 0%, #111 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444', endColorstr='#111', GradientType=0 );
-    border-color: #000000;
-    box-shadow: 0 0 3px #000;
-    height:20px;
-	padding:10px 0;
-}
-
-#header .tabs {
-    display: inline;
-   	float: right;
-}
-
-#header .nds {
-    clear: both;
-    color: hotpink;
-    font-family: trebuchet ms;
-    font-size: 21px;
-    font-weight: bold;
-    padding: 0 10px;
-    width: 200px;
-}
-
-#header .nds:link,
-#header .nds:visited,
-#header .nds:hover,
-#header .nds:active {
-	text-decoration:none;
-}
-
-#header .user_links {
-    float: right;
-}
-
-#header #toggle_write {
-	color: lightgreen;
-}
-
-#header .user_links a {
-    color: #55aa55;
-    display: inline-block;
-    height: 100%;
-    min-width: 40px;
-    padding: 0 10px;
-    text-align: center;
-}
-
-#header a:link,
-#header a:visited {
-	text-decoration:none;
-}
-
-#header .user_links a:hover,
-#header .user_links a:active {
-}
-
-#header .contents {
-	padding-top: 10px;
-}
-#footer .contact{
-	color: #333;
-    font-size: 11px;
+body {
+	background: #ddd;
+    color: #fff;
+    font-family: lucida grande,helvetica,arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.6em;
     margin: 0;
-    text-align: center;
-    text-shadow: 0 0 1px #fff;
-}
-/* Profile */
-
-#edit_profile {
-	margin: 0;
-	text-align: center;
+    min-width: 1024px;
+    min-height: 768px;
 }
 
-#edit_profile .submit:hover {
+a:link,
+a:visited,
+a:active {
+	color: #424242;
+	text-decoration: none;
+}
+
+a:hover {
 	cursor: pointer;
 }
 
-#edit_profile label {
-    display: inline-block;
-	min-width: 100px;
-    white-space: nowrap;
-    margin-top: 5px;
+.hidden {
+	display: none
 }
 
-#edit_profile .submit {
-    margin: 15px;
-    min-width: 50px;
-}
-
-#edit_profile .edit_me:hover {
-	cursor: pointer;
-}
-
-#edit_profile .edit_me {
-	font-size: 25px;
-}
-
-#edit_profile .confirm_new_password {
-	display: none;
-}
-
-.edit_me {
-    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
-    -moz-user-select: none; /* mozilla browsers */
-    -khtml-user-select: none; /* webkit (konqueror) browsers */
-    -ms-user-select: none; /* IE10+ */
-}
-
-/* VALIDATE */
-
-#edit_profile label.error {
-	margin: 2px;
-    position: absolute;
-}
-
-#edit_profile .success_symbol {
-	color: #0e0;
-}
-
-#edit_profile .error_symbol {
-	color: #e00;
-	cursor: pointer;
-}
-
-#edit_profile .success_symbol,
-#edit_profile .error_symbol {
-	font-size: 20px;
-	margin: 0px 5px;
-	position: absolute;
-	vertical-align: middle;
-	left: 0;
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	display: none;
-}
-
-.ui-dialog .ui-dialog-title {
-	color: maroon;
-}
-
-#dialog-confirm {
-	font-weight: bold;
-}
-#home {
-    background: #fff;
-}
-
-#articles .article_date {
-    color: #888;
-    text-shadow: 0 0 1px #fff;
-}
-
-#articles .para_tags {
-	color: navy;
-}
-
-#tabs li.selected {
-    background: #3a5795;
-	background: -moz-linear-gradient(top, #3a5795 0%, #1a3775 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #3a5795), color-stop(100%, #1a3775));
-	background: -webkit-linear-gradient(top, #3a5795 0%, #1a3775 100%);
-	background: -o-linear-gradient(top, #3a5795 0%, #1a3775 100%);
-	background: -ms-linear-gradient(top, #3a5795 0%, #1a3775 100%);
-	background: linear-gradient(to bottom, #3a5795 0%, #1a3775 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a5795', endColorstr='#1a3775', GradientType=0 );
-}
-
-#tabs li.selected,
-#tabs li.selected a {
-    color: #eee;
-}
-
-#tabs li {
-	background: #eee;
-	background: -moz-linear-gradient(top, #eee 0%, #fff 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #eee), color-stop(100%, #fff));
-	background: -webkit-linear-gradient(top, #eee 0%, #fff 100%);
-	background: -o-linear-gradient(top, #eee 0%, #fff 100%);
-	background: -ms-linear-gradient(top, #eee 0%, #fff 100%);
-	background: linear-gradient(to bottom, #eee 0%, #fff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#fff', GradientType=0 );
-	box-shadow: 0 0 2px #aaa;
-}
-
-#tabs li,
-#tabs li a {
-	color: #3a5795;
-}
-
-#articles .article {
-	background: #eee;
-	background: -moz-linear-gradient(top, #eee 0%, #fff 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #eee), color-stop(100%, #fff));
-	background: -webkit-linear-gradient(top, #eee 0%, #fff 100%);
-	background: -o-linear-gradient(top, #eee 0%, #fff 100%);
-	background: -ms-linear-gradient(top, #eee 0%, #fff 100%);
-	background: linear-gradient(to bottom, #eee 0%, #fff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#fff', GradientType=0 );
-	color: #333;
-	text-shadow: 0 0 1px #ddd;
-	box-shadow: 0 0 6px #aaa;
-}
-
-#articles .delete_thought {
-	color: darkred;
-}
-
-#custom_css {
-    background: none repeat scroll 0 0 black;
-    left: 0;
+.clear_both {
+	clear: both;
+    display: block;
     margin: 10px;
+}
+
+.unklog {
+	color: hotpink;
+}
+
+#container {
+	height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#wrapper {
+	margin: 10px 0;
+}
+
+/*HOME PAGE*/
+
+#home {
+    margin: 0 auto;
+    min-height: 690px;
     padding: 10px;
-    position: absolute;
-    top: 0;
-	z-index: 100;
+    position: relative;
+    width: 1156px;
+	border-radius: 0.4em;
 }
 
-#custom_css li {
-	display: block;
-}
-
-#custom_css ul {
+#home .project_name {
+	color: black;
+	font-size: 14px;
+	font-weight: bold;
 	margin: 0;
 	padding: 0;
 }
-
-#tags {
-	color: navy;
+	
+#home .delete_thought:hover {
+	cursor: pointer;
 }
 
-#text,
-#title {
-	color: #333;
+/*ARTICLE CSS*/
+
+#articles {
+    position: relative;
+	min-height: 200px;
+}
+
+#articles .text_container {
+	height: 150px;
+	overflow: hidden;
+}
+
+#articles .text_container,
+#articles .text_container p{
+	padding: 0;
+	margin: 0;
+}
+
+#articles .text_container .title {
+    font-weight: bold;
+    margin: 0 0 10px;
+}
+
+#articles .edit_thought:hover {
+	cursor: pointer;
+}
+	
+#articles .edit_thought {
+	margin: 10px;
+	padding: 0;
+	position: absolute;
+	right: -5px;
+	top: -10px;
+}
+
+#articles .article {
+	min-height: 200px;
+	display: inline-block;
+	list-style: outside none none;
+	margin: 5px;
+	overflow: hidden;
+	padding: 15px 9px 0px;
+	width: 200px;
+	position: relative;
+}
+
+#articles .bottom {
+	margin: 5px 0 0;
+}
+
+#articles .para_tags {
+	margin: 15px 0 0;
+    padding: 0;
+    width: 180px;
+    white-space: nowrap;
+}
+
+#articles .para_tags span {
+	margin-right: 3px;
+	font-size: 10px;
+}
+
+#articles .article_date {
+    margin: -5px 0 5px;
+    font-size: 10px;
+}
+
+#articles .delete_thought {
+    bottom: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 5px;
+    width: 10px;
+}
+
+#more {
+	clear: both;
+	display: block;
+	margin: 5px;
+	background: #424242;
+	color: pink;
+	border: 1px solid pink;
+}
+
+#more:hover {
+	cursor: pointer;
+}
+
+/* TABS */
+
+#tabs li:hover {
+	cursor: pointer;
+}
+
+#month_tags {
+	display: none;
+}
+
+#month_tags, #menu_tags {
+  margin:0;
+  padding:0 0 5px;
+}
+
+#tabs li {
+    display: inline-block;
+    font-size: 14px;
+    margin: 5px;
+    min-width: 50px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+}
+
+#tabs li a {
+    padding: 6px 10px;
+    display: block;
+}
+
+/* WRITE BOX */
+#thought_log {
+	display: none;
+	margin: 0;
+	padding: 5px;
+	position: fixed;
+	right: 10px;
+	top: 50px;
+	width: 450px;
+	z-index: 100;
+}
+
+#thought_log .keep_write_open {
+	float: right;
+}
+
+#thought_log .hide:hover {
+	cursor: pointer;
+}
+
+#thought_log .hide {
+    background: none repeat scroll 0 0 #ff666e;
+    border-radius: 0.3em;
+    float: right;
+    font-size: 12px;
+    margin: 2px;
+    padding: 0 5px;
+    vertical-align: middle;
+}
+
+#thought_log .tag:hover {
+	cursor: pointer;
+}
+
+#thought_log p {
+	margin: 3px;
+}
+
+#moodLog {
+	color: lightBlue;
+	display: none;
+}
+
+#toggleMoodLog {
+	color: lightgreen;
+	font-weight: bold;
+}
+
+#toggleMoodLog:hover {
+	text-shadow: 0 0 5px #aaa;
+	cursor: pointer;
 }
 
 #tags,
 #title,
 #text {
-	background: #fafafa;
+    border: none;
+    width: 100%;
+}
+    
+#tags {
+    margin-top: 3px;
 }
 
-#page_page .open,
-#articles .edit_thought {
-	color: darkred;
+#text {
+	overflow: auto;
+	height: 320px;
+	resize: none;
 }
 
-#home #articles .editing {
-	background: #fff;
+#text,
+#title {
+	border: none;
+    margin: 5px 0;
+	font-family: lucida grande;
+	font-size: 12px;
 }
 
-#thought_log {
-    border: 1px solid #808080;
-	background: -moz-linear-gradient(0pt 100% 90deg, #444, #111) repeat scroll 0 0 #333333;
-	background: #444;
-	background: -moz-linear-gradient(top, #444 0%, #111 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #444), color-stop(100%, #111));
-	background: -webkit-linear-gradient(top, #444 0%, #111 100%);
-	background: -o-linear-gradient(top, #444 0%, #111 100%);
-	background: -ms-linear-gradient(top, #444 0%, #111 100%);
-	background: linear-gradient(to bottom, #444 0%, #111 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444', endColorstr='#111', GradientType=0 );
+#tags,
+#title {
+	height: 20px;
 }
 
-.green {
-	color: lightgreen;
-}
+/* Body */
 
-.brightblue {
-	color: #88ffff;
-}
-
-.lightyellow {
-	color: #ffff88;
-}
-
-.pink {
-	color: pink;
-}
-
-.lightgreen {
-	color: #cbf4c6;
-}
-
-#home #articles .black,
-#home #edit_profile,
-#home #register_box,
-#home #sign_in_box {
-	background: -moz-linear-gradient(0pt 100% 90deg, #333, #111) repeat scroll 0 0 #333333;
-	background: #333;
-	background: -moz-linear-gradient(top, #333 0%, #111 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #333), color-stop(100%, #111));
-	background: -webkit-linear-gradient(top, #333 0%, #111 100%);
-	background: -o-linear-gradient(top, #333 0%, #111 100%);
-	background: -ms-linear-gradient(top, #333 0%, #111 100%);
-	background: linear-gradient(to bottom, #333 0%, #111 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333', endColorstr='#111', GradientType=0 );
-	text-shadow: none;
-	color: #eee;
-	text-shadow: 0 0 1px #000;
-}
-
-#edit_profile .submit,
-#register .submit,
-#sign_in .submit {
-    border: 1px solid pink;
-    background: #424242;
-    color: pink;
-}
-
-#edit_profile .submit:hover,
-#register .submit:hover,
-#sign_in .submit:hover {
-	text-shadow: 0 0 7px pink;
-}
-
-#edit_profile label.selected,
-#register label,
-#sign_in label {
-    color: lightblue;
-}
-
-#edit_profile label {
-    color: lightgray;
-}
-
-#edit_profile span.selected {
-	color: orange;
-}
-
-#register_box .login,
-#sign_in_box .sign_up {
-    color: #ddd;
-}
-
-#notepad {
-	color: black;
-}
-#article_page #articles .article {
-	width: 620px;
-}
-
-#article_page #articles .text_container {
-	height: 550px;
-}
-
-#article_page #tabs li {
-	padding: 6px 10px;
+div.hr {
+	display: none;
+    background: none no-repeat scroll center center #fff;
+    height: 1px;
+    margin-bottom: 10px;
 }
 #mashup_page #register_wrapper,
 #mashup_page #sign_in_wrapper {
@@ -1549,4 +1414,158 @@ body .ui-tooltip {
 #mashup_page #register_wrapper .close,
 #mashup_page #sign_in_wrapper .close {
 	display: inline;
+}
+/*NOTEPAD*/
+
+#notepad textarea {
+    border: 1px solid #aaa;
+    height: 100%;
+    width: 100%;
+}
+
+#notepad input {
+	margin: 5px 0;
+}
+#page_page .open:hover {
+	cursor: pointer;
+}
+
+#page_page .open {
+	position:absolute; 
+	top: 7px; 
+	right: 10px;
+}
+/* SIGN IN */
+
+#articles .contact {
+	font-size: 11px;
+}
+
+#sign_in_about {
+	text-transform: uppercase;
+}
+
+#sign_in_box .sign_up {
+    bottom: 10px;
+    position: absolute;
+    right: 10px;
+}
+
+#sign_in_box .error_message,
+#register_box .error_message {
+    display: none;
+}
+
+/* REGISTER */
+
+#register,
+#sign_in {
+	margin: 0;
+	text-align: center;
+}
+
+#register .submit:hover,
+#sign_in .submit:hover {
+	cursor: pointer;
+}
+
+#register label {
+	margin-top: 0px;
+}
+
+#register label,
+#sign_in label {
+    display: inline-block;
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+#sign_in label {
+	margin-top: 5px;
+}
+
+#sign_in .remember_me {
+	color: #bbb;
+	text-shadow: 0 0 1px black;
+}
+
+#sign_in .remember_me,
+#register_box .login,
+#sign_in_box .sign_up {
+    color: #ddd;
+    font-size: 11px;
+}
+
+
+#register .submit {
+	margin: 7px;
+}
+
+#sign_in .submit {
+	margin: 10px;
+}
+
+#register .submit,
+#sign_in .submit {
+    min-width: 50px;
+}
+
+#register_box .login {
+    left: 5px;
+    position: absolute;
+    top: 2px;
+}
+
+/* VALIDATE */
+
+#sign_in label.error,
+#register label.error {
+	margin: 2px;
+    position: absolute;
+}
+
+#home #sign_in .error_symbol,
+#home #register .error_symbol {
+	color: #e00;
+	cursor: pointer;
+}
+
+#home #sign_in .success_symbol,
+#home #register .success_symbol {
+	color: #0e0;
+}
+
+#home #sign_in .success_symbol,
+#home #register .success_symbol,
+#home #sign_in .error_symbol,
+#home #register .error_symbol {
+	font-size: 20px;
+	margin: 0px 5px;
+	position: absolute;
+	vertical-align: middle;
+	left: 0;
+}
+
+/* HEADER AND BLACK BOXES*/
+
+#header #sign_in_register a {
+	color: #90ee90;
+}
+
+#register_wrapper .close:hover,
+#sign_in_wrapper .close:hover {
+	cursor: pointer;	
+}
+
+#register_wrapper .close,
+#sign_in_wrapper .close {
+	position: absolute;
+	right: -5px;
+	color: #000;
+	display: none;
+}
+
+#header #show_sign_in.disabled,
+#header #show_register.disabled {
+	color: #5a5;
 }

@@ -5,7 +5,7 @@
 	</div>
 </div>
 <?php
-if($GLOBALS['isDev']&&0) {
+if($GLOBALS['isDev']) {
 	
 	$jsFiles = array(
 		"Library/JS/jquery.min.js",
@@ -29,7 +29,7 @@ if($GLOBALS['isDev']&&0) {
 
 } else {
 	echo "<script type='text/javascript'>";
-	include_once "Library/JS/all.min.04.08.15.js";
+	include_once "Library/JS/all.min.04.08.15.2.js";
 	echo "</script>";
 }
 ?>
