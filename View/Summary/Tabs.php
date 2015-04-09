@@ -15,7 +15,7 @@
 		?>
 				<li class="tab menu_tag show_all_tags <?php echo ($args['selectedTagName'] == 'Show-All') ? 'selected' : '' ?>">
 					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['public_user_name'].'/Show-All') : replaceParamInURL('tag', urlencode('Show-All')); ?>">
-						Show All
+						Show-All
 					</a>
 				</li>
 		</ul>
