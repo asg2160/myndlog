@@ -81,7 +81,7 @@ $(function() {
 			}
 		});
 	
-		var tag = 'Show All'; 
+		var tag = 'Show-All'; 
 		var showAll_liElement = createTagElement(tag, getTabURL(tag), (tag == selectedTag || !selectedTag));
 		$newMenuTags.append(showAll_liElement);
 		$('#menu_tags').html($newMenuTags.html());
@@ -184,7 +184,7 @@ $(function() {
 		
 		window.homeLazyLoad = false;
 		
-		var selectedTag = ($('#selected_tag').val() == 'Show All') ? '' : $('#selected_tag').val();
+		var selectedTag = ($('#selected_tag').val() == 'Show-All') ? '' : $('#selected_tag').val();
 		var userIDParam = $('#tuid').length ? "&uid=" + $('#tuid').val() : "";
 		
 		$.ajax({
