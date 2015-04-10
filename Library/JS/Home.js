@@ -188,7 +188,7 @@ $(function() {
 		var userIDParam = $('#tuid').length ? "&uid=" + $('#tuid').val() : "";
 		
 		$.ajax({
-			url: 'Home',
+			url: getURL('Home'),
 			type: 'POST',
 			data: "tid=" + $('#articles .article:last').attr('id').replace('thought_','') + "&tag=" + selectedTag + "&num=" + limit + "&isPublicPage=" + ($('#home_page').length ? 0 : 1) + userIDParam + "&action=getxbeforey&isAjax=1",
 			async: false,

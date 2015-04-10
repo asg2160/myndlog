@@ -52,3 +52,12 @@ function getQueryParams(qs) {
 
     return params;
 }
+
+function getURL(pageName) {
+	var url = isDev() ? ("http://localhost/~abhishekgandhi/myndlog/index.php/" + pageName) : (window.location.origin + '/' + pageName);
+	return url;
+}
+
+function isDev() {
+	return window.location.hostname == 'localhost';
+}
