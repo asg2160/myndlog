@@ -97,7 +97,7 @@ function rand_color() {
     return '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
 }
 
-function getTagLinkForPublicPage($userName, $tagName) {
+function getTagLink($userName, $tagName) {
 	if($userName)
 		return "<a href='".getURL($userName.'/'.urlencode($tagName))."'>".strtoupper($tagName)."</a>";
 	else

@@ -29,7 +29,7 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 				$tags = explode(",",$thought->tags);
 				$tagCount = 0;
 				foreach($tags as $tag) {
-					if($tag) echo getTagLinkForPublicPage($args['public_user_name'],$tag);
+					if($tag) echo getTagLink($args['thought_user_name'],$tag);
 				}
 			?>
 		</div>
@@ -68,7 +68,7 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 						$tagCount = 0;
 						foreach($tags as $tag) {
 							$delimeter = ($tagCount++) ? ", " : "";
-							echo $delimeter.getTagLinkForPublicPage($args['public_user_name'],$tag);
+							echo $delimeter.getTagLink($args['thought_user_name'],$tag);
 						}
 					?>
 				</span>

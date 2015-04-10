@@ -92,7 +92,7 @@ if($GLOBALS['isDev']) {
 			<?php } ?>
 		</div>
 	<?php } else { ?>
-		<?php $user = new User(User::getIDByUsername(urldecode($args['public_user_name']))); ?>
+		<?php $user = new User(User::getIDByUsername(urldecode($args['thought_user_name']))); ?>
 		<a class="nds" href="<?php echo $user->getPublicPageURL();?>">
 			<?php echo $user->userName; ?>
 		</a>

@@ -6,7 +6,7 @@
 				$selectedClass = ($args['selectedTagName'] == $tagName['Name']) ? 'selected' : '';
 		?>
 				<li class="tab menu_tag <?php echo $selectedClass; ?>">
-					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['public_user_name'].'/'.urlencode($tagName['Name'])) : replaceParamInURL('tag', urlencode($tagName['Name'])); ?>">
+					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['thought_user_name'].'/'.urlencode($tagName['Name'])) : replaceParamInURL('tag', urlencode($tagName['Name'])); ?>">
 						<?php echo $tagName['Name']; ?>
 					</a>
 				</li>
@@ -14,7 +14,7 @@
 			}
 		?>
 				<li class="tab menu_tag show_all_tags <?php echo ($args['selectedTagName'] == 'Show-All') ? 'selected' : '' ?>">
-					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['public_user_name'].'/Show-All') : replaceParamInURL('tag', urlencode('Show-All')); ?>">
+					<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['thought_user_name'].'/Show-All') : replaceParamInURL('tag', urlencode('Show-All')); ?>">
 						Show-All
 					</a>
 				</li>
