@@ -67,6 +67,11 @@ a:hover {
 	cursor: pointer;
 }
 
+#search .clear_search {
+	color: #777;
+	text-decoration: underline;
+}
+
 /*ARTICLE CSS*/
 
 #articles {

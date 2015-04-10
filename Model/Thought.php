@@ -154,6 +154,13 @@ class Thought extends Model {
 		$result = DB::query("SELECT ID FROM Thought WHERE ID < ".$thoughtID." AND UserID = ".$userID.$visibleQuery.$tagQuery." ORDER BY ID DESC LIMIT ".$num);
 		return $result;
 	}
+	
+	public static function getByKeyword($keyword) {
+		if(!$keyword) return false;
+		
+		$result = DB::query("SELECT ID FROM Thought WHERE Text LIKE '%".$keyword."%'");
+		return $result;
+	}
 } 
 
 ?>

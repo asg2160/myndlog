@@ -66,20 +66,30 @@ class HomeController extends Controller {
 				loadURL($GLOBALS['DefaultPage']);
 			}
 			
-			$args['selectedTagName'] = 'Show-All';
-			$projectID = User::getDefaultProject($_SESSION['UserID']);
-			
-			if($args['get']['tag'] && $args['get']['tag']!='Show-All') {
-				$args['selectedTagName'] = $args['get']['tag'];
-				$args['thoughtIDs'] = Thought::getByUserAndTag($_SESSION['UserID'], $projectID, $args['get']['tag'], null, $GLOBALS['ThoughtsPerQuery']);
-				if(!count($args['thoughtIDs'])) loadUrl('Home');
+			if($args['get']['keyword']) {
+					$args['keyword'] = $args['get']['keyword'];
+					$args['thoughtIDs'] = Thought::getByKeyword($args['keyword']);
+					$args['message'] = "No thoughts found for keyword - '".$args['keyword']."'";
+					$args['isSearch'] = true;
+					
 			} else {
-				$args['thoughtIDs'] = Thought::getByUser($_SESSION['UserID'], $projectID, null, $GLOBALS['ThoughtsPerQuery']);
+						
+				$args['selectedTagName'] = 'Show-All';
+				$projectID = User::getDefaultProject($_SESSION['UserID']);
+				
+				if($args['get']['tag'] && $args['get']['tag']!='Show-All') {
+					$args['selectedTagName'] = $args['get']['tag'];
+					$args['thoughtIDs'] = Thought::getByUserAndTag($_SESSION['UserID'], $projectID, $args['get']['tag'], null, $GLOBALS['ThoughtsPerQuery']);
+					if(!count($args['thoughtIDs'])) loadUrl('Home');
+				} else {
+					$args['thoughtIDs'] = Thought::getByUser($_SESSION['UserID'], $projectID, null, $GLOBALS['ThoughtsPerQuery']);
+				}
+				
+				$args['tagNames'] = Tag::getAllNamesByUser($_SESSION['UserID']);
+				$args['message'] = "You have not added any thoughts. Click on the 'Write' tab and get started.";
+				$args['userID'] = $_SESSION['UserID'];
 			}
 			
-			$args['tagNames'] = Tag::getAllNamesByUser($_SESSION['UserID']);
-			$args['message'] = "You have not added any thoughts. Click on the 'Write' tab and get started.";
-			$args['userID'] = $_SESSION['UserID'];
 			$this->view($args,'View/Home/Home.php');
 		}
 	}
