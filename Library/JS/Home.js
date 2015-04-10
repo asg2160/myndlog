@@ -210,11 +210,6 @@ $(function() {
 	
 	function createEvents() {
 		
-		$("#tabs .back").click(function(){
-			window.location.href = $.cookie('previousUrl');
-			return false;
-		});
-		
 		$(".edit_thought").click(function(){
 			
 			if($("#toggle_write").is(":visible")) $("#toggle_write").click();

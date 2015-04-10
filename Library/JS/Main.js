@@ -1,7 +1,5 @@
 $(function() {
 	$(document).tooltip();
-	$.cookie("previousUrl", $.cookie("currentUrl"));
-	$.cookie("currentUrl", window.location.href);
 	window.GET = getQueryParams(document.location.search);
 });
 

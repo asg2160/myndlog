@@ -29,7 +29,7 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 				$tags = explode(",",$thought->tags);
 				$tagCount = 0;
 				foreach($tags as $tag) {
-					echo getTagLinkForPublicPage($args['public_user_name'],$tag);
+					if($tag) echo getTagLinkForPublicPage($args['public_user_name'],$tag);
 				}
 			?>
 		</div>
