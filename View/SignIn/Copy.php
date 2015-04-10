@@ -7,7 +7,7 @@
 </div>
 
 <div class="article black">	
-	<p class="brightblue">These are not blogs for the world, or small tweets for others, but something in-between for you.</p>
+	<p class="lightyellow">These are not blogs for the world, or small tweets for others, but something in-between for you.</p>
 	<p class="lightyellow">You can organize your thoughts by tags, like the ones show as examples on this page.</p>
 </div>
 
