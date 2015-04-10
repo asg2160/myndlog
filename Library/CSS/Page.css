@@ -1,0 +1,5 @@
+#articles .open {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}

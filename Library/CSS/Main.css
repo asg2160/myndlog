@@ -68,8 +68,19 @@ a:hover {
 }
 
 #search .clear_search {
-	color: #777;
-	text-decoration: underline;
+    color: #777;
+    font-size: 11px;
+    text-decoration: underline;
+}
+
+#search .button {
+	background: black;
+	border: 1px solid;
+	color: orange;
+}
+
+#search .button:hover{
+	cursor: pointer;
 }
 
 /*ARTICLE CSS*/
