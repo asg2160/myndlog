@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$(document).tooltip();
 
 	$("#sign_in").validate({
 		rules: {

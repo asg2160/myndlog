@@ -161,6 +161,10 @@ a:hover {
     width: 10px;
 }
 
+#articles .tweet_container {
+	margin: 5px 0;
+}
+
 #more {
 	clear: both;
 	display: block;

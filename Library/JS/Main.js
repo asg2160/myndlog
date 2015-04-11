@@ -1,5 +1,4 @@
 $(function() {
-	$(document).tooltip();
 	window.GET = getQueryParams(document.location.search);
 });
 

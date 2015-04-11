@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	
 	$(document).tooltip();
 
 	$("#edit_profile").validate({
@@ -46,7 +45,7 @@ $(document).ready(function(){
 		var isUnique = false;
 		$.ajax({
 				dataType: 'json',
-				url: 'User',
+				url: getURL('User'),
 		 	    type: 'POST',
 		 	    data: "user_name=" + value + "&action=check_unique&isAjax=1",
 		   	    async: false,

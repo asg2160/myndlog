@@ -1,5 +1,6 @@
 $(document).ready(function(){
-
+	$(document).tooltip();
+	
 	$("#register").validate({
 		onkeyup: function(element) {
 				var element_id = jQuery(element).attr('id');
@@ -59,7 +60,7 @@ $(document).ready(function(){
 		var isUnique = false;
 		$.ajax({
 				dataType: 'json',
-				url: 'User',
+				url: getURL('User'),
 		 	    type: 'POST',
 		 	    data: "user_name=" + value + "&action=check_unique&isAjax=1",
 		   	    async: false,
@@ -78,7 +79,7 @@ $(document).ready(function(){
 		var isUnique = false;
 		$.ajax({
 				dataType: 'json',
-				url: 'User',
+				url: getURL('User'),
 		 	    type: 'POST',
 		 	    data: "email=" + value + "&action=check_unique&isAjax=1",
 		   	    async: false,
