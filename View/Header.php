@@ -2,49 +2,7 @@
 <meta name="description" content="MyndLog lets you add, save and modify all your thoughts in one location. They can be writings, rough ideas, 2DO lists or anything random, say a dream you didn't forget"/>
 <meta name="keywords" content="write,thoughts,blog,introspect,2do,todo,ideas"/>
 <meta name="robots" content="index,follow"/>
-<?php
-ob_start();
-
-// not important right now. also, experiment with a different color picker.
-// include_once "View/Colors.php";
-
-/*
-foreach (glob("Library/CSS/*.css") as $filename) {
-	echo "<style>";
-	include_once $filename;
-	echo "</style>";
-}
-*/
-
-if($GLOBALS['isDev']) {
-	$cssFiles = array(
-		"Library/CSS/Colors/Light.css",
-		"Library/CSS/Notepad.css",
-		"Library/CSS/Thought.css",
-		"Library/CSS/Dialog.css",
-		"Library/CSS/EditProfile.css",
-		"Library/CSS/Footer.css",
-		"Library/CSS/Header.css",
-		"Library/CSS/Main.css",
-		"Library/CSS/Page.css",
-		"Library/CSS/SignIn_Register.css",
-		"Library/CSS/jquery-ui.css",
-		"Library/CSS/jquery.growl.css",
-		"Library/CSS/Footer.css",
-		"Library/CSS/Mashup.css"
-	);
-	
-	foreach ($cssFiles as $filename) {
-		echo "<style>";
-		include_once $filename;
-		echo "</style>";
-	} 
-} else {
-	echo "<style>";
-	include_once "Library/CSS/all.min.04.08.15.1.css";
-	echo "</style>";
-}
-?>
+<?php ob_start(); ?>
 <div id="container">
 	<div id="dialog-confirm">
 	</div>
