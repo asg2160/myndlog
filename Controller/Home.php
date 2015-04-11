@@ -71,7 +71,7 @@ class HomeController extends Controller {
 			
 			if($args['get']['keyword']) {
 					$args['keyword'] = $args['get']['keyword'];
-					$args['thoughtIDs'] = Thought::getByKeyword($args['keyword']);
+					$args['thoughtIDs'] = Thought::getByUserAndKeyword($_SESSION['UserID'], $args['keyword']);
 					$args['message'] = "No thoughts found for keyword - '".$args['keyword']."'";
 					$args['isSearch'] = true;
 					

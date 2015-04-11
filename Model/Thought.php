@@ -155,10 +155,11 @@ class Thought extends Model {
 		return $result;
 	}
 	
-	public static function getByKeyword($keyword) {
+	public static function getByUserAndKeyword($userID,$keyword) {
+		if(!$userID) return false;
 		if(!$keyword) return false;
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE Text LIKE '%".$keyword."%'");
+		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND Text LIKE '%".$keyword."%'");
 		return $result;
 	}
 } 
