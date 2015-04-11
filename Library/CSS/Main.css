@@ -127,6 +127,7 @@ a:hover {
 	padding: 15px 9px 0px;
 	width: 200px;
 	position: relative;
+	vertical-align: top;
 }
 
 #articles .bottom {
