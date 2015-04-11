@@ -55,6 +55,7 @@ function loadURL($url) {
 	echo "<script>";
 	echo "window.location='".getURL($url)."';";
 	echo "</script>";
+	die();
 	/*error_reporting(E_ALL); ini_set('display_errors', 1);
 	header("Location: ".getURL($url));
 	die();*/
