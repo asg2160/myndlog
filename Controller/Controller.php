@@ -20,7 +20,10 @@ class Controller extends DB {
 		
 		foreach($filenames as $filename) {
 			echo "<style>";
-			include_once "Library/CSS/".$filename.".".$GLOBALS['version'].".min.css";
+			if($GLOBALS['isDev'])
+				include_once "Library/CSS/".$filename.".css";
+			else
+				include_once "Library/CSS/".$filename.".".$GLOBALS['version'].".min.css";
 			echo "</style>";
 		}
 	}
@@ -43,7 +46,10 @@ class Controller extends DB {
 		
 		foreach($filenames as $filename) {
 			echo "<script type='text/javascript'>";
-			include_once "Library/JS/".$filename.".".$GLOBALS['version'].".min.js";
+			if($GLOBALS['isDev'])
+				include_once "Library/JS/".$filename.".js";
+			else
+				include_once "Library/JS/".$filename.".".$GLOBALS['version'].".min.js";
 			echo "</script>";
 		}
 	}
