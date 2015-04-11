@@ -2,7 +2,7 @@
 class ThoughtController extends Controller {
 	function load($args) {
 		
-		$this->loadJS(array('jquery.slimscroll'));
+		$this->loadJSInit(array('jquery.slimscroll'));
 		$this->loadCSS(array('Thought'));
 		
 		if($args['get']['tid']) {

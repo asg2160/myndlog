@@ -2,7 +2,7 @@
 class NotepadController extends Controller {
 	function load($args) {
 		
-		$this->loadJS(array('Notepad','Home','jquery.ui','jquery.slimscroll'));
+		$this->loadJSInit(array('Notepad','Home','jquery.ui','jquery.slimscroll'));
 		$this->loadCSS(array('Notepad','jquery.ui'));
 		
 		if(!isAuth()) loadUrl('Home');

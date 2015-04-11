@@ -3,7 +3,7 @@ class EditProfileController extends Controller {
 
 	function load($args) { 
 	
-		$this->loadJS(array('EditProfile','jquery.ui','jquery.validate'));
+		$this->loadJSInit(array('EditProfile','jquery.ui','jquery.validate'));
 		$this->loadCSS(array('EditProfile','jquery.ui'));
 		
 		if(!$args) $args = array();

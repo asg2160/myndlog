@@ -5,7 +5,7 @@ class Controller extends DB {
 	protected $jsFiles;
 	
 	function __construct() {
-		$this->loadJS(array('jquery','Main','jquery.cookie'));
+		$this->loadJSInit(array('jquery','Main','jquery.cookie'));
 		$this->loadCSS(array('Light','Main','Dialog','Header','Footer'));
 	}
 	
@@ -25,7 +25,7 @@ class Controller extends DB {
 		}
 	}
 	
-	function loadJS($filenames) {
+	function loadJSInit($filenames) {
 		if(!$filenames || empty($filenames)) return;
 		
 		if(!empty($this->jsFiles)) 

@@ -3,7 +3,7 @@ class HomeController extends Controller {
 	
 	function load($args) {
 		
-		$this->loadJS(array('Home','jquery.ui','jquery.slimscroll'));
+		$this->loadJSInit(array('Home','jquery.ui','jquery.slimscroll'));
 		$this->loadCSS(array('jquery.ui'));
 				
 		if($args['post']['action']) {

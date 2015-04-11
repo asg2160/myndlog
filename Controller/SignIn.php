@@ -3,7 +3,7 @@ class SignInController extends Controller {
 
 	function load($args) {		
 		
-		$this->loadJS(array('SignIn','Home','jquery.ui','jquery.validate','jquery.slimscroll'));
+		$this->loadJSInit(array('SignIn','Home','jquery.ui','jquery.validate','jquery.slimscroll'));
 		$this->loadCSS(array('SignIn_Register','jquery.ui'));
 		
 		if($args['get']['so']) {

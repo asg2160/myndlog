@@ -3,7 +3,7 @@ class RegisterController extends Controller {
 
 	function load($args) {
 		
-		$this->loadJS(array('Register','Home','jquery.ui','jquery.validate','jquery.slimscroll'));
+		$this->loadJSInit(array('Register','Home','jquery.ui','jquery.validate','jquery.slimscroll'));
 		$this->loadCSS(array('SignIn_Register','jquery.ui'));
 		
 		if(isAuth()) {
