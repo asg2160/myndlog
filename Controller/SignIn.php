@@ -1,7 +1,10 @@
 <?php
 class SignInController extends Controller {
 
-	function load($args) {
+	function load($args) {		
+		
+		$this->loadJS(array('SignIn','Home','jquery.ui','jquery.validate','jquery.slimscroll'));
+		$this->loadCSS(array('SignIn_Register','jquery.ui'));
 		
 		if($args['get']['so']) {
 			unAuth();
@@ -39,7 +42,7 @@ class SignInController extends Controller {
 				$args['rmEmail'] = $_COOKIE['rememberMeOnMyndLogEmail'];
 				$args['rmPassword'] = $_COOKIE['rememberMeOnMyndLogPwd'];
 			}
-				
+			
 			$this->view($args,'View/SignIn/Main.php');
 		}
 	}

@@ -3,5 +3,6 @@ $GLOBALS['Name'] = "MyndLog";
 $GLOBALS['Page'] = "";
 $GLOBALS['ThoughtsPerQuery'] = 50;
 $GLOBALS['DefaultPage'] = 'SignIn';
-$GLOBALS['isDev'] = true;
+$GLOBALS['isDev'] = false;
+$GLOBALS['version'] = 1;
 ?>

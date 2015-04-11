@@ -1,6 +1,10 @@
 <?php
 class ThoughtController extends Controller {
 	function load($args) {
+		
+		$this->loadJS(array('jquery.slimscroll'));
+		$this->loadCSS(array('Thought'));
+		
 		if($args['get']['tid']) {
 			
 			$thoughtID = ($args['get']['tid']);

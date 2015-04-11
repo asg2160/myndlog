@@ -3,6 +3,9 @@ class RegisterController extends Controller {
 
 	function load($args) {
 		
+		$this->loadJS(array('Register','Home','jquery.ui','jquery.validate','jquery.slimscroll'));
+		$this->loadCSS(array('SignIn_Register','jquery.ui'));
+		
 		if(isAuth()) {
 			loadURL('Home');
 		}
@@ -47,7 +50,7 @@ class RegisterController extends Controller {
 			}
 			
 			$args['tagNames'] = Tag::getAllNamesByUser($args['userID'], true);
-							
+			
 			$this->view($args,'View/Register/Main.php');
 		}
 	}

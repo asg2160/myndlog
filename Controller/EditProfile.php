@@ -2,6 +2,10 @@
 class EditProfileController extends Controller {
 
 	function load($args) { 
+	
+		$this->loadJS(array('EditProfile','jquery.ui','jquery.validate'));
+		$this->loadCSS(array('EditProfile','jquery.ui'));
+		
 		if(!$args) $args = array();
 		
 		if(!isAuth()) loadURL($GLOBALS['DefaultPage']);
@@ -16,7 +20,7 @@ class EditProfileController extends Controller {
 		}
 		
 		$args['user'] = new User($_SESSION['UserID']);
-
+		
 		$this->view($args,'View/EditProfile/EditProfile.php');
 	}
 }
