@@ -70,7 +70,7 @@
 
 #register .submit,
 #sign_in .submit {
-    min-width: 50px;
+    min-width: 60px;
 }
 
 #register_box .login {
