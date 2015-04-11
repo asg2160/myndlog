@@ -82,8 +82,8 @@ $args = array();
 $args['post'] = $_POST;
 $args['get'] = $_GET;
 $controllerClassName = $GLOBALS['Page']."Controller";
+Controller::$isAjax = $args['post']['isAjax'] || $args['get']['isAjax'];
 $controller = new $controllerClassName();
-
 $controller->load($args);
 
 /* Test 
