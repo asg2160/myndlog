@@ -2,6 +2,7 @@
 <meta name="description" content="MyndLog lets you add, save and modify all your thoughts in one location. They can be writings, rough ideas, 2DO lists or anything random, say a dream you didn't forget"/>
 <meta name="keywords" content="write,thoughts,blog,introspect,2do,todo,ideas"/>
 <meta name="robots" content="index,follow"/>
+<meta name=viewport content="width=device-width, initial-scale=1">
 <?php ob_start(); ?>
 <div id="container">
 	<div id="dialog-confirm">

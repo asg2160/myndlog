@@ -108,4 +108,32 @@ function getTagLink($userName, $tagName) {
 function tweetButton($url, $text) {
 	return "<a href='https://twitter.com/share' class='twitter-share-button' data-url='".$url."' data-text='".$text."'>Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
 }
+
+function getAdSenseCode($type) {
+	switch("myndlog_".$type) {
+		case 'myndlog_thought':
+		default:
+		$code = "<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>
+	<!-- myndlog_thought -->
+	<ins class='adsbygoogle'
+	     style='display:inline-block;width:336px;height:280px'
+	     data-ad-client='ca-pub-1294683367767480'
+	     data-ad-slot='9786246346'></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>";
+	}
+	
+	return $code;
+}
+
+function getAdSenseView($type, $num) {
+	echo "<div class='ad_sense'>";
+	for($i=0; $i < $num; $i++) {
+		echo "<div>";
+		echo getAdSenseCode($type);
+		echo "</div>";
+	}
+	echo "</div>";
+}
 ?>
