@@ -28,6 +28,7 @@ $(document).ready(function(){
 				minlength:4,
 				maxlength:20,
 				"uniqueUserName":true,
+				"illegalUserName":true,
 				onkeyup: false
 			}
 		},
@@ -73,6 +74,10 @@ $(document).ready(function(){
 		return isUnique;
 		
 	}, getErrorMessage('This user-name has already been taken '));
+	
+	$.validator.addMethod("illegalUserName", function(value) {
+		return isUserNameIllegal(value);
+	}, getErrorMessage('That user-name is not allowed.'));
 	
 	$.validator.addMethod("uniqueEmail", function(value) {
 		

@@ -58,7 +58,11 @@ $(document).ready(function(){
 		return isUnique;
 		
 	}, getErrorMessage('This user-name has already been taken '));
-		
+	
+	$.validator.addMethod("illegalUserName", function(value) {
+		return isUserNameIllegal(value);
+	}, getErrorMessage('That user-name is not allowed.'));
+	
 	$("#edit_profile .edit_me").click(function(){
 		$(this).toggleClass('selected');
 		

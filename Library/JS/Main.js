@@ -60,3 +60,13 @@ function getURL(pageName) {
 function isDev() {
 	return window.location.hostname == 'localhost';
 }
+
+function isUserNameIllegal(value) {
+
+	var illegalNames = ['SignIn','Register','Home','User','EditProfile','Controller','Mashup','Notepad','Thought','Write','Page','Admin'];
+	illegalNames = $.map(illegalNames, function(value, index){ 
+											return value.toLowerCase(); 
+										});
+	
+	return $.inArray(value.toLowerCase(), illegalNames) < 0;
+}
