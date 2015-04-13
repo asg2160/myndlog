@@ -3,7 +3,7 @@ class PageController extends Controller {
 	
 	function load($args) {
 		
-		$this->loadJSInit(array('Home','jquery.slimscroll'));
+		$this->loadJSInit(array('Home','jquery.slimscroll','jquery.ui'));
 		$this->loadCSS(array('Page'));
 		
 		$args['thought_user_name'] = urldecode($args['get']['user_name']);
