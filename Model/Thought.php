@@ -159,7 +159,16 @@ class Thought extends Model {
 		if(!$userID) return false;
 		if(!$keyword) return false;
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND Text LIKE '%".$keyword."%'");
+		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND Text LIKE '%".$keyword."%' ORDER BY ID DESC");
+		return $result;
+	}
+	
+	public static function get($visible = true, $limit) {
+		if(!is_null($visible)) $visibleQuery = " AND Visible = ".($visible ? 1 : 0);
+		if(is_null($limit)) $limit = $GLOBALS['ThoughtsPerQuery'];
+		$limitQuery = " LIMIT ".$limit;
+		
+		$result = DB::query("SELECT ID FROM Thought WHERE 1 ".$visibleQuery." ORDER BY ID DESC ".$limitQuery);
 		return $result;
 	}
 } 
