@@ -8,8 +8,8 @@
 	<div id="dialog-confirm">
 	</div>
 <div id="header">
-
 	<div class="contents">
+	<input type="hidden" class="page_name" value="<?php echo $GLOBALS['Page']; ?>">
 	<?php if(!in_array($GLOBALS['Page'],array('Page','Thought'))) { ?>
 		<a class="nds" href="<?php echo getURL('Home');?>">
 			<?php echo $GLOBALS['Name']; ?>.

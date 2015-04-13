@@ -1,5 +1,19 @@
 $(function() {
-	window.GET = getQueryParams(document.location.search);
+	window.Myndlog = {};
+	Myndlog.margins = {
+		name:function() {
+			return [$('#tuid').val(), (isDev() ? 'd' : 'p'), $('#header .page_name').val()].join('_');
+		},
+		set:function() {
+			$.cookie(Myndlog.margins.name(), parseInt($('#menu_tags').css('margin-left')));
+			
+			if(parseInt($('#menu_tags').css('margin-left')) >= 0) $("#tabs .left_scroller").parent().hide();
+			if(parseInt($('#menu_tags').css('margin-left')) == Myndlog.minMargin) $("#tabs .right_scroller").parent().hide();
+		},
+		get:function() {
+			return $.cookie(Myndlog.margins.name());
+		}
+	}
 });
 
 function getErrorMessage(msg) {
@@ -52,6 +66,11 @@ function getQueryParams(qs) {
     return params;
 }
 
+function getBaseURL() {
+	var url = isDev() ? ("http://localhost/~abhishekgandhi/myndlog") : (window.location.origin);
+	return url;
+}
+
 function getURL(pageName) {
 	var url = isDev() ? ("http://localhost/~abhishekgandhi/myndlog/index.php/" + pageName) : (window.location.origin + '/' + pageName);
 	return url;
@@ -63,7 +82,7 @@ function isDev() {
 
 function isUserNameIllegal(value) {
 
-	var illegalNames = ['SignIn','Register','Home','User','EditProfile','Controller','Mashup','Notepad','Thought','Write','Page','Admin'];
+	var illegalNames = ['MyndLog', 'SignIn','Register','Home','User','EditProfile','Controller','Mashup','Notepad','Thought','Write','Page','Admin'];
 	illegalNames = $.map(illegalNames, function(value, index){ 
 											return value.toLowerCase(); 
 										});

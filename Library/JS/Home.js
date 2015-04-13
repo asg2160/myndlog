@@ -1,7 +1,7 @@
 $(function() {
 	
 	window.scrollTo(0,0);
-	window.homeLazyLoad = true;
+	Myndlog.homeLazyLoad = true;
 	$(window).scroll(function() {
 		if($(window).scrollTop() + $(window).height() > $(document).height()-100) {
 			loadOlder();
@@ -11,7 +11,6 @@ $(function() {
 	loadSummaryViewAndBindEvents();
 	
 	function loadSummaryViewAndBindEvents() {
-
 		createEvents();
 		slimscrollForThoughts();			
 		
@@ -21,18 +20,140 @@ $(function() {
 		}
 		
 		$("#thought_log").draggable({containment:"#wrapper"});
+			
+		$('#tabs').on('mouseover', function() {
+			$('#tabs .scroller').show();
+		});
 		
-		//updateTagsInTabs();
+		$('#tabs').on('mouseleave', function() {
+			$('#tabs .scroller').hide();
+		});
+		
+		initScrollEvent();
+		bindScrollLeftEvent();
+		bindScrollRightEvent();
+		var position = true;
+		if(Myndlog.margins.get()) {
+			$('#menu_tags').css('margin-left',Myndlog.margins.get());
+		}
+		makeTabVisible($('#menu_tags li.selected'));
 	}
+	
+	/* SCROLL CODE ENDS */
+	
+	function initScrollEvent() {
+		var fullTabsWidth = 0;
+		var tabMargin = parseInt($('#menu_tags li').css('margin-right')) + parseInt($('#menu_tags li').css('margin-left'));			
+		$('#menu_tags li').each(function(){
+			fullTabsWidth += $(this).width() + tabMargin;
+		});
+		Myndlog.minMargin = $('#menu_tags').width() - fullTabsWidth;
+		Myndlog.marginChange = 200;
+	}
+	
+	function bindScrollLeftEvent() {
+		$("#tabs .left_scroller").on('click',function(){
+			var currentMargin = parseInt($('#menu_tags').css('margin-left'));
+			var newMargin = currentMargin + Myndlog.marginChange;
+			if(newMargin > 0) {
+				newMargin = 0;
+				$(this).parent().hide();
+			}
+			$('#menu_tags').animate({'margin-left':newMargin},function(){
+				$("#tabs .right_scroller").parent().show();
+				Myndlog.margins.set();
+			});		
+		});
+	}
+	
+	function bindScrollRightEvent() {
+		$("#tabs .right_scroller").on('click',function(){
+			var currentMargin = parseInt($('#menu_tags').css('margin-left'));
+			var newMargin = currentMargin - Myndlog.marginChange;
+			if(newMargin < Myndlog.minMargin) {
+				newMargin = Myndlog.minMargin;
+				$(this).parent().hide();
+			}
+			$('#menu_tags').animate({'margin-left':newMargin},function(){
+				$("#tabs .left_scroller").parent().show();
+				Myndlog.margins.set();
+			});
+		});
+	}
+	
+	function isTabVisible($tab) {
+		if(!$tab.length) return;
+		
+		var tabStartPos = $tab.position().left;
+		var isTabHiddenOnTheLeft = (tabStartPos < 0);
+		
+		var tabEndPos = $tab.position().left + $tab.width() + parseInt($tab.css('margin-left')) + parseInt($tab.css('margin-right'));
+		var isTabHiddenOnTheRight = (tabEndPos > $('#menu_tags').width());
+		
+		var isTabVisble = !(isTabHiddenOnTheLeft || isTabHiddenOnTheRight);
+		return isTabVisble;
+	}
+	
+	function makeTabVisible($tab) {
+		var tabStartPos = $tab.position().left;
+		var isTabHiddenOnTheLeft = (tabStartPos < 0);
+		
+		var tabEndPos = $tab.position().left + $tab.width() + parseInt($tab.css('margin-left')) + parseInt($tab.css('margin-right'));
+		var isTabHiddenOnTheRight = (tabEndPos > $('#menu_tags').width());
+		
+		var isTabHidden = isTabHiddenOnTheLeft || isTabHiddenOnTheRight;
+		
+		if(isTabHiddenOnTheLeft) {		
+			do {
+				var margin = parseInt($('#menu_tags').css('margin-left'));
+				$('#menu_tags').css('margin-left',margin+1)
+				tabStartPos = $tab.position().left;
+				isTabHiddenOnTheLeft = (tabStartPos < 0);
+			} while(isTabHiddenOnTheLeft);
+			
+			var $prevTab = $tab.prev().prev().prev();
+			var isTabRightEnough = isTabVisible($prevTab) || parseInt($('#menu_tags').css('margin-left')) >= 0;
+			if(!isTabRightEnough) {
+				do {
+					var margin = parseInt($('#menu_tags').css('margin-left'));
+					$('#menu_tags').css('margin-left',margin+1);
+					isTabRightEnough = isTabVisible($prevTab) || parseInt($('#menu_tags').css('margin-left')) >= 0;
+				} while(!isTabRightEnough);
+			}
+		}
+		
+		if(isTabHiddenOnTheRight) {
+			do {
+				var margin = parseInt($('#menu_tags').css('margin-left'));
+				$('#menu_tags').css('margin-left',margin-1)
+				tabEndPos = $tab.position().left + $tab.width() + parseInt($tab.css('margin-left')) + parseInt($tab.css('margin-right'));
+				isTabHiddenOnTheRight = (tabEndPos > $('#menu_tags').width());
+			} while(isTabHiddenOnTheRight);
+			
+			var $nextTab = $tab.next().next().next();
+			var isTabLeftEnough = isTabVisible($nextTab) || parseInt($('#menu_tags').css('margin-left')) <= Myndlog.minMargin;
+			if(!isTabLeftEnough) {
+				do {
+					var margin = parseInt($('#menu_tags').css('margin-left'));
+					$('#menu_tags').css('margin-left',margin-1);
+					isTabLeftEnough = isTabVisible($nextTab) || parseInt($('#menu_tags').css('margin-left')) <= Myndlog.minMargin;
+				} while(!isTabLeftEnough);
+			}
+		}
+		Myndlog.margins.set();
+	}
+	
+	/* SCROLL CODE ENDS */
 	
 	function slimscrollForThoughts() {
 			
 		$('#articles .text_container').slimScroll({
 			height:$('#articles .text_container').height(),
-			size:8,
-			railVisible: true,
+			size:6,
+			railVisible: false,
 			disableFadeOut: true,
-			wheelStep: 2
+			wheelStep: 2,
+			color: '#555'
 		}).bind('slimscroll', function(e, pos){
 			if(pos == 'bottom') {
 				return false;
@@ -61,32 +182,6 @@ $(function() {
   	function loadTags() {
   		$("#menu_tags").html($("#menu_tags_hidden").html());
   	}
-  	
-  	function updateTagsInTabs() {
-  		var $newMenuTags = $("<div id='new_menu_tags'></div>");
-		var selectedTag = window.GET['tag'];
-		var allTags = '';
-		
-		$("#articles .article").each(function(){
-			var tags = $(this).attr('tags');
-			if(tags) allTags = tags + ' ' + allTags;
-		});
-	
-		var allTagsArray = getUnique(allTags.split(" "));		
-	
-		$.each(allTagsArray,function(index,tag){
-			if(tag != "") {
-				var liElement = createTagElement(tag, getTabURL(tag), (tag == selectedTag));
-				$newMenuTags.append(liElement);
-			}
-		});
-	
-		var tag = 'Show-All'; 
-		var showAll_liElement = createTagElement(tag, getTabURL(tag), (tag == selectedTag || !selectedTag));
-		$newMenuTags.append(showAll_liElement);
-		$('#menu_tags').html($newMenuTags.html());
-		$newMenuTags.remove();
-	}
 	  	
 	function createTagElement(tag, url, isSelected) {
 		var classes = "tag menu_tag show_all_tags" + (isSelected ? ' selected' : '');
@@ -163,6 +258,7 @@ $(function() {
 	}
 	
 	function editCleanUp() {
+		$("#title").val("");
 		$("#text").val("");
 		$("#tags").val("");
         $("#thought_id").val("0");
@@ -175,14 +271,14 @@ $(function() {
 	}
 	
 	function loadOlder(){
-		if(!window.homeLazyLoad) {
+		if(!Myndlog.homeLazyLoad) {
 			return false;
 		}
 		
 		var limit = 50;
 		if($('#articles .thought').length < limit) return false;
 		
-		window.homeLazyLoad = false;
+		Myndlog.homeLazyLoad = false;
 		
 		var selectedTag = ($('#selected_tag').val() == 'Show-All') ? '' : $('#selected_tag').val();
 		var userIDParam = $('#tuid').length ? "&uid=" + $('#tuid').val() : "";
@@ -198,12 +294,11 @@ $(function() {
 				if(response) {
 					$("#articles").append(response);
 					if($('#articles .thought').length % 50 == 0) {
-						window.homeLazyLoad = true;
+						Myndlog.homeLazyLoad = true;
 					}
 				}
 				slimscrollForThoughts();
 				createEvents();
-				//setTimeout(function(){window.homeLazyLoad = true;},2000);
 			}
 		});
 	}
@@ -255,7 +350,7 @@ $(function() {
 			});
 		});
 	}
-		
+	
 	$('#thought_log .keep_write_open input').click(function() {
 		if($(this).is(':checked')) {
 			$.cookie("keepWriteOpen",1);

@@ -15,12 +15,7 @@
 }
 
 #thought_tags a {
-    display: inline-block;
-    font-size: 14px;
     margin: 5px;
-    min-width: 50px;
-    text-align: center;
-    text-transform: uppercase;
     position: relative;
     padding: 5px 10px;
 }

@@ -100,9 +100,9 @@ function rand_color() {
 
 function getTagLink($userName, $tagName) {
 	if($userName)
-		return "<a href='".getURL($userName.'/'.urlencode($tagName))."'>".strtoupper($tagName)."</a>";
+		return "<a href='".getURL($userName.'/'.urlencode($tagName))."'>".($tagName)."</a>";
 	else
-		return strtoupper($tagName);
+		return $tagName;
 }
 
 function tweetButton($url, $text) {

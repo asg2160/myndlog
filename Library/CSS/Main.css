@@ -1,5 +1,5 @@
 body {
-	background: #ddd;
+	background: #fff;
     color: #fff;
     font-family: lucida grande,helvetica,arial,sans-serif;
     font-size: 12px;
@@ -89,11 +89,13 @@ a:hover {
     position: relative;
     vertical-align: top;
     width: auto;
+    font-size: 12px;
 }
 
 #articles .text_container {
 	height: 150px;
 	overflow: hidden;
+	text-align: justify;
 }
 
 #articles .text_container,
@@ -145,6 +147,7 @@ a:hover {
 #articles .para_tags span {
 	margin-right: 3px;
 	font-size: 10px;
+	text-transform: uppercase;
 }
 
 #articles .article_date {
@@ -182,6 +185,11 @@ a:hover {
 
 /* TABS */
 
+#tabs {
+	overflow: hidden;
+	position: relative;
+}
+
 #tabs li:hover {
 	cursor: pointer;
 }
@@ -191,23 +199,58 @@ a:hover {
 }
 
 #month_tags, #menu_tags {
-  margin:0;
-  padding:0 0 5px;
+	margin:0;
+	padding:0 0 5px;
+	overflow: visible;
+	width: 100%;
+	white-space: nowrap;
+	font-size: 0;
 }
 
+#thought_tags a,
 #tabs li {
     display: inline-block;
-    font-size: 14px;
-    margin: 5px;
+    font-size: 12px;
+    margin: 0px 2px;
     min-width: 50px;
     text-align: center;
-    text-transform: uppercase;
     position: relative;
+    border-radius: 0.3em;
 }
 
 #tabs li a {
     padding: 6px 10px;
-    display: block;
+}
+
+#thought_tags a,
+#tabs li a {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#tabs .scroller {
+	background: lightblue;
+	height: 31px;
+	margin: 0;
+	opacity: 0.3;
+	position: absolute;
+	top: 0;
+	width: 30px;
+	z-index: 2;
+	display: none;
+}
+
+#tabs .right_scroller {
+	right: 0;
+}
+
+#tabs .left_scroller {
+	left: 0;
+}
+
+#tabs .scroller:hover {
+	cursor: pointer;
 }
 
 /* WRITE BOX */
@@ -284,7 +327,6 @@ a:hover {
 #title {
 	border: none;
     margin: 5px 0;
-	font-family: lucida grande;
 	font-size: 12px;
 }
 
