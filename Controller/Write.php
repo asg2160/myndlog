@@ -15,7 +15,7 @@ class WriteController extends Controller {
 				case 'add':
 					// create user
 					$thought = new Thought();
-					$thoughtID = $thought->add($args['post']);
+					$thoughtID = $thought->save($args['post']);
 				break;
 			}
 						

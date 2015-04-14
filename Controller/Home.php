@@ -7,7 +7,6 @@ class HomeController extends Controller {
 		$this->loadCSS(array('jquery.ui'));
 				
 		if($args['post']['action']) {
-			
 			switch($args['post']['action']) {
 			
 				case 'delete':
@@ -16,39 +15,11 @@ class HomeController extends Controller {
 					ThoughtTag::deleteByThought($args['post']['tid']);
 				break;
 			
-				case 'add':
-					$thought = new Thought();
-					$thoughtID = $thought->add($args['post']);
+				case 'save':
+					$thought = new Thought($args['post']['tid']);
+					$thoughtID = $thought->save($args['post']);
 				break;
-				
-				case 'update':
-				
-					// MAKE A FUNCTION
-					$thoughtData = array();
-					if(!is_null($args['post']['title'])) $thoughtData["Title"] = $args['post']['title'];
-					if(!is_null($args['post']['text'])) $thoughtData["Text"] = substr($args['post']['text'],0,1500);
-					if(!is_null($args['post']['visible'])) $thoughtData["Visible"] = $args['post']['visible'];
-					$thoughtID = $args['post']['tid'];
-					
-					Thought::updateByID($thoughtData,$thoughtID);
-					
-					if($thoughtID && !is_null($args['post']['tags'])) {
-											
-						$tagNames = explode(",",cleanupTags($args['post']['tags']));
-					
-						foreach($tagNames as $tagName) {
-							$tag = new Tag();
-							$tagID = $tag->add(array('name'=>$tagName));
-							if(!$tagID) continue;
-							$thoughtTag = new ThoughtTag();
-							$thoughtTag->add(array('thoughtID'=>$thoughtID, 'tagID'=>$tagID));
-						}
-						
-						$query = "DELETE FROM ThoughtTag WHERE ThoughtID = ".$thoughtID." AND TagID NOT IN (SELECT ID FROM Tag WHERE Name IN ".arrayToValueString($tagNames).");";	
-						DB::query($query);
-					}
-				break;
-				
+								
 				case 'get':
 					$thought = new Thought($args['post']['tid']);
 					echo json_encode(array("thoughtID"=>$args['post']['tid'],"title"=>$thought->title,"text"=>$thought->text,"tags"=>$thought->tags));

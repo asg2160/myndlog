@@ -23,7 +23,7 @@ class Tag extends Model {
 		return DB::delete('Tag', $tag);
 	}
 	
-	function add($args) {
+	function save($args) {
 	
 		if(!$args['name']) return false;
 				

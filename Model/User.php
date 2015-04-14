@@ -20,7 +20,7 @@ class User extends Model {
 		$this->userName = $result['UserName'];
 	}
 	
-	function add($args) {
+	function save($args) {
 				
 		$user = array();
 		

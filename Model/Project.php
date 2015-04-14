@@ -24,7 +24,7 @@ class Project extends Model {
 		return DB::delete('Project', $projectID);
 	}
 	
-	function add($args) {
+	function save($args) {
 		
 		$project = array();				
 		$project['ID'] = null;

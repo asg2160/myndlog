@@ -24,7 +24,7 @@ class ThoughtTag extends Model {
 		return DB::delete('ThoughtTag', $tag);
 	}
 	
-	function add($args) {
+	function save($args) {
 		
 		if(!$args['thoughtID']) return false;
 		if(!$args['tagID']) return false;

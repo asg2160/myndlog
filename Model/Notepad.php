@@ -20,7 +20,7 @@ class Notepad extends Model {
 		$this->dateAdded = $result['DateAdded'];
 	}
 	
-	function add($args) {
+	function save($args) {
 		
 		if(!$args['userID']) return false;
 		

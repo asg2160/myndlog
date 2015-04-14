@@ -81,7 +81,7 @@ foreach($paras as $para) {
 	$thought['tags'] = "";
 	
 	$t = new Thought();
-	$tID = $t->add($thought);
+	$tID = $t->save($thought);
 
 	echo $tID."CREATED<br><br>";
 }

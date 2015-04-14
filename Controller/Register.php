@@ -18,14 +18,14 @@ class RegisterController extends Controller {
 			} else {
 				// create user
 				$user = new User();
-				$userID = $user->add($args['post']);
+				$userID = $user->save($args['post']);
 				
 				if($userID) {
 					$project = new Project();
-					$projectID = $project->add(array('userID'=>$userID));
+					$projectID = $project->save(array('userID'=>$userID));
 					
 					$notepad = new Notepad();
-					$notepadID = $notepad->add(array('userID'=>$userID));
+					$notepadID = $notepad->save(array('userID'=>$userID));
 					
 					$_SESSION['UserID'] = $userID;
 	

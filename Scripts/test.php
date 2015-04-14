@@ -26,9 +26,9 @@ foreach($results as $result) {
 	foreach($tagNames as $tagName) {
 		$tagName = str_replace(" ","-",$tagName);
 		$tag = new Tag();
-		$tagID = $tag->add(array('name'=>$tagName));
+		$tagID = $tag->save(array('name'=>$tagName));
 		$thoughtTag = new ThoughtTag();
-		$thoughtTag->add(array('thoughtID'=>$result['ID'], 'tagID'=>$tagID));
+		$thoughtTag->save(array('thoughtID'=>$result['ID'], 'tagID'=>$tagID));
 		echo "\n $thoughtID $tagID ADDED";
 	}
 }
@@ -49,11 +49,11 @@ if($thoughtID) {
 	if(!is_null($args['tags'])) $tagNames = explode(",",$args['tags']);
 		foreach($tagNames as $tagName) {
 			$tag = new Tag();
-			$tagID = $tag->add(array('name'=>$tagName));
+			$tagID = $tag->save(array('name'=>$tagName));
 			if(!$tagID) continue;
 			Thought::updateByID($thoughtData,$thoughtID);
 			$thoughtTag = new ThoughtTag();
-			$thoughtTag->add(array('thoughtID'=>$thoughtID, 'tagID'=>$tagID));
+			$thoughtTag->save(array('thoughtID'=>$thoughtID, 'tagID'=>$tagID));
 	}
 }
 
