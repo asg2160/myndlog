@@ -85,21 +85,4 @@ $controllerClassName = $GLOBALS['Page']."Controller";
 Controller::$isAjax = $args['post']['isAjax'] || $args['get']['isAjax'];
 $controller = new $controllerClassName();
 $controller->load($args);
-
-/* Test 
-error_reporting(E_ALL); ini_set('display_errors', 1);
-echo "start";
-
-// add thoguht
-$thought = array('text'=>'i delcare bankruptcy!!!','tags'=>'a,bb,cc,dd');
-$t = new Thought();
-echo "\n\n".$t->add($thought);
-
-echo "done";
-die();
-
-var_dump(Thought::delete(1));
-die();
-
-*/
 ?>
