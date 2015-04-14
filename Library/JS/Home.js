@@ -32,13 +32,15 @@ $(function() {
 		});
 		
 		initScrollEvent();
-		bindScrollLeftEvent();
-		bindScrollRightEvent();
-		var position = true;
-		if(Myndlog.margins.get()) {
-			$('#menu_tags').css('margin-left',Myndlog.margins.get());
+		if(Myndlog.minMargin < 0) {
+			bindScrollLeftEvent();
+			bindScrollRightEvent();
+			var position = true;
+			if(Myndlog.margins.get()) {
+				$('#menu_tags').css('margin-left',Myndlog.margins.get());
+			}
+			if($('#menu_tags').length) makeTabVisible($('#menu_tags li.selected'));
 		}
-		if($('#menu_tags').length) makeTabVisible($('#menu_tags li.selected'));
 	}
 	
 	/* SCROLL CODE ENDS */
@@ -51,6 +53,9 @@ $(function() {
 		});
 		Myndlog.minMargin = $('#menu_tags').width() - fullTabsWidth;
 		Myndlog.marginChange = 200;
+		
+		// DISABLE SCROLL :
+		Myndlog.minMargin = 0;
 	}
 	
 	function bindScrollLeftEvent() {
@@ -236,9 +241,8 @@ $(function() {
 			return false;
 		}
 		
-		var action = "add";
+		var action = "save";
 		var thoughtID = parseInt($("#thought_id").val());
-		if(thoughtID) action = "update";
 		
 		$.ajax({
 			url: 'Home',
