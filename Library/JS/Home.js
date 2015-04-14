@@ -22,10 +22,12 @@ $(function() {
 		$("#thought_log").draggable({containment:"#wrapper"});
 			
 		$('#tabs').on('mouseover', function() {
+			if(Myndlog.minMargin >= 0) return;
 			$('#tabs .scroller').show();
 		});
 		
 		$('#tabs').on('mouseleave', function() {
+			if(Myndlog.minMargin >= 0) return;
 			$('#tabs .scroller').hide();
 		});
 		
@@ -36,7 +38,7 @@ $(function() {
 		if(Myndlog.margins.get()) {
 			$('#menu_tags').css('margin-left',Myndlog.margins.get());
 		}
-		makeTabVisible($('#menu_tags li.selected'));
+		if($('#menu_tags').length) makeTabVisible($('#menu_tags li.selected'));
 	}
 	
 	/* SCROLL CODE ENDS */
