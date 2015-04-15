@@ -58,7 +58,6 @@ class Controller extends DB {
 		if(!Controller::$isAjax) include_once("View/Header.php");
 		
 		if(!is_array($filenames)) $filenames = array($filenames);
-	
 		foreach($filenames as $filename) {
 			include_once($filename);
 		}
@@ -66,21 +65,23 @@ class Controller extends DB {
 		if(!Controller::$isAjax) include_once("View/Footer.php");
 	}
 	
-	function standaloneView($args, $filenames) {
-		if(!is_array($filenames)) $filenames = array($filenames);
-		foreach($filenames as $filename) {
-			include_once($filename);
-		}
-	}
-	
-	function standaloneViewString($args, $filenames) {
-		if(!is_array($filenames)) $filenames = array($filenames);
-		
+	function viewString($args, $filenames) {
 		$args['view_string'] = true;
-		$viewString = '';
+
+		if(!Controller::$isAjax) {
+			include_once("View/Header_.php");
+			$viewString = $view;
+		}
 		
+		if(!is_array($filenames)) $filenames = array($filenames);
+				
 		foreach($filenames as $filename) {
 			include_once($filename);
+			$viewString .= $view;
+		}
+		
+		if(!Controller::$isAjax) {
+			include_once("View/Footer.php");
 			$viewString .= $view;
 		}
 		

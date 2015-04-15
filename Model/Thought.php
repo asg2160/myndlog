@@ -37,63 +37,61 @@ class Thought extends Model {
 		DB::delete('Thought', $thoughtID);
 	}
 	
-	function save($args) {
-		$thought = array();
+	public function _setText($value) {
+		$value = substr($value,0,LIMIT::$thought_text);
+		if(!is_string($value)) $value = '';
+		return $value;
+	}
 		
-		$thought['ID'] = $this->ID;
-		
-		if(!$thought['ID'] || array_key_exists('text',$args))
-			$thought['Text'] = !$args['text'] ? $args['text'] : substr($args['text'],0,LIMIT::$thought_text);
-		
-		if(!$thought['ID'] || array_key_exists('userID',$args))
-			$thought['UserID'] = $args['userID'] ? $args['userID'] : $_SESSION['UserID'];
+	public function _setTitle($value) {
+		$value = substr($value,0,LIMIT::$thought_title);
+		if(!is_string($value)) $value = '';
+		return $value;
+	}
 	
-		if(!$thought['ID'])
-			$thought['DateAdded'] = time();
+	public function _setTags($value) {
+		$value = explode(",",cleanupTags($value));
+		return array_slice($value,0,LIMIT::$tags_per_thought);
+	}
+		
+	function update($column,$value) {
+		$this->setValue($column,$value);
+		$this->save();
+	}
 	
-		if(!$thought['ID'] || array_key_exists('projectID',$args))
-			$thought['ProjectID'] = $args['projectID'] ? $args['projectID'] : User::getDefaultProject($thought['UserID']);
-		
-		if(!$thought['ID'] || array_key_exists('visible',$args))
-			$thought['Visible'] = $args['visible'] ? $args['visible'] : 0;
-		
-		if(!$thought['ID'] || array_key_exists('title',$args))
-			$thought['Title'] = !$args['title'] ? $args['title'] : substr($args['title'],0,LIMIT::$thought_title);
-				
-		$isUpdate = false;
-		if(is_null($thought['ID'])) {
-			if(!$thought['UserID'] || !$thought['ProjectID']) return false;
-			$this->ID = $this->insert($thought);
-		} else {
-			$isUpdate = true;
-			Thought::updateByID($thought,$thought['ID']);
+	function add($userID,$text,$title,$tags,$visible) {
+		$this->setValue('UserID',$userID);
+		$this->setValue('Text',$text);
+		$this->setValue('Title',$title);
+		$this->setValue('Visible',$visible);
+		$this->setValue('ProjectID',User::getDefaultProject($thought->getValue('UserID')));
+		$this->setValue('Tags',$tags);
+		$this->save();
+	}
+
+	function postSaveCleanUp() {
+		$tags = $this->data['Tags'];
+		foreach($tags as $tag) {
+			
+			// create tag if it does not already exist
+			$tagObj = new Tag();
+			$tagID = $tagObj->add($tag);
+			
+			if(!$tagID) continue;
+			
+			// create thought tag link if it does not already exist
+			$thoughtTagObj = new ThoughtTag();
+			$thoughtTagObj->add($this->ID,$tagID);
 		}
 		
-		if(!$this->ID) return false;
-		
-		if(array_key_exists('tags', $args)) {
-			$tags = explode(",", cleanupTags($args['tags']));
-			$tags = array_slice($tags,0,LIMIT::$tags_per_thought);
-			
-			foreach($tags as $tag) {
-				
-				$tagArr = array('name'=>$tag);
-				$tag = new Tag();
-				$tagID = $tag->save($tagArr);
-				
-				if(!$tagID) continue;
-				
-				$thoughtTagArr = array('thoughtID'=>$this->ID, 'tagID'=>$tagID);
-				$thoughtTag = new ThoughtTag();
-				$thoughtTagID = $thoughtTag->save($thoughtTagArr);
-			}
-			
-			if($isUpdate && count($tags)) {
-				$query = "DELETE FROM ThoughtTag WHERE ThoughtID = ".$this->ID." AND TagID NOT IN (SELECT ID FROM Tag WHERE Name IN ".arrayToValueString($tags).");";
-				DB::query($query);
-			}
+		// delete tags not being used
+		if($this->ID) {
+			$this->deleteAllTagsExcept($tags);
 		}
-		return $this->ID;
+	}
+	
+	function deleteAllTagsExcept($tags) {
+		ThoughtTag::deleteAllTagsExcept($this->ID, $tags);
 	}
 	
 	function getByUser($userID, $projectID, $visible, $limit) {

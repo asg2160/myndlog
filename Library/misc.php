@@ -31,11 +31,16 @@ function replaceParamInURL($key,$val,$url) {
 }
 
 function arrayToValueString($valueArray) {
-
 	$valueArray = array_map('mapToSQL', $valueArray);
 	$valueString .= '('.implode(',', $valueArray).')';
 
 	return $valueString;
+}
+
+function arrayToColumnString($columnArray) {
+	$columnString = '('.implode(',', $columnArray).')';
+	
+	return $columnString;
 }
 
 function getURL($controller,$get){

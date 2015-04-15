@@ -23,19 +23,16 @@ class Tag extends Model {
 		return DB::delete('Tag', $tag);
 	}
 	
-	function save($args) {
-	
-		if(!$args['name']) return false;
-				
-		$tag = array();				
-		$tag['ID'] = null;
-		$tag['Name'] = $args['name'];
-		$tag['DateAdded'] = time();
+	function add($name) {
+		if(!$name) return false;
 		
-		if($tagID = Tag::exists($tag['Name'])) return $tagID;
-		
-		$this->ID = $this->insert($tag);
-		return $this->ID;
+		$tagID = Tag::exists($name);
+		if(!$tagID) {
+			$this->setValue('Name',$name);
+			$tagID = $this->save();
+		}
+
+		return $tagID;
 	}
 	
 	public static function exists($name) {

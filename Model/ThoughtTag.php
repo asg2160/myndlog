@@ -24,21 +24,23 @@ class ThoughtTag extends Model {
 		return DB::delete('ThoughtTag', $tag);
 	}
 	
-	function save($args) {
+	function add($thoughtID,$tagID) {
+		if(!$thoughtID) return false;
+		if(!$tagID) return false;
 		
-		if(!$args['thoughtID']) return false;
-		if(!$args['tagID']) return false;
+		$thoughtTagID = ThoughtTag::exists($thoughtID,$tagID);
 		
-		$thoughtTag = array();				
-		$thoughtTag['ID'] = null;
-		$thoughtTag['ThoughtID'] = $args['thoughtID'];
-		$thoughtTag['TagID'] = $args['tagID'];
-		$thoughtTag['DateAdded'] = time();
-				
-		if($ttID = ThoughtTag::exists($thoughtTag['ThoughtID'],$thoughtTag['TagID'])) return $ttID;
-		
-		$this->ID = $this->insert($thoughtTag);
-		return $this->ID;
+		if(!$thoughtTagID) {
+			$this->setValue('ThoughtID',$thoughtID);
+			$this->setValue('TagID',$tagID);
+			$thoughtTagID = $this->save();
+		}
+		return $thoughtTagID;
+	}
+	
+	public static function deleteAllTagsExcept($thoughtID, $tags) {
+		$query = "DELETE FROM ThoughtTag WHERE ThoughtID = ".$thoughtID." AND TagID NOT IN (SELECT ID FROM Tag WHERE Name IN ".arrayToValueString($tags).");";
+		DB::query($query);
 	}
 	
 	public static function exists($thoughtID,$tagID) {

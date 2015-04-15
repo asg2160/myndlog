@@ -12,25 +12,83 @@ class HomeController extends Controller {
 				case 'delete':
 					Thought::delete($args['post']['tid']);
 					ThoughtTag::deleteByThought($args['post']['tid']);
-				break;
-				
-				case 'save':
-					$thought = new Thought($args['post']['tid']);
-					$thoughtID = $thought->save($args['post']);
+					
+					$json_views = array();
 					
 					if($args['post']['paint_tabs']) {
 						$viewArgs = array();
 						$viewArgs['tagNames'] = Tag::getAllNamesByUser($_SESSION['UserID']);
-						$tabView = $this->standaloneViewString($viewArgs, 'View/Summary/Tabs.php');
+						$viewArgs['selectedTagName'] = $args['post']['selectedTagName'];
+						$tabView = $this->viewString($viewArgs, 'View/Summary/Tabs.php');
+						$json_views['tabs'] = $tabView;
+					}
+					
+					if($json_views) echo json_encode($json_views);
+				break;
+				
+				case 'update':
+					$thought = new Thought($args['post']['tid']);
+					
+					if(array_key_exists('text',$args['post']))
+						$thought->setValue('Text',$args['post']['text']);
+					
+					if(array_key_exists('title',$args['post']))
+						$thought->setValue('Title',$args['post']['title']);
+					
+					if(array_key_exists('visible',$args['post']))
+						$thought->setValue('Visible',$args['post']['visible']);
+					
+					if(array_key_exists('tags',$args['post']))
+						$thought->setValue('Tags',$args['post']['tags']);
+					
+					$thought->save();
+					
+					if($args['post']['paint_tabs']) {
+						$viewArgs = array();
+						$viewArgs['tagNames'] = Tag::getAllNamesByUser($_SESSION['UserID']);
+						$viewArgs['selectedTagName'] = $args['post']['selectedTagName'];
+						$tabView = $this->viewString($viewArgs, 'View/Summary/Tabs.php');
+						$json_views['tabs'] = $tabView;
 					}
 					
 					if($args['post']['paint_new_thought']) {
 						$viewArgs = array();
-						$viewArgs['thoughtIDs'] = array(array('ID'=>$thoughtID));
-						$thoughtView = $this->standaloneViewString($viewArgs, 'View/Summary/Thoughts.php');
+						$viewArgs['thoughtIDs'] = array(array('ID'=>$thought->ID));
+						$thoughtView = $this->viewString($viewArgs, 'View/Summary/Thoughts.php');
+						$json_views['new_thought'] = $thoughtView;
 					}
 					
-					echo json_encode(array("tabs"=>$tabView, "new_thought"=>$thoughtView));
+					if($json_views) echo json_encode($json_views);
+				break;
+				
+				case 'add':
+					$thought = new Thought();
+					$thought->setValue('UserID',$_SESSION['UserID']);
+					$thought->setValue('Text',$args['post']['text']);
+					$thought->setValue('Title',$args['post']['title']);
+					$thought->setValue('Visible',0);
+					$thought->setValue('ProjectID',User::getDefaultProject($thought->getValue('UserID')));
+					$thought->setValue('Tags',$args['post']['tags']);
+					$thought->save();
+					
+					$json_views = array();
+					
+					if($args['post']['paint_tabs']) {
+						$viewArgs = array();
+						$viewArgs['tagNames'] = Tag::getAllNamesByUser($_SESSION['UserID']);
+						$viewArgs['selectedTagName'] = $args['post']['selectedTagName'];
+						$tabView = $this->viewString($viewArgs, 'View/Summary/Tabs.php');
+						$json_views['tabs'] = $tabView;
+					}
+					
+					if($args['post']['paint_new_thought']) {
+						$viewArgs = array();
+						$viewArgs['thoughtIDs'] = array(array('ID'=>$thought->ID));
+						$thoughtView = $this->viewString($viewArgs, 'View/Summary/Thoughts.php');
+						$json_views['new_thought'] = $thoughtView;
+					}
+					
+					if($json_views) echo json_encode($json_views);
 				break;
 								
 				case 'get':
@@ -44,7 +102,8 @@ class HomeController extends Controller {
 					$userID = $args['post']['uid'] ? $args['post']['uid'] : $_SESSION['UserID'];
 					if(!$userID) return false;
 					$args['thoughtIDs'] = Thought::getXBeforeY($userID, $args['post']['num'], $args['post']['tid'], $args['post']['tag'],$visible);
-					$this->standaloneView($args, 'View/Summary/Thoughts.php');
+					$thoughtsView = $this->viewString($args, 'View/Summary/Thoughts.php');
+					echo json_encode(array('thoughts_view'=>$thoughtsView));
 				break;
 			}
 			
@@ -56,7 +115,7 @@ class HomeController extends Controller {
 			if($args['get']['keyword']) {
 					$args['keyword'] = $args['get']['keyword'];
 					$args['thoughtIDs'] = Thought::getByUserAndKeyword($_SESSION['UserID'], $args['keyword']);
-					$args['message'] = "No thoughts found for keyword - '".$args['keyword']."'";
+					$args['message'] = "No thoughts found with keyword - '".$args['keyword']."'";
 					$args['isSearch'] = true;
 					
 			} else {

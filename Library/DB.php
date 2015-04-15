@@ -25,12 +25,17 @@ function query($query) {
 	return $rows;
 }
 
-function insert($tableName, $valueArray) {
+function insert($tableName, $data) {
 
-	if(empty($valueArray) || !is_array($valueArray)) return;
-
+	if(empty($data) || !is_array($data)) return;
+	
+	$columnArray = array_keys($data);
+	$columnString = arrayToColumnString($columnArray);
+	
+	$valueArray = array_values($data);
 	$valueString = arrayToValueString($valueArray);
-	mysqli_query(DB::cxn(),'INSERT INTO '.$tableName.' VALUES '.$valueString); 
+	
+	mysqli_query(DB::cxn(),'INSERT INTO '.$tableName.' '.$columnString.' VALUES '.$valueString); 
 
 	return mysqli_insert_id(DB::cxn());
 }
