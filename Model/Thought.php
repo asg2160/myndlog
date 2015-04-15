@@ -53,6 +53,10 @@ class Thought extends Model {
 		$value = explode(",",cleanupTags($value));
 		return array_slice($value,0,LIMIT::$tags_per_thought);
 	}
+	
+	public function _setVisible($value) {
+		return is_null($value) ? 0 : $value;
+	}
 		
 	function update($column,$value) {
 		$this->setValue($column,$value);
