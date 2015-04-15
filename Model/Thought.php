@@ -39,17 +39,30 @@ class Thought extends Model {
 	
 	function save($args) {
 		$thought = array();
-		$thought['ID'] = $this->ID;
-		$thought['Text'] = !$args['text'] ? $args['text'] : substr($args['text'],0,LIMIT::$thought_text);
-		$thought['UserID'] = $args['userID'] ? $args['userID'] : $_SESSION['UserID'];
-		$thought['DateAdded'] = time();
-		$thought['ProjectID'] = $args['projectID'] ? $args['projectID'] : User::getDefaultProject($thought['UserID']);
-		$thought['Visible'] = $args['visible'] ? $args['visible'] : 0;
-		$thought['Title'] = !$args['title'] ? $args['title'] : substr($args['title'],0,LIMIT::$thought_title);
-		if(!$thought['UserID'] || !$thought['ProjectID']) return false;
 		
+		$thought['ID'] = $this->ID;
+		
+		if(!$thought['ID'] || array_key_exists('text',$args))
+			$thought['Text'] = !$args['text'] ? $args['text'] : substr($args['text'],0,LIMIT::$thought_text);
+		
+		if(!$thought['ID'] || array_key_exists('userID',$args))
+			$thought['UserID'] = $args['userID'] ? $args['userID'] : $_SESSION['UserID'];
+	
+		if(!$thought['ID'])
+			$thought['DateAdded'] = time();
+	
+		if(!$thought['ID'] || array_key_exists('projectID',$args))
+			$thought['ProjectID'] = $args['projectID'] ? $args['projectID'] : User::getDefaultProject($thought['UserID']);
+		
+		if(!$thought['ID'] || array_key_exists('visible',$args))
+			$thought['Visible'] = $args['visible'] ? $args['visible'] : 0;
+		
+		if(!$thought['ID'] || array_key_exists('title',$args))
+			$thought['Title'] = !$args['title'] ? $args['title'] : substr($args['title'],0,LIMIT::$thought_title);
+				
 		$isUpdate = false;
 		if(is_null($thought['ID'])) {
+			if(!$thought['UserID'] || !$thought['ProjectID']) return false;
 			$this->ID = $this->insert($thought);
 		} else {
 			$isUpdate = true;
@@ -57,28 +70,29 @@ class Thought extends Model {
 		}
 		
 		if(!$this->ID) return false;
+		
+		if(array_key_exists('tags', $args)) {
+			$tags = explode(",", cleanupTags($args['tags']));
+			$tags = array_slice($tags,0,LIMIT::$tags_per_thought);
+			
+			foreach($tags as $tag) {
 				
-		$tags = explode(",", cleanupTags($args['tags']));
-		$tags = array_slice($tags,0,LIMIT::$tags_per_thought);
-		
-		foreach($tags as $tag) {
+				$tagArr = array('name'=>$tag);
+				$tag = new Tag();
+				$tagID = $tag->save($tagArr);
+				
+				if(!$tagID) continue;
+				
+				$thoughtTagArr = array('thoughtID'=>$this->ID, 'tagID'=>$tagID);
+				$thoughtTag = new ThoughtTag();
+				$thoughtTagID = $thoughtTag->save($thoughtTagArr);
+			}
 			
-			$tagArr = array('name'=>$tag);
-			$tag = new Tag();
-			$tagID = $tag->save($tagArr);
-			
-			if(!$tagID) continue;
-			
-			$thoughtTagArr = array('thoughtID'=>$this->ID, 'tagID'=>$tagID);
-			$thoughtTag = new ThoughtTag();
-			$thoughtTagID = $thoughtTag->save($thoughtTagArr);
+			if($isUpdate && count($tags)) {
+				$query = "DELETE FROM ThoughtTag WHERE ThoughtID = ".$this->ID." AND TagID NOT IN (SELECT ID FROM Tag WHERE Name IN ".arrayToValueString($tags).");";
+				DB::query($query);
+			}
 		}
-		
-		if($isUpdate) {
-			$query = "DELETE FROM ThoughtTag WHERE ThoughtID = ".$this->ID." AND TagID NOT IN (SELECT ID FROM Tag WHERE Name IN ".arrayToValueString($tags).");";
-			DB::query($query);
-		}
-			
 		return $this->ID;
 	}
 	
