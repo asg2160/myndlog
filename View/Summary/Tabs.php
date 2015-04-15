@@ -1,8 +1,7 @@
 <?php
-$view = '';
-
-if(!$isArticle) {
-	$view = "<div id='tabs'>
+$view = "<div id='tabs'>";
+if(!$isArticle && count($args['tagNames'])) {
+	$view .= "
 		<div>
 			<p class='left_scroller scroller'></p>
 		</div>
@@ -32,7 +31,7 @@ if(!$isArticle) {
 		</div>
 	</div>";
 }
-
+$view .= "</div>";
 $view .= "<input id='selected_tag' type='hidden' value='".$args['selectedTagName']."'>";
 
 if(!$args['view_string']) echo $view;
