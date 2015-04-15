@@ -224,7 +224,7 @@ $(function() {
   		$.ajax({
 			url: 'Home',
 	 	    type: 'POST',
-	 	    data: "visible=" + visible + "&action=update" + "&tid=" + thoughtID + "&isAjax=1",
+	 	    data: "visible=" + visible + "&action=save" + "&tid=" + thoughtID + "&isAjax=1",
 	   	    async: false,
 	  	    cache: false,
 	 	    timeout: 30000,
@@ -245,15 +245,25 @@ $(function() {
 		var thoughtID = parseInt($("#thought_id").val());
 		
 		$.ajax({
+			dataType: 'json',
 			url: 'Home',
 	 	    type: 'POST',
-	 	    data: "title=" + title + "&text=" + text + "&tags=" + tag + "&action=" + action + "&tid=" + thoughtID + "&isAjax=1",
+	 	    data: "title=" + title + "&text=" + text + "&tags=" + tag + "&action=" + action + "&tid=" + thoughtID + "&paint_tabs=1&paint_new_thought=1&isAjax=1",
 	   	    async: false,
 	  	    cache: false,
 	 	    timeout: 30000,
 		    success: function(response) {
-		    	$('#write').attr('disabled',true);
-		    	window.location = window.location.href;
+		    	$('#tabs').replaceWith(response.tabs);
+		    	
+		    	if(thoughtID) {
+		    		$('#thought_' + thoughtID).replaceWith(response.new_thought);
+		    	} else {
+		    		$('#articles').prepend(response.new_thought);
+		    	}
+		    	loadSummaryViewAndBindEvents();
+		    	editCleanUp();
+		    	//$('#write').attr('disabled',true);
+		    	//window.location = window.location.href;
 		    	/*
 		    	updateThought($("#thought_" + thoughtID),text,tag);
 		    	loadSummaryViewAndBindEvents();
@@ -310,6 +320,8 @@ $(function() {
 	}
 	
 	function createEvents() {
+		
+		$('#articles .bottom input[type=checkbox]').prop('disabled',false);
 		
 		$(".edit_thought").click(function(){
 			

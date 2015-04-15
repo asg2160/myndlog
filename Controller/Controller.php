@@ -68,10 +68,23 @@ class Controller extends DB {
 	
 	function standaloneView($args, $filenames) {
 		if(!is_array($filenames)) $filenames = array($filenames);
-	
 		foreach($filenames as $filename) {
 			include_once($filename);
 		}
+	}
+	
+	function standaloneViewString($args, $filenames) {
+		if(!is_array($filenames)) $filenames = array($filenames);
+		
+		$args['view_string'] = true;
+		$viewString = '';
+		
+		foreach($filenames as $filename) {
+			include_once($filename);
+			$viewString .= $view;
+		}
+		
+		return $viewString;
 	}
 }
 ?>

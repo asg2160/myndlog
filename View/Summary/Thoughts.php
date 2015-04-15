@@ -1,11 +1,13 @@
 <?php
+$view = '';
+
 $isPublicPage = $isArticle || $isPage || $isSignIn || $isRegister || $isMashup || $args['isPublicPage'];
 
-if($isSignIn || $isMashup) {
+if($isSignIn) {
 	include_once('View/SignIn/Box.php');
 }
 
-if($isRegister || $isMashup) {
+if($isRegister) {
 	include_once('View/Register/Box.php');
 }
 
@@ -21,68 +23,70 @@ for($i=0; $i<count($args['thoughtIDs']); $i++) {
 	$classTags = str_replace(","," ",$tags);
 	$monthClass = strtolower(date("F",$thought->dateAdded));
 	$isVisible = $thought->visible;	
-?>
-	<?php if($isArticle): ?>
-		<div id="thought_tags">
-			<?php if(!$isPublicPage): ?><span>tags:</span><?php endif; ?>
-			<?php
+
+	 if($isArticle) {
+		$view = "<div id='thought_tags'>";
+			if(!$isPublicPage) $view .= "<span>tags:</span>";
 				$tags = explode(",",$thought->tags);
 				$tagCount = 0;
 				foreach($tags as $tag) {
-					if($tag) echo getTagLink($args['thought_user_name'],$tag);
+					if($tag) $view .= getTagLink($args['thought_user_name'],$tag);
 				}
-			?>
-		</div>
-	<?php endif; ?>
+		$view .= "</div>";
+	}
 		
-	<div tags="<?php echo $classTags;?>" month="<?php echo $monthClass;?>" class="article thought" id=<?php echo "thought_".$thought->ID; ?>>
-		<?php if(!$isPublicPage): ?>
-			<p class="edit_thought data_action">
+	$view .= "<div tags='".$classTags."' month='".$monthClass."' class='article thought' id='thought_".$thought->ID."'>";
+		if(!$isPublicPage) {
+			$view .= "<p class='edit_thought data_action'>
 				edit
-			</p>
-		<?php endif; ?>
+			</p>";
+		}
 		
-		<?php if($isPage): ?>
-			<a href="<?php echo getURL('thought/'.$thought->ID); ?>" class="open">
+		if($isPage) {
+			$view .= "<a href=".getURL('thought/'.$thought->ID)." class='open'>
 				open
-			</a>
-		<?php endif; ?>
+			</a>";
+		}
 		
-		<p class="article_date">
-			<?php echo date("F j, Y",$thought->dateAdded); ?>
+		$view .= "<p class='article_date'>
+			".date('F j, Y',$thought->dateAdded)."
 		</p>
 		
-		<div class="text_container">
-			<?php if($thought->title): ?>
-				<p class="title"><?php echo $thought->title;?></p>
-			<?php endif; ?>
-			<p><?php echo nl2br($thought->text);?></p>
-		</div>
+		<div class='text_container'>";
+			if($thought->title) {
+				$view .= "<p class='title'>".$thought->title."</p>";
+			}
+			$view .= "<p>".nl2br($thought->text)."</p>
+		</div>";
 		
-		<?php if(!$isArticle): ?>
-			<p class="para_tags">
-				<?php if(!$isPublicPage): ?><span>tags:</span><?php endif; ?>
-				<span class="list">
-					<?php
-						$tags = explode(",",$thought->tags);
-						$tagCount = 0;
-						foreach($tags as $tag) {
-							$delimeter = ($tagCount++) ? ", " : "";
-							echo $delimeter.getTagLink($args['thought_user_name'],$tag);
-						}
-					?>
-				</span>
-			</p>
-		<?php endif; ?>
+		if(!$isArticle) {
+			$view .= "<p class='para_tags'>";
+				if(!$isPublicPage) {
+					$view .= "<span>tags:</span>";
+				}
+				$view .= "<span class='list'>";
+				$tags = explode(",",$thought->tags);
+				$tagCount = 0;
+				
+				foreach($tags as $tag) {
+					$delimeter = ($tagCount++) ? ", " : "";
+					$view .= $delimeter.getTagLink($args['thought_user_name'],$tag);
+				}	
+			$view .= "</span>
+			</p>";
+		}
 
-		<?php if(!$isPublicPage): ?>
-			<p class="delete_thought data_action" tid=<?php echo $thought->ID?>>x</p>
-		<?php endif; ?>
+		if(!$isPublicPage) {
+			$view .= "<p class='delete_thought data_action' tid='".$thought->ID."'>x</p>";
+		}
 		
-		<?php if(!$isPublicPage): ?>
-			<div class="bottom">
-				make public<input type="checkbox" <?php echo ($isVisible ? 'checked' : '');?> class="visibility">
-			</div>
-		<?php endif; ?>
-	</div>
-<?php } ?>
+		if(!$isPublicPage) {
+			$view .= "<div class='bottom'>
+				make public<input type='checkbox' ".($isVisible ? 'checked' : '')." class='visibility' disabled>
+			</div>";
+		}
+	$view .= "</div>";
+}
+
+if(!$args['view_string']) echo $view;
+?>

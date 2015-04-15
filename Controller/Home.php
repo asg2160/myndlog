@@ -10,14 +10,27 @@ class HomeController extends Controller {
 			switch($args['post']['action']) {
 			
 				case 'delete':
-					// DELETE THOUHTS NOT WORKING 
 					Thought::delete($args['post']['tid']);
 					ThoughtTag::deleteByThought($args['post']['tid']);
 				break;
-			
+				
 				case 'save':
 					$thought = new Thought($args['post']['tid']);
 					$thoughtID = $thought->save($args['post']);
+					
+					if($args['post']['paint_tabs']) {
+						$viewArgs = array();
+						$viewArgs['tagNames'] = Tag::getAllNamesByUser($_SESSION['UserID']);
+						$tabView = $this->standaloneViewString($viewArgs, 'View/Summary/Tabs.php');
+					}
+					
+					if($args['post']['paint_new_thought']) {
+						$viewArgs = array();
+						$viewArgs['thoughtIDs'] = array(array('ID'=>$thoughtID));
+						$thoughtView = $this->standaloneViewString($viewArgs, 'View/Summary/Thoughts.php');
+					}
+					
+					echo json_encode(array("tabs"=>$tabView, "new_thought"=>$thoughtView));
 				break;
 								
 				case 'get':

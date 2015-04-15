@@ -1,30 +1,39 @@
-<?php if(!$isArticle) { ?>
-	<div id="tabs">
+<?php
+$view = '';
+
+if(!$isArticle) {
+	$view = "<div id='tabs'>
 		<div>
-			<p class="left_scroller scroller"></p>
+			<p class='left_scroller scroller'></p>
 		</div>
-		<ul id="menu_tags">
-		<?php
-			foreach($args['tagNames'] as $tagName) {
-				$selectedClass = ($args['selectedTagName'] == $tagName['Name']) ? 'selected' : '';
-		?>
-			<li class="tab menu_tag <?php echo $selectedClass; ?>">
-				<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['thought_user_name'].'/'.urlencode($tagName['Name'])) : replaceParamInURL('tag', urlencode($tagName['Name'])); ?>">
-					<?php echo $tagName['Name']; ?>
+		<ul id='menu_tags'>";
+		
+		foreach($args['tagNames'] as $tagName) {
+			$selectedClass = ($args['selectedTagName'] == $tagName['Name']) ? 'selected' : '';
+			$url = ($GLOBALS['Page'] == 'Page') ? getURL($args['thought_user_name'].'/'.urlencode($tagName['Name'])) : replaceParamInURL('tag', urlencode($tagName['Name']));
+			
+			$view .= "<li class='tab menu_tag ".$selectedClass."'>
+				<a href='".$url."'>
+					".$tagName['Name']."
 				</a>
-			</li>
-		<?php
+			</li>'";
 			}
-		?>
-			<li class="tab menu_tag show_all_tags <?php echo ($args['selectedTagName'] == 'Show-All') ? 'selected' : '' ?>">
-				<a href="<?php echo ($GLOBALS['Page'] == 'Page') ? getURL($args['thought_user_name'].'/Show-All') : replaceParamInURL('tag', urlencode('Show-All')); ?>">
+			
+			$selectedClass = ($args['selectedTagName'] == 'Show-All') ? 'selected' : '';
+			$url = ($GLOBALS['Page'] == 'Page') ? getURL($args['thought_user_name'].'/Show-All') : replaceParamInURL('tag', urlencode('Show-All'));
+			$view .= "<li class='tab menu_tag show_all_tags ".$selectedClass."'>
+				<a href='".$url."'>
 					Show-All
 				</a>
 			</li>
 		</ul>
 		<div>
-			<p class="right_scroller scroller"></p>
+			<p class='right_scroller scroller'></p>
 		</div>
-	</div>
-<?php } ?>
-<input id="selected_tag" type="hidden" value="<?php echo $args['selectedTagName']; ?>">
+	</div>";
+}
+
+$view .= "<input id='selected_tag' type='hidden' value='".$args['selectedTagName']."'>";
+
+if(!$args['view_string']) echo $view;
+?>
