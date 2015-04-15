@@ -198,18 +198,22 @@ $(function() {
   	function del(id) {
 	  	if(!id) return false;
 		
+		var selectedTagName = $('#selected_tag').val();
+
 		$.ajax({
+			dataType: 'json',
 			url: 'Home',
 	 	    type: 'POST',
-	 	    data: "tid=" + id + "&action=delete" + "&isAjax=1",
+	 	    data: "tid=" + id + "&action=delete" + "&selectedTagName=" + selectedTagName + "&paint_tabs=1&isAjax=1",
 	   	    async: false,
 	  	    cache: false,
 	 	    timeout: 30000,
 		    success: function(response) {
-		    	$("#container .data_action").hide();
 		    	$("#thought_" + id).remove();
-		    	var url = $('#articles .article').length ? window.location.href : (window.location.origin + window.location.pathname);
-		    	window.location = url;
+		    	$('#tabs').replaceWith(response.tabs);
+		    	if(!$('#articles .article').length) {
+		    		window.location = window.location.href;
+		    	}
 	      	}
 		});
   	}
@@ -224,7 +228,7 @@ $(function() {
   		$.ajax({
 			url: 'Home',
 	 	    type: 'POST',
-	 	    data: "visible=" + visible + "&action=save" + "&tid=" + thoughtID + "&isAjax=1",
+	 	    data: "visible=" + visible + "&action=update" + "&tid=" + thoughtID + "&isAjax=1",
 	   	    async: false,
 	  	    cache: false,
 	 	    timeout: 30000,
@@ -241,34 +245,46 @@ $(function() {
 			return false;
 		}
 		
-		var action = "save";
 		var thoughtID = parseInt($("#thought_id").val());
+		var action = thoughtID ? 'update' : 'add';
+		var selectedTagName = $('#selected_tag').val();
 		
 		$.ajax({
 			dataType: 'json',
 			url: 'Home',
 	 	    type: 'POST',
-	 	    data: "title=" + title + "&text=" + text + "&tags=" + tag + "&action=" + action + "&tid=" + thoughtID + "&paint_tabs=1&paint_new_thought=1&isAjax=1",
+	 	    data: "title=" + title + "&text=" + text + "&tags=" + tag + "&action=" + action + "&tid=" + thoughtID + "&selectedTagName=" + selectedTagName + "&paint_tabs=1&paint_new_thought=1&isAjax=1",
 	   	    async: false,
 	  	    cache: false,
 	 	    timeout: 30000,
 		    success: function(response) {
-		    	$('#tabs').replaceWith(response.tabs);
-		    	
-		    	if(thoughtID) {
-		    		$('#thought_' + thoughtID).replaceWith(response.new_thought);
-		    	} else {
-		    		$('#articles').prepend(response.new_thought);
-		    	}
-		    	loadSummaryViewAndBindEvents();
-		    	editCleanUp();
-		    	//$('#write').attr('disabled',true);
-		    	//window.location = window.location.href;
-		    	/*
-		    	updateThought($("#thought_" + thoughtID),text,tag);
-		    	loadSummaryViewAndBindEvents();
-		    	editCleanUp();
-	    		*/
+		    
+	    	$('#tabs').replaceWith(response.tabs);
+	    	
+	    	var thoughtBelongsToSelectedTab = false;
+	    	if(selectedTagName == "Show-All" || $.inArray(selectedTagName,$('#tags').val().split(',')) >= 0) {
+	    		thoughtBelongsToSelectedTab = true;
+	    	}
+	    	
+	    	if(thoughtID) {
+	    		if(thoughtBelongsToSelectedTab) {
+	    			$('#thought_' + thoughtID).replaceWith(response.new_thought);
+	    		} else {
+	    			$('#thought_' + thoughtID).remove();
+	    		}
+	    	} else {
+	    		$('#articles .message').remove();
+	    		if(thoughtBelongsToSelectedTab) {
+	    			$('#articles').prepend(response.new_thought);
+	    		}
+	    	}
+	    	
+	    	if(!$('#articles .article').length) {
+		    	window.location = window.location.href;
+		   	}
+	    	
+	    	loadSummaryViewAndBindEvents();
+	    	editCleanUp();
 	    	}
 		});
 	}
@@ -300,6 +316,7 @@ $(function() {
 		var userIDParam = $('#tuid').length ? "&uid=" + $('#tuid').val() : "";
 		
 		$.ajax({
+			dataType: 'json',
 			url: getURL('Home'),
 			type: 'POST',
 			data: "tid=" + $('#articles .article:last').attr('id').replace('thought_','') + "&tag=" + selectedTag + "&num=" + limit + "&isPublicPage=" + ($('#home_page').length ? 0 : 1) + userIDParam + "&action=getxbeforey&isAjax=1",
@@ -307,8 +324,8 @@ $(function() {
 			cache: false,
 			timeout: 30000,
 			success:function(response) {
-				if(response) {
-					$("#articles").append(response);
+				if(response.thoughts_view) {
+					$("#articles").append(response.thoughts_view);
 					if($('#articles .thought').length % 50 == 0) {
 						Myndlog.homeLazyLoad = true;
 					}
@@ -329,7 +346,7 @@ $(function() {
 			
 			editCleanUp();
 			var tid = $(this).parent().addClass('editing').attr("id").replace("thought_","");
-			
+
 			$.ajax({
 				dataType: 'json',
 				url: 'Home',
@@ -422,17 +439,17 @@ $(function() {
 	        buttons: {
 				"Cancel": function () {
 					$(this).dialog('close');
-					callback(thoughtID,false);
+					deleteCallback(thoughtID,false);
 				},
 				"Delete": function () {
 				 	$(this).dialog('close');
-					callback(thoughtID,true);
+					deleteCallback(thoughtID,true);
 				}
 	        }
 	    });
 	}
 	
-	function callback(thoughtID,value) {
+	function deleteCallback(thoughtID,value) {
 	    if (value) {
 			del(thoughtID);
 	    }
