@@ -1,41 +1,22 @@
-#home {
-    background: #fff;
-}
-
 #articles .article_date {
+	text-transform: uppercase;
     color: #888;
     text-shadow: 0 0 1px #fff;
 }
 
-#articles .para_tags,
-#articles .para_tags a {
-	color: navy;
-}
-
-#thought_tags a,
-#tabs li.selected {
-    background: #3a5795;
-}
-
-#thought_tags a,
+#thought_tags a:hover,
 #tabs li.selected,
 #tabs li.selected a {
     color: #fff;
 }
 
 #tabs li {
-	background: #fff;
+	background: transparent;
 }
 
-#tabs li,
-#tabs li a {
-	color: #3a5795;
-}
-
-#articles .article {
-	background: #fff;
-	color: #333;
-	box-shadow: 0 0 2px 0 #ccc;
+#thought_tags a,
+#tabs li:hover {
+	background: #eee;
 }
 
 #articles .delete_thought {
@@ -81,10 +62,6 @@
 	color: darkred;
 }
 
-#home #articles .editing {
-	background: #fff;
-}
-
 #thought_log {
     border: 1px solid #808080;
 	background: -moz-linear-gradient(0pt 100% 90deg, #444, #111) repeat scroll 0 0 #333333;
@@ -96,72 +73,6 @@
 	background: -ms-linear-gradient(top, #444 0%, #111 100%);
 	background: linear-gradient(to bottom, #444 0%, #111 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444', endColorstr='#111', GradientType=0 );
-}
-
-.green {
-	color: lightgreen;
-}
-
-.brightblue {
-	color: #88ffff;
-}
-
-.lightyellow {
-	color: #ffff88;
-}
-
-.pink {
-	color: pink;
-}
-
-.lightgreen {
-	color: #cbf4c6;
-}
-
-#home #articles .black,
-#home #edit_profile,
-#home #register_box,
-#home #sign_in_box {
-	background: -moz-linear-gradient(0pt 100% 90deg, #333, #111) repeat scroll 0 0 #333333;
-	background: #333;
-	background: -moz-linear-gradient(top, #333 0%, #111 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #333), color-stop(100%, #111));
-	background: -webkit-linear-gradient(top, #333 0%, #111 100%);
-	background: -o-linear-gradient(top, #333 0%, #111 100%);
-	background: -ms-linear-gradient(top, #333 0%, #111 100%);
-	background: linear-gradient(to bottom, #333 0%, #111 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333', endColorstr='#111', GradientType=0 );
-	text-shadow: none;
-	color: #eee;
-	text-shadow: 0 0 1px #000;
-}
-
-#edit_profile .submit,
-#register .submit,
-#sign_in .submit {
-    border: 1px solid pink;
-    background: #424242;
-    color: pink;
-}
-
-#edit_profile .submit:hover,
-#register .submit:hover,
-#sign_in .submit:hover {
-	text-shadow: 0 0 7px pink;
-}
-
-#edit_profile label.selected,
-#register label,
-#sign_in label {
-    color: lightblue;
-}
-
-#edit_profile label {
-    color: lightgray;
-}
-
-#edit_profile span.selected {
-	color: orange;
 }
 
 #register_box .login,

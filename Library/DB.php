@@ -14,7 +14,7 @@ static function cxn() {
 	return self::$mysqli;
 }
 
-function query($query) {
+function query($query, $flatten = false) {
 	$result = mysqli_query(DB::cxn(),$query);
 	$rows = array();
 	if($result) {
@@ -22,6 +22,7 @@ function query($query) {
 			$rows[] = $row;
 		}
 	}
+	if($flatten) $rows = array_flatten($rows);
 	return $rows;
 }
 

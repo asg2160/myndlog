@@ -1,6 +1,7 @@
 $(function() {
 
-	function saveNotepad(notes) {		
+	function saveNotepad(notes) {
+		$('#save_notepad').prop('disabled',true);	
 		$.ajax({
 			url: 'Notepad',
 	 	    type: 'POST',
@@ -9,13 +10,30 @@ $(function() {
 	  	    cache: false,
 	 	    timeout: 30000,
 		    success: function(response) {
-		    	$('#save_notepad').attr('disabled',true);
-		    	window.location = window.location.href;
+		    	$('#save_notepad').prop('disabled',false);
+		    	$('#notepad .saved_text .time').text(getCurrentTime());
+		    	$('#notepad .saved_text').show();
 	    	}
 		});
+	}
+	
+	function getCurrentTime() {
+		var date = new Date($.now());
+		var mid = date.getHours() < 12 ? 'am' : 'pm';
+		var timeArray = date.toTimeString().split(' ')[0];
+		return timeArray + " " + mid;
+	}
+	
+	function autoSave(time) {
+		setTimeout(function(){
+					$("#save_notepad").click();
+					autoSave(60000);
+				},time);
 	}
 	
 	$("#save_notepad").click(function(){
 		saveNotepad($("#notepad textarea").val());
 	});
+	
+	autoSave(0);
 });

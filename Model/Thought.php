@@ -11,6 +11,7 @@ class Thought extends Model {
 	var $dateAdded;
 	var $visible;
 	var $title;
+	private static $defaultTag = 'Show-All';
 	
 	function __construct($thoughtID) {
 		if(!$thoughtID) return;
@@ -45,17 +46,23 @@ class Thought extends Model {
 		
 	public function _setTitle($value) {
 		$value = substr($value,0,LIMIT::$thought_title);
-		if(!is_string($value)) $value = '';
+		if(!is_string($value) || $value == '') $value = null;
+
+		if(is_null($value)) $this->setValue('Visible',0);
+		
 		return $value;
 	}
 	
 	public function _setTags($value) {
 		$value = explode(",",cleanupTags($value));
+		$value = array_slice($value,0,3);
 		return array_slice($value,0,LIMIT::$tags_per_thought);
 	}
 	
 	public function _setVisible($value) {
-		return is_null($value) ? 0 : $value;
+		$value = $this->title ? $value : 0;
+		$value = is_null($value) ? 0 : $value;
+		return $value;
 	}
 		
 	function update($column,$value) {
@@ -107,7 +114,7 @@ class Thought extends Model {
 		
 		if(!is_null($visible)) $visibleQuery = " AND Visible = ".($visible ? 1 : 0);
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND ProjectID = ".$projectID.$visibleQuery." ORDER BY ID DESC ".$limitQuery);
+		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND ProjectID = ".$projectID.$visibleQuery." ORDER BY ID DESC ".$limitQuery, true);
 		
 		return $result;
 	}
@@ -121,7 +128,7 @@ class Thought extends Model {
 		
 		if(!is_null($visible)) $visibleQuery = " AND Visible = ".($visible ? 1 : 0);
 		
-		$result = DB::query("SELECT ThoughtID AS ID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE UserID = ".$userID." AND ProjectID = ".$projectID.$visibleQuery.") AND TagID IN (SELECT ID FROM Tag WHERE Name='".$tagName."') ORDER BY ID DESC ".$limitQuery);
+		$result = DB::query("SELECT ThoughtID AS ID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE UserID = ".$userID." AND ProjectID = ".$projectID.$visibleQuery.") AND TagID IN (SELECT ID FROM Tag WHERE Name='".$tagName."') ORDER BY ID DESC ".$limitQuery, true);
 		
 		return $result;
 	}
@@ -131,7 +138,7 @@ class Thought extends Model {
 		if(!is_null($visible)) $visibleQuery = " AND Visible = ".($visible ? 1 : 0);
 		if(!is_null($limit)) $limitQuery = " LIMIT ".$limit;	
 
-		$result = DB::query("SELECT ThoughtID AS ID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE 1 ".$visibleQuery.") AND TagID IN (SELECT ID FROM Tag WHERE Name='".$tagName."') ORDER BY ID DESC ".$limitQuery);
+		$result = DB::query("SELECT ThoughtID AS ID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE 1 ".$visibleQuery.") AND TagID IN (SELECT ID FROM Tag WHERE Name='".$tagName."') ORDER BY ID DESC ".$limitQuery, true);
 		
 		return $result;
 	}
@@ -155,13 +162,14 @@ class Thought extends Model {
 		if(!$thoughtID) return false;
 		if(!$num) $num = $GLOBALS['ThoughtsPerQuery'];
 		if(!is_null($visible)) $visibleQuery = " AND Visible = ".($visible ? 1 : 0);
-
+		if($tag == Thought::$defaultTag) $tag = '';
+		
 		if($tag) { 
 			$tagID = Tag::getIDByName($tag);
 			$tagQuery = " AND (SELECT COUNT(ID) FROM ThoughtTag WHERE ThoughtID = Thought.ID AND TagID = ".$tagID.") > 0 ";
 		}
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE ID > ".$thoughtID." AND UserID = ".$userID.$visibleQuery.$tagQuery." LIMIT ".$num);
+		$result = DB::query("SELECT ID FROM Thought WHERE ID > ".$thoughtID." AND UserID = ".$userID.$visibleQuery.$tagQuery." LIMIT ".$num, true);
 		return $result;
 	}
 	
@@ -170,13 +178,14 @@ class Thought extends Model {
 		if(!$thoughtID) return false;
 		if(!$num) $num = $GLOBALS['ThoughtsPerQuery'];
 		if(!is_null($visible)) $visibleQuery = " AND Visible = ".($visible ? 1 : 0);
+		if($tag == Thought::$defaultTag) $tag = '';
 
 		if($tag) { 
 			$tagID = Tag::getIDByName($tag);
 			$tagQuery = " AND (SELECT COUNT(ID) FROM ThoughtTag WHERE ThoughtID = Thought.ID AND TagID = ".$tagID.") > 0 ";
 		}
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE ID < ".$thoughtID." AND UserID = ".$userID.$visibleQuery.$tagQuery." ORDER BY ID DESC LIMIT ".$num);
+		$result = DB::query("SELECT ID FROM Thought WHERE ID < ".$thoughtID." AND UserID = ".$userID.$visibleQuery.$tagQuery." ORDER BY ID DESC LIMIT ".$num, true);
 		return $result;
 	}
 	
@@ -184,7 +193,7 @@ class Thought extends Model {
 		if(!$userID) return false;
 		if(!$keyword) return false;
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND Text LIKE '%".$keyword."%' ORDER BY ID DESC");
+		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND Text LIKE '%".$keyword."%' ORDER BY ID DESC", true);
 		return $result;
 	}
 	

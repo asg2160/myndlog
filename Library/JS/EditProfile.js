@@ -83,6 +83,20 @@ $(document).ready(function(){
 			$('#edit_profile .submit').hide();
 		}
 	});
+	
+	$('#themes').on('change',function(){
+		$.ajax({
+			url: getURL('User'),
+	 	    type: 'POST',
+	 	    data: "theme_id=" + $('#themes').val() + "&action=update_theme&isAjax=1",
+	   	    async: false,
+	  	    cache: false,
+	 	    timeout: 30000,
+		    success: function(response) {
+		    	window.location = window.location;
+	    	}
+		});
+	});
 });
 
 function toggleDisabled($input, value) {	

@@ -1,4 +1,16 @@
 $(function() {
+
+	$(window).scroll(function() {
+		if($('#tabs').length) {
+			var headerPos = $('#tabs').offset().top + $('#tabs').height();
+			if($(window).scrollTop() > headerPos && !$('#tabs').hasClass('tabs_fixed')) {
+				$('#tabs').addClass('tabs_fixed');
+			} else if($(window).scrollTop() == 0) {
+				$('#tabs').removeClass('tabs_fixed')
+			}
+		}
+	});
+	
 	window.Myndlog = {};
 	Myndlog.margins = {
 		name:function() {
@@ -14,6 +26,12 @@ $(function() {
 			return $.cookie(Myndlog.margins.name());
 		}
 	}
+	
+	$(window).on("popstate", function(e) {
+    	if (e.originalEvent.state !== null) {
+    		window.location.href = location.href;
+   	 	}
+  	});
 });
 
 function getErrorMessage(msg) {

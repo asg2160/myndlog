@@ -1,11 +1,62 @@
+/* COMMON */
+
+#sign_in_page {
+	margin: 20px 0 0;
+}
+
+#sign_in_page .heading {
+	font-size: 17px;
+	font-style: italic;
+	text-align: center;
+}
+
+#sign_in input[type=text],
+#sign_in input[type=password],
+#register input[type=text],
+#register input[type=password] {
+	border: 1px solid #ccc;
+	height: 25px;
+}
+
+#sign_in_box .links {
+	float: right;
+	margin: 0 5px;
+}
+
+#register,
+#sign_in {
+	margin: 0;
+	text-align: center;
+	padding: 10px 0;
+}
+
+#register .submit:hover,
+#sign_in .submit:hover {
+	cursor: pointer;
+}
+
+#register .submit,
+#sign_in .submit {
+    background: #fff; /*#f3f340;*/
+    border: medium none;
+    color: #000;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    margin: 0 10px;
+}
+
+#sign_in_box .links .sign_in {
+	display: none;
+}
+
+#register {
+	display: none;
+}
+
 /* SIGN IN */
 
 #articles .contact {
 	font-size: 11px;
-}
-
-#sign_in_about {
-	text-transform: uppercase;
 }
 
 #sign_in_box .sign_up {
@@ -14,63 +65,44 @@
     right: 10px;
 }
 
-#sign_in_box .error_message,
-#register_box .error_message {
-    display: none;
+#register_box,
+#sign_in_box {
+	/*
+	background: -moz-linear-gradient(top, #eee 0%, #ddd 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #eee), color-stop(100%, #ddd));
+	background: -webkit-linear-gradient(top, #eee 0%, #ddd 100%);
+	background: -o-linear-gradient(top, #eee 0%, #ddd 100%);
+	background: -ms-linear-gradient(top, #eee 0%, #ddd 100%);
+	background: linear-gradient(to bottom, #eee 0%, #ddd 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#ddd', GradientType=0 );
+	*/
+    background: #333;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 3px #ddd;
+    color: #fff;
+    font-size: 11px;
+    margin: 10px 0;
+    text-transform: uppercase;
 }
 
 /* REGISTER */
 
-#register,
-#sign_in {
-	margin: 0;
-	text-align: center;
-}
-
-#register .submit:hover,
-#sign_in .submit:hover {
-	cursor: pointer;
-}
-
-#register label {
-	margin-top: 0px;
-}
-
 #register label,
 #sign_in label {
     display: inline-block;
-    min-width: 100px;
     white-space: nowrap;
+	margin: 0 0 0 5px;
 }
 
-#sign_in label {
-	margin-top: 5px;
-}
-
-#sign_in .remember_me {
-	color: #bbb;
-	text-shadow: 0 0 1px black;
+#sign_in label.remember_me {
+	margin: 0;
+	font-size: 9px;
 }
 
 #sign_in .remember_me,
 #register_box .login,
 #sign_in_box .sign_up {
-    color: #ddd;
     font-size: 11px;
-}
-
-
-#register .submit {
-	margin: 7px;
-}
-
-#sign_in .submit {
-	margin: 10px;
-}
-
-#register .submit,
-#sign_in .submit {
-    min-width: 60px;
 }
 
 #register_box .login {
@@ -81,54 +113,101 @@
 
 /* VALIDATE */
 
+#sign_in input.error,
+#register input.error {
+	background: #fdd;
+}
+
+#sign_in input.valid,
+#register input.valid {
+	background: #dfd;
+}
+
+#sign_in_box #sign_in input[type=password].valid {
+	background: #fff;
+}
+
 #sign_in label.error,
 #register label.error {
-	margin: 2px;
     position: absolute;
 }
 
-#home #sign_in .error_symbol,
-#home #register .error_symbol {
+#sign_in .error_symbol,
+#register .error_symbol {
 	color: #e00;
+	cursor: pointer;
+	font-size: 20px;
+	left: 0;
+	margin: -8px -10px;
+	position: absolute;
+	vertical-align: middle;
+}
+
+/* COPY */
+#copy .desc {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#copy {
+	text-align: center;
+}
+
+#copy p {
+	margin: 0;
+}
+
+#copy img {
+	border: 1px solid #ccc;
+}
+
+#copy .thumbs {
+	padding: 0;
+}
+
+#copy .thumbs img {
+	width: 100px;
+}
+
+#copy .thumbs img.selected {
+	border: 3px solid #555;
+}
+
+#copy .thumbs img:hover {
 	cursor: pointer;
 }
 
-#home #sign_in .success_symbol,
-#home #register .success_symbol {
-	color: #0e0;
+#copy .thumbs li {
+	margin: 10px;
+	display: inline-block;
 }
 
-#home #sign_in .success_symbol,
-#home #register .success_symbol,
-#home #sign_in .error_symbol,
-#home #register .error_symbol {
-	font-size: 20px;
-	margin: 0px 5px;
-	position: absolute;
-	vertical-align: middle;
-	left: 0;
+#copy .preview img {
+	width: 800px;
+	margin: 0;
 }
 
-/* HEADER AND BLACK BOXES*/
-
-#header #sign_in_register a {
-	color: #90ee90;
+#copy .preview p {
+	font-size: 14px;
+	margin: 10px auto;
+	padding: 0;
+	width: 800px;
 }
 
-#register_wrapper .close:hover,
-#sign_in_wrapper .close:hover {
-	cursor: pointer;	
+#copy .arrow:hover {
+	cursor: pointer;
 }
 
-#register_wrapper .close,
-#sign_in_wrapper .close {
-	position: absolute;
-	right: -5px;
-	color: #000;
+#copy .arrow {
+	font-size: 14px;
+	font-weight: normal;
 	display: none;
 }
 
-#header #show_sign_in.disabled,
-#header #show_register.disabled {
-	color: #5a5;
+#copy .right_arrow {
+	float: right;
+}
+
+#copy .left_arrow {
+	float: left;
 }

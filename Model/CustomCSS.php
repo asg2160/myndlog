@@ -19,12 +19,12 @@ class CustomCSS extends Model {
 	var $article_bg;
 	var $dateAdded;
 	
-	function __construct($tagID) {
-		if(!$tagID) return;
+	function __construct($cssID) {
+		if(!$cssID) return;
 		
-		$results = DB::selectByID("CustomCSS", $tagID);
+		$results = DB::selectByID("CustomCSS", $cssID);
 		$result = $results[0];
-		$this->ID = $tagID;
+		$this->ID = $cssID;
 		$this->userID = $result['DateAdded'];
 		$this->summary_bg = $result['summary_bg'];
 		$this->article_tags_date = $result['article_tags_date'];

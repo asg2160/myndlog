@@ -3,10 +3,11 @@ class Controller extends DB {
 	
 	public static $isAjax = false;
 	protected $jsFiles;
+	public $themeID;
 	
 	function __construct() {
 		$this->loadJSInit(array('jquery','Main','jquery.cookie'));
-		$this->loadCSS(array('Light','Main','Dialog','Header','Footer'));
+		$this->loadCSS(array('Theme','Light','Main','Dialog','Header','Footer'));
 	}
 	
 	function load($args) {
@@ -54,7 +55,20 @@ class Controller extends DB {
 		}
 	}
 	
+	function calculateThemeID() {
+		$this->themeID = User::getThemeID($_SESSION['UserID']);
+	}
+	
+	function initView() {
+		$this->calculateThemeID();
+		loadThemeInSession($this->themeID);
+	}
+	
 	function view($args, $filenames) {
+		$this->initView();
+		
+		if(!Controller::$isAjax) echo $_SESSION['Theme'];
+		
 		if(!Controller::$isAjax) include_once("View/Header.php");
 		
 		if(!is_array($filenames)) $filenames = array($filenames);
@@ -66,11 +80,18 @@ class Controller extends DB {
 	}
 	
 	function viewString($args, $filenames) {
+		$this->initView();
+		
 		$args['view_string'] = true;
+		
+		if(!Controller::$isAjax) {
+			echo $_SESSION['Theme'];
+			$viewString = $view;
+		}
 
 		if(!Controller::$isAjax) {
 			include_once("View/Header_.php");
-			$viewString = $view;
+			$viewString .= $view;
 		}
 		
 		if(!is_array($filenames)) $filenames = array($filenames);

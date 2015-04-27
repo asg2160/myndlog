@@ -20,23 +20,14 @@ class Notepad extends Model {
 		$this->dateAdded = $result['DateAdded'];
 	}
 	
-	function save($args) {
-		
-		if(!$args['userID']) return false;
-		
-		$Notepad = array();				
-		$Notepad['ID'] = null;
-		$Notepad['Notes'] = $args['notes'];
-		$Notepad['UserID'] = $args['userID'];
-		$Notepad['DateAdded'] = time();	
-		
-		if($notepadID = Notepad::exists($Notepad['UserID'])) return $notepadID;
-		
-		$this->ID = $this->insert($Notepad);
-		
+	function add($userID) {
+		if($notepadID = Notepad::exists($userID)) return $notepadID;
+
+		$this->setValue('UserID',$userID);
+		$this->save();
+
 		return $this->ID;
-	}
-	
+	}	
 	public static function exists($userID) {
 		if(!$userID) return false;
 		

@@ -53,7 +53,7 @@ $pageString = strtok($pageString,'?');
 $pageArray = explode("/",$pageString);
 
 if(!in_array(ucfirst($pageArray[0]), $controllerNames)) {
-	if(User::nameExists($pageArray[0])) {
+	if(User::nameExists(urldecode($pageArray[0]))) {
 		$GLOBALS['Page'] = 'Page';
 		
 		// myndlog.com/abhi
@@ -66,6 +66,9 @@ if(!in_array(ucfirst($pageArray[0]), $controllerNames)) {
 }
 
 switch($GLOBALS['Page']) {
+	case 'Home':
+	case 'SignIn':
+	case 'Register':
 	case 'Page':
 		// myndlog.com/abhi/tag/2do
 		if($pageArray[1]) $_GET['tag'] = $pageArray[1];
@@ -85,4 +88,10 @@ $controllerClassName = $GLOBALS['Page']."Controller";
 Controller::$isAjax = $args['post']['isAjax'] || $args['get']['isAjax'];
 $controller = new $controllerClassName();
 $controller->load($args);
+
+if(!Controller::$isAjax) {
+	echo "<script type='text/javascript'>";
+	echo "window.tpq = ".$GLOBALS['ThoughtsPerQuery'];
+	echo "</script>";
+}
 ?>

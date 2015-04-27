@@ -3,11 +3,12 @@
 class User extends Model {
 	
 	var $table = 'User';
-	var $fields = array('ID','Email','Password','Status','DateAdded','UserName');
+	var $fields = array('ID','Email','Password','Status','DateAdded','UserName','ThemeID');
 	var $email;
 	var $password;
 	var $userName;
 	var $status;
+	var $themeID;
 
 	function __construct($userID) {
 		if(!$userID) return;
@@ -18,25 +19,42 @@ class User extends Model {
 		$this->email = $result['Email'];
 		$this->password = $result['Password'];
 		$this->userName = $result['UserName'];
+		$this->themeID = $result['ThemeID'];
 	}
 	
-	function save($args) {
+	public static function getThemeID($userID) {
+		if(!$userID) return Theme::getDefaultID();
+		
+		$user = new User($userID);
+		return $user->themeID;
+	}
+	
+	function _setPassword($value) {
+		return crypt($value);
+	}
+	
+	function _setStatus($value) {
+		if(!is_int($value)) $value = 1;
+		return $value;
+	}
+	
+	function _setUserName($value) {
+		$value = str_replace(" ","-",$value);
+		return $value;
+	}
+	
+	function add($email,$password,$userName,$status) {
+		
+		if(User::exists($email,$password)) return false;
+		if(User::emailExists($userName)) return false;
+		if(User::nameExists($userName)) return false;
 				
-		$user = array();
+		$this->setValue('Email',$email);
+		$this->setValue('Password',$password);
+		$this->setValue('Status',$status);
+		$this->setValue('UserName',$userName);
 		
-		if(!$args['email'] || !$args['password'] || !$args['user_name']) return false;
-			
-		$user['ID'] = null;
-		$user['Email'] = $args['email'];
-		$user['Password'] = crypt($args['password']);
-		$user['Status'] =  $args['status'] ? $args['status'] : 1;
-		$user['DateAdded'] = time();
-		$user['UserName'] = str_replace(" ","-",$args['user_name']);
-		
-		if(User::exists($user['Email'],$user['Password'])) return false;
-		if(User::nameExists($user['UserName'])) return false;
-		
-		$this->ID = $this->insert($user);
+		$this->save();
 		
 		return $this->ID;
 	}
@@ -86,6 +104,15 @@ class User extends Model {
 
 		$result = DB::query("SELECT ID FROM User WHERE UserName = '".$userName."'");
 		return (int)$result[0]['ID'];
+	}
+	
+	public static function getThoughtsGroupedByTag($userID, $visible) {
+		if(!$userID) return;
+		$visibleQuery = is_null($visible) ? '' : ' AND Visible = '.($visible ? 1 : 0).' ';
+		
+		$results = DB::query("SELECT Max(ThoughtID) AS ThoughtID, TagID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE UserID = ".$userID.$visibleQuery.") GROUP BY TagID ORDER BY DateAdded");
+		
+		return $results;
 	}
 } 
 

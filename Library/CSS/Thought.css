@@ -6,10 +6,6 @@
 	height: 600px;
 }
 
-#article_page #tabs li {
-	padding: 6px 10px;
-}
-
 #thought_tags {
 	margin-bottom: 5px;
 }
@@ -17,7 +13,6 @@
 #thought_tags a {
     margin: 5px;
     position: relative;
-    padding: 5px 10px;
 }
 
 #article_page .ad_sense {
@@ -30,4 +25,9 @@
 
 #article_page .ad_sense div {
 	margin: 20px 10px 10px;
+}
+
+#article_page .text_container .title:hover{
+	cursor: text;
+	color: #333;
 }

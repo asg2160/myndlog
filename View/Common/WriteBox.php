@@ -2,16 +2,18 @@
 	<input id="thought_id" value="0" type="hidden">
 	
 	<span class="hide">x</span>
-	
-	<p>Write :</p>
+		
+	<p>Title (Not mandatory <strong>but</strong> articles without a title cannot be made public.):</p>
 	<input id="title" type="text">
-	<textarea id="text" cols="55"></textarea>
+	
+	<p>Text:</p>
+	<textarea id="text"></textarea>
 	
 	<br>
 	
+	<p>Enter a Tag:</p>
 	<input id="tags" type="text" name="tags"><br>
-	<p class="tags_desc">(Enter a single tag or multiple comma seperated tags. Eg: "philosphy" or "idea,book" or "sexism,economy,politics")</p>
-	
+		
 	<br>
 	
 	<div class="keep_write_open">

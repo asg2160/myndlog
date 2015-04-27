@@ -2,30 +2,29 @@
 
 #header {
 	width: 100%;
+	/*
+    position: fixed;
+    top: 0;
+    z-index: 2;
+	*/
 }
 
 #header .powered_by {
+	display: none;
     float: right;
     margin: 0 10px;
 }
 
 #header .powered_by a {
-	color: #ddd;
+	color: #aaa;
 }
 
 #header .contents{
-	background: #444;
-	background: -moz-linear-gradient(top, #444 0%, #111 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, #444), color-stop(100%, #111));
-	background: -webkit-linear-gradient(top, #444 0%, #111 100%);
-	background: -o-linear-gradient(top, #444 0%, #111 100%);
-	background: -ms-linear-gradient(top, #444 0%, #111 100%);
-	background: linear-gradient(to bottom, #444 0%, #111 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444', endColorstr='#111', GradientType=0 );
-    border-color: #000000;
-    box-shadow: 0 0 3px #000;
+    border-color: #000;
+    box-shadow: 0 0 10px #aaa;
     height:20px;
 	padding:10px 0;
+	position: relative;
 }
 
 #header .tabs {
@@ -34,13 +33,11 @@
 }
 
 #header .nds {
-    clear: both;
-    color: hotpink;
-    font-family: trebuchet ms;
-    font-size: 21px;
-    font-weight: bold;
-    padding: 0 10px;
-    width: 200px;
+	clear: both;
+	font-size: 20px;
+	padding: 0 10px;
+	text-transform: uppercase;
+	width: 200px;
 }
 
 #header .nds:link,
@@ -51,20 +48,27 @@
 }
 
 #header .user_links {
-    float: right;
+	position: absolute;
+	right: 0;
+	top: 30%;
+}
+
+#header .user_name {
+	text-align: center;
 }
 
 #header #toggle_write {
-	color: lightgreen;
+   font-weight: bold;
 }
 
 #header .user_links a {
-    color: #55aa55;
+    color: #999;
     display: inline-block;
     height: 100%;
     min-width: 40px;
     padding: 0 10px;
     text-align: center;
+	text-transform: uppercase;
 }
 
 #header a:link,
@@ -74,8 +78,4 @@
 
 #header .user_links a:hover,
 #header .user_links a:active {
-}
-
-#header .contents {
-	padding-top: 10px;
 }

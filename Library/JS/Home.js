@@ -7,12 +7,13 @@ $(function() {
 			loadOlder();
 		}
 	});
-
-	loadSummaryViewAndBindEvents();
 	
-	function loadSummaryViewAndBindEvents() {
+	if($('#header .page_name').val() != 'Thought') {
+		fetchSummaryForTag($('#selected_tag').val());
+	}
+	
+	function loadSummaryViewAndBindEvents() {		
 		createEvents();
-		slimscrollForThoughts();			
 		
 		// keep write box open if cookie is set
 		if($.cookie("keepWriteOpen")) {
@@ -20,16 +21,6 @@ $(function() {
 		}
 		
 		$("#thought_log").draggable({containment:"#wrapper"});
-			
-		$('#tabs').on('mouseover', function() {
-			if(Myndlog.minMargin >= 0) return;
-			$('#tabs .scroller').show();
-		});
-		
-		$('#tabs').on('mouseleave', function() {
-			if(Myndlog.minMargin >= 0) return;
-			$('#tabs .scroller').hide();
-		});
 		
 		initScrollEvent();
 		if(Myndlog.minMargin < 0) {
@@ -152,34 +143,6 @@ $(function() {
 	
 	/* SCROLL CODE ENDS */
 	
-	function slimscrollForThoughts() {
-			
-		$('#articles .text_container').slimScroll({
-			height:$('#articles .text_container').height(),
-			size:6,
-			railVisible: false,
-			disableFadeOut: true,
-			wheelStep: 2,
-			color: '#555'
-		}).bind('slimscroll', function(e, pos){
-			if(pos == 'bottom') {
-				return false;
-			}
-		});
-	}
-	
-	function destroySlimScroll($element) {
-		$element.slimScroll({
-		    destroy:true
-		});
-		
-		events = jQuery._data( $element[0], "events" );
-		
-		if (events) {
-		    jQuery._removeData( $element[0], "events" );
-		}	
-	}
-	
 	function updateThought($thought,text,tags) {
 		$thought.attr('tags',tags.replace(',',' '));
 		$thought.find('.text_container p').html(text.replace(/\n\r?/g, '<br />'));
@@ -202,7 +165,7 @@ $(function() {
 
 		$.ajax({
 			dataType: 'json',
-			url: 'Home',
+			url: getURL('Home'),
 	 	    type: 'POST',
 	 	    data: "tid=" + id + "&action=delete" + "&selectedTagName=" + selectedTagName + "&paint_tabs=1&isAjax=1",
 	   	    async: false,
@@ -214,6 +177,7 @@ $(function() {
 		    	if(!$('#articles .article').length) {
 		    		window.location = window.location.href;
 		    	}
+	      		createEvents();
 	      	}
 		});
   	}
@@ -226,7 +190,7 @@ $(function() {
   		else visible = 0;
   		
   		$.ajax({
-			url: 'Home',
+			url: getURL('Home'),
 	 	    type: 'POST',
 	 	    data: "visible=" + visible + "&action=update" + "&tid=" + thoughtID + "&isAjax=1",
 	   	    async: false,
@@ -245,46 +209,69 @@ $(function() {
 			return false;
 		}
 		
+		// commented cause we only allow 1 tag now
+		/*
+		// clean up tags
+		var newTag;
+		var continueLoop = true;
+			do {
+				newTag = tag.replace(',,',',')
+				continueLoop = (newTag!=tag);
+				tag = newTag;
+			} while(continueLoop);
+		if(tag.substring(0,1) == ',') tag = tag.substring(1);
+		if(tag.substring(tag.length-1) == ',') tag = tag.substring(0,tag.length-1);
+		*/
+		
+		if(!tag) {
+			showError("Please add a tag");
+			return false;
+		}
+		
+		if(!(/^[a-z0-9]+$/i).test(tag)) {
+			showError("Invalid tag. Only letters(a-z) and digits(0-9) allowed.");
+			return false;
+		}
+		
 		var thoughtID = parseInt($("#thought_id").val());
 		var action = thoughtID ? 'update' : 'add';
 		var selectedTagName = $('#selected_tag').val();
+		var view_action = thoughtID ? 'thought_replace' : 'prepend';
 		
 		$.ajax({
 			dataType: 'json',
-			url: 'Home',
+			url: getURL('Home'),
 	 	    type: 'POST',
-	 	    data: "title=" + title + "&text=" + text + "&tags=" + tag + "&action=" + action + "&tid=" + thoughtID + "&selectedTagName=" + selectedTagName + "&paint_tabs=1&paint_new_thought=1&isAjax=1",
+	 	    data: "title=" + title + "&text=" + text + "&tags=" + tag + "&action=" + action + "&tid=" + thoughtID + "&selectedTagName=" + selectedTagName + "&view_action=" + view_action + "&paint_tabs=1&paint_new_thought=1&isAjax=1",
 	   	    async: false,
 	  	    cache: false,
 	 	    timeout: 30000,
 		    success: function(response) {
-		    
-	    	$('#tabs').replaceWith(response.tabs);
-	    	
+		    	    	
 	    	var thoughtBelongsToSelectedTab = false;
+	    	/*
 	    	if(selectedTagName == "Show-All" || $.inArray(selectedTagName,$('#tags').val().split(',')) >= 0) {
 	    		thoughtBelongsToSelectedTab = true;
 	    	}
+	    	*/
 	    	
+	    	paintSummary(response);
+	    	
+	    	/*
 	    	if(thoughtID) {
 	    		if(thoughtBelongsToSelectedTab) {
-	    			$('#thought_' + thoughtID).replaceWith(response.new_thought);
+	    			$('#thought_' + thoughtID).replaceWith(response.thought);
 	    		} else {
 	    			$('#thought_' + thoughtID).remove();
 	    		}
 	    	} else {
 	    		$('#articles .message').remove();
 	    		if(thoughtBelongsToSelectedTab) {
-	    			$('#articles').prepend(response.new_thought);
+	    			$('#articles').prepend(response.thought);
 	    		}
 	    	}
+	    	*/
 	    	
-	    	if(!$('#articles .article').length) {
-		    	window.location = window.location.href;
-		   	}
-	    	
-	    	loadSummaryViewAndBindEvents();
-	    	editCleanUp();
 	    	}
 		});
 	}
@@ -307,64 +294,100 @@ $(function() {
 			return false;
 		}
 		
-		var limit = 50;
+		var limit = window.tpq;
 		if($('#articles .thought').length < limit) return false;
-		
+
 		Myndlog.homeLazyLoad = false;
 		
-		var selectedTag = ($('#selected_tag').val() == 'Show-All') ? '' : $('#selected_tag').val();
+		var selectedTag = $('#selected_tag').val();
+		
 		var userIDParam = $('#tuid').length ? "&uid=" + $('#tuid').val() : "";
+		var pageName = $('#header .page_name').val();
+		
+		if(pageName == 'Page' && !selectedTag) {
+			console.log(pageName);
+			console.log(selectedTag);
+			return false;
+		}
 		
 		$.ajax({
 			dataType: 'json',
 			url: getURL('Home'),
 			type: 'POST',
-			data: "tid=" + $('#articles .article:last').attr('id').replace('thought_','') + "&tag=" + selectedTag + "&num=" + limit + "&isPublicPage=" + ($('#home_page').length ? 0 : 1) + userIDParam + "&action=getxbeforey&isAjax=1",
+			data: "tid=" + $('#articles .article:last').attr('id').replace('thought_','') + "&tag=" + selectedTag + "&num=" + limit + "&isPublicPage=" + ($('#home_page').length ? 0 : 1) + userIDParam + "&page_name=" + pageName + "&view_action=append" + "&action=getxbeforey&isAjax=1",
 			async: false,
 			cache: false,
 			timeout: 30000,
 			success:function(response) {
-				if(response.thoughts_view) {
-					$("#articles").append(response.thoughts_view);
-					if($('#articles .thought').length % 50 == 0) {
-						Myndlog.homeLazyLoad = true;
-					}
+				paintSummary(response);
+				if(response.thoughts.count >= window.tpq) {
+					Myndlog.homeLazyLoad = true;
+					console.log($('#articles .article:last').attr('id').replace('thought_',''));
 				}
-				slimscrollForThoughts();
-				createEvents();
 			}
 		});
 	}
 	
+	$('#search .clear_search').on('click', function(){
+		fetchSummaryForTag();
+		$(this).hide();
+	});
+	
 	function createEvents() {
+		
+		$('#tabs').on('mouseover', function() {
+			if(Myndlog.minMargin >= 0) return;
+			$('#tabs .scroller').show();
+		});
+		
+		$('#tabs').on('mouseleave', function() {
+			if(Myndlog.minMargin >= 0) return;
+			$('#tabs .scroller').hide();
+		});
+		
+		$('#wrapper a.fetch_summary').click(function(){
+			if(typeof $(this).attr('inline-href') !== 'undefined') {
+				window.history.pushState("object or string", "Title", $(this).attr('inline-href'));
+			}
+			fetchSummaryForTag($(this).text());
+		});
 		
 		$('#articles .bottom input[type=checkbox]').prop('disabled',false);
 		
-		$(".edit_thought").click(function(){
+		$('#articles .text_container .title, #articles .open_article').on('click',function(){
+			if(typeof $(this).attr('href') == 'undefined' || $(this).attr('href') == 'home') {
+				if($("#toggle_write").is(":visible")) $("#toggle_write").click();
 			
-			if($("#toggle_write").is(":visible")) $("#toggle_write").click();
-			
-			editCleanUp();
-			var tid = $(this).parent().addClass('editing').attr("id").replace("thought_","");
-
-			$.ajax({
-				dataType: 'json',
-				url: 'Home',
-		 	    type: 'POST',
-		 	    data: "tid=" + tid + "&action=get&isAjax=1",
-		   	    async: false,
-		  	    cache: false,
-		 	    timeout: 30000,
-			    success: function(response) { 
-					$("#title").val(response.title);
-					$("#text").val(response.text);
-					$("#tags").val(response.tags);
-					$("#thought_id").val(response.thoughtID);
-		    	}
-			});
+				editCleanUp();
+				var tid = $(this).parents('.article').addClass('editing').attr("id").replace("thought_","");
+	
+				$.ajax({
+					dataType: 'json',
+					url: getURL('Home'),
+			 	    type: 'POST',
+			 	    data: "tid=" + tid + "&action=get&isAjax=1",
+			   	    async: false,
+			  	    cache: false,
+			 	    timeout: 30000,
+				    success: function(response) { 
+						$("#title").val(response.title);
+						$("#text").val(response.text);
+						$("#tags").val(response.tags);
+						$("#thought_id").val(response.thoughtID);
+			    	}
+				});
+			} else {
+				window.location = $(this).attr('href');
+			}
 		});
 		
 		$("#articles .visibility").change(function(){
+			if(!$(this).parents('.article').find('.title').length) {
+				showError('Articles without a title cannot be made public. Please add a title to the article.');
+				$(this).attr('checked',false);
+				return;
+			}
+		
 			var tid = $(this).parents('.article').attr('id').replace('thought_','');
 			var visibility = $(this).is(':checked');
 			updateVisibility(tid,visibility);
@@ -380,7 +403,8 @@ $(function() {
 			$(this).hide();
 			$('#thought_log').fadeIn(function(){				
 				if($('#tabs').length && ($('#selected_tag').val() != 'Show-All')) {
-					if(!$('#tags').val()) $('#tags').val($('#selected_tag').val() + ',');
+					// .val() + ','); modified as we only allow 1 tag now.
+					if(!$('#tags').val()) $('#tags').val($('#selected_tag').val());
 				}
 			});
 		});
@@ -425,6 +449,12 @@ $(function() {
 		write(title, text, tag);
 	});
 	
+	$('#tags').keyup(function(e){
+		if(e.keyCode == 13) {
+		   $("#write").click(); 
+		}
+	});
+	
 	function showDeleteConfirmation(thoughtID) {
 		$("#dialog-confirm").text("Are you sure you want to permanently delete this thought? This action is not reversible.");
 
@@ -449,10 +479,92 @@ $(function() {
 	    });
 	}
 	
+	$("#search .button").on('click',function(){
+		fetchSummaryForSearch($("#search .box").val());
+	});
+	
 	function deleteCallback(thoughtID,value) {
 	    if (value) {
 			del(thoughtID);
 	    }
 	    $("#dialog-confirm").text("");
+	}
+	
+	function fetchSummaryForSearch(keyword) {
+		if(typeof keyword == 'undefined' || keyword == '') return;
+		
+		$.ajax({
+			dataType: 'json',
+			url: getURL('Home'),
+	 	    type: 'POST',
+	 	    data: "q=" + keyword + "&tuid=" + $('#tuid').val() + "&action=search&isAjax=1",
+	   	    async: false,
+	  	    cache: false,
+	 	    timeout: 30000,
+		    success: function(response) {
+				paintSummary(response);
+				$('#search .clear_search').show();
+				loadSummaryViewAndBindEvents();
+				Myndlog.homeLazyLoad = true;
+			}
+		});
+	}
+
+	function fetchSummaryForTag(tagName) {
+		if(typeof tagName == 'undefined') tagName = '';
+		var pageName = $('#header .page_name').val();
+		
+		$.ajax({
+			dataType: 'json',
+			url: getURL('Home'),
+	 	    type: 'POST',
+	 	    data: "selectedTagName=" + tagName + "&tuid=" + $('#tuid').val() + "&ipp=" + ($('#home_page').length ? 0 : 1) + "&page_name=" + pageName + "&action=summary&isAjax=1",
+	   	    async: false,
+	  	    cache: false,
+	 	    timeout: 30000,
+		    success: function(response) {		    		    	
+				paintSummary(response);
+				Myndlog.homeLazyLoad = true;
+			}
+		});
+	}
+
+	function paintSummary(response) {
+		paintTabs(response.tabs);
+		paintThoughts(response.thoughts);
+
+		loadSummaryViewAndBindEvents();
+		editCleanUp();
+				
+		if(!$('#articles .article').length) {
+			//window.location = window.location.href;
+		}
+	}
+	
+	function paintTabs(tabs) {
+		if(typeof tabs === 'undefined') return;
+		
+		if(!$('#tabs').length) {
+			$('#summary').prepend($("<div id='tabs'></div>"));
+		}
+		$('#tabs').replaceWith(tabs);
+	}
+	
+	function paintThoughts(thoughts) {
+		if(typeof thoughts.thought_replace !== 'undefined') {
+			$('#thought_' + thoughts.thought_id).replaceWith(thoughts.thought_replace);
+		}
+
+		if(typeof thoughts.replace !== 'undefined') {
+			$('#articles').replaceWith(thoughts.replace);
+		}
+		
+		if(typeof thoughts.append !== 'undefined') {
+			$('#articles').append(thoughts.append);
+		}
+		
+		if(typeof thoughts.prepend !== 'undefined') {
+			$('#articles').prepend(thoughts.prepend);
+		}
 	}
 });

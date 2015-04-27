@@ -1,0 +1,22 @@
+#header .contents {
+	background: #fff;
+}
+
+#header .nds {
+	color: #222;
+}
+
+#articles .para_tags {
+	background: #333; /*#40a3de; /*red 40a340*/
+}
+
+#thought_tags a:hover,
+#tabs li.selected:hover,
+#tabs li.selected {
+    background: #333;
+}
+
+#page_page .articles_desc span {
+	background: #fff; /*#f3f340; /*#40b340*/
+	color: #000;
+}

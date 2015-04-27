@@ -9,3 +9,12 @@
 #notepad input {
 	margin: 5px 0;
 }
+
+#notepad .saved_text {
+    background: #f3f340;
+    border-radius: 0.4em;
+    color: #444;
+    display: none;
+    float: right;
+    padding: 1px 5px;
+}

@@ -1,11 +1,11 @@
 body {
-	background: #fff;
-    color: #fff;
-    font-family: lucida grande,helvetica,arial,sans-serif;
-    font-size: 12px;
-    line-height: 1.6em;
-    margin: 0;
-    min-height: 768px;
+	background: #f5f5f5;
+	color: #333;
+	font-family: arial,helvetica,sans-serif;
+	font-size: 11.5px;
+	line-height: 1.6em;
+	margin: 0;
+	padding: 0;
 }
 
 a:link,
@@ -29,10 +29,6 @@ a:hover {
     margin: 10px;
 }
 
-.unklog {
-	color: hotpink;
-}
-
 #container {
 	height: 100%;
     width: 100%;
@@ -43,33 +39,25 @@ a:hover {
 	margin: 10px 0;
 }
 
-/*HOME PAGE*/
-
 #home {
-    margin: 0 auto;
-    min-height: 690px;
-    padding: 10px;
-    position: relative;
-    max-width: 1156px;
+	margin: 0 auto;
+	min-height: 690px;
+	padding: 10px;
+	max-width: 1156px;
 	border-radius: 0.4em;
 }
 
-#home .project_name {
-	color: black;
-	font-size: 14px;
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
-}
-	
-#home .delete_thought:hover {
-	cursor: pointer;
+/* SEARCH */
+
+#search {
+    margin: 10px;
 }
 
 #search .clear_search {
     color: #777;
     font-size: 11px;
     text-decoration: underline;
+    display: none;
 }
 
 #search .button {
@@ -90,23 +78,31 @@ a:hover {
     vertical-align: top;
     width: auto;
     font-size: 12px;
+    letter-spacing: 0.25px;
+    margin-top: 10px;
+}
+
+#articles .delete_thought:hover {
+	cursor: pointer;
 }
 
 #articles .text_container {
-	height: 150px;
+	height: 195px;
 	overflow: hidden;
-	text-align: justify;
-}
-
-#articles .text_container,
-#articles .text_container p{
-	padding: 0;
-	margin: 0;
+	text-align: left;
+	font-size: 13px;
+	line-height: 20px;
 }
 
 #articles .text_container .title {
+    font-size: 15px;
     font-weight: bold;
     margin: 0 0 10px;
+}
+
+#articles .text_container .title:hover{
+	cursor: pointer;
+	color: #ff4f00;
 }
 
 #articles .edit_thought:hover {
@@ -122,32 +118,38 @@ a:hover {
 }
 
 #articles .article {
-	min-height: 200px;
+	background: #fff;
+	margin: 5px;
 	display: inline-block;
 	list-style: outside none none;
-	margin: 5px;
 	overflow: hidden;
-	padding: 15px 9px 0px;
-	width: 200px;
+	padding: 10px 9px;
+	width: 355px;
 	position: relative;
 	vertical-align: top;
+	border: 1px solid #ddd;
 }
 
 #articles .bottom {
 	margin: 5px 0 0;
 }
 
+#articles .para_tags a {
+	color: white;
+}
+
 #articles .para_tags {
-	margin: 15px 0 0;
-    padding: 0;
-    width: 180px;
-    white-space: nowrap;
+	margin: 0;
+	padding: 2px 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	white-space: nowrap;
 }
 
 #articles .para_tags span {
-	margin-right: 3px;
-	font-size: 10px;
-	text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 #articles .article_date {
@@ -188,6 +190,9 @@ a:hover {
 #tabs {
 	overflow: hidden;
 	position: relative;
+	margin: 0;
+	padding: 0;
+	background: #fff;
 }
 
 #tabs li:hover {
@@ -199,33 +204,51 @@ a:hover {
 }
 
 #month_tags, #menu_tags {
-	margin:0;
-	padding:0 0 5px;
+	margin: 0 auto;
+	max-width: 1156px;
 	overflow: visible;
+	padding: 0;
 	width: 100%;
-	font-size: 0;
+	/*white-space: nowrap; DISABLE SCROLL*/
+}
+
+#tabs .user_page a {
+	background-image: url("http://localhost/~abhishekgandhi/myndlog/images/home.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#tabs.tabs_fixed {
+	background: #fff;
+	border-bottom: 1px solid #aaa;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2;
 }
 
 #thought_tags a,
 #tabs li {
     display: inline-block;
-    font-size: 12px;
-    margin: 0px 2px;
-    min-width: 50px;
-    text-align: center;
+	margin: 0;
+	min-width: 50px;
     position: relative;
-    border-radius: 0.3em;
-}
-
-#tabs li a {
-    padding: 6px 10px;
+    background: white;
+    text-align: center;
 }
 
 #thought_tags a,
 #tabs li a {
-    display: inline-block;
-    text-transform: uppercase;
-    font-weight: bold;
+	display: block;
+	font-size: 13px;
+	font-weight: bold;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+	text-transform: uppercase;
 }
 
 #tabs .scroller {
@@ -260,8 +283,9 @@ a:hover {
 	position: fixed;
 	right: 10px;
 	top: 50px;
-	width: 450px;
-	z-index: 100;
+	width: 550px;
+	z-index: 3;
+	color: #eee;
 }
 
 #thought_log .keep_write_open {
@@ -288,6 +312,7 @@ a:hover {
 
 #thought_log p {
 	margin: 3px;
+	text-transform: uppercase;
 }
 
 #moodLog {

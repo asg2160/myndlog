@@ -1,5 +1,8 @@
 <div id="notepad">
-	<span>Rough Work : If you don't want to add individual thoughts, then write and save all of them in this notepad. When you have something to add, click on 'Write' and copy it into the write box.</span>
+	<span>Rough Work : Doodle and save your work. When you have thoughts to add, click on 'Write' and copy your work into the write box.</span>
+	<span class="saved_text">your work was saved at 
+		<span class="time"></span>
+	</span>
 	<textarea><?php echo $args['notes']; ?></textarea>
 	<input type="submit" value="save" id="save_notepad">
 </div>

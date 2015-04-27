@@ -56,6 +56,10 @@ function getURL($controller,$get){
 	return $url;
 }
 
+function getImageURL($images) {
+	return "";
+}
+
 function loadURL($url) {
 	echo "<script>";
 	echo "window.location='".getURL($url)."';";
@@ -66,6 +70,10 @@ function loadURL($url) {
 	die();*/
 }
 
+function auth($userID) {
+	setcookie('LoggedInUserID', $userID, time() + (86400 * 30 * 365), "/");
+}
+
 function isAuth() {
 	if(!$_SESSION['UserID'] && $_COOKIE['LoggedInUserID'] && $_COOKIE['LoggedInUserID'] != "null") $_SESSION['UserID'] = $_COOKIE['LoggedInUserID'];
 	return $_SESSION['UserID'];
@@ -73,6 +81,7 @@ function isAuth() {
 
 function unAuth() {
 	unset($_SESSION['UserID']);
+	unset($_SESSION['Theme']);
 	setcookie('LoggedInUserID', 0, 1, "/");
 	unset($_COOKIE['LoggedInUserID']);
 }
@@ -101,13 +110,6 @@ function simple_decrypt($text) {
 
 function rand_color() {
     return '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-}
-
-function getTagLink($userName, $tagName) {
-	if($userName)
-		return "<a href='".getURL($userName.'/'.urlencode($tagName))."'>".($tagName)."</a>";
-	else
-		return $tagName;
 }
 
 function tweetButton($url, $text) {
@@ -140,5 +142,147 @@ function getAdSenseView($type, $num) {
 		echo "</div>";
 	}
 	echo "</div>";
+}
+
+function splitStringBySpace($haystack,$n) {
+	$needle = ' ';
+	return splitString($haystack,$needle,$n);
+}
+
+function splitString($haystack,$needle,$n) {
+	$pos = strposn($haystack,$needle,$n);
+	$strings = array();
+	$strings[0] = $pos ? substr($haystack,0,$pos) : '';
+	$strings[1] = $pos ? substr($haystack,$pos + strlen($needle)) : $haystack;
+	return $strings;
+}
+
+function strposn($haystack,$needle,$n) {
+	if(!$n) return 0;
+	$pos1 = strpos($haystack, $needle);
+	for($i = 1; $i < $n; $i++) {
+		$posn = strpos($haystack, $needle, $pos1+1);
+		$pos1 = $posn;
+	}
+	return $pos1;
+}
+
+function countWords($string) {
+	$words = explode(" ",$string);
+	return count($words);
+}
+
+function getTagLink($userName, $tagName, $pageName) {
+	
+	if($pageName) {
+		$urlPageName = ($pageName == 'Page') ? $userName : $pageName;
+		$href = "inline-href='".getURL($urlPageName.'/'.urlencode($tagName))."'";
+	} else {
+		$href = "href='".getURL($userName.'/'.urlencode($tagName))."'";
+	}
+	
+	if($userName)
+		return "<a class='fetch_summary' ".$href.">".$tagName."</a>";
+	else
+		return $tagName;
+}
+
+function getThoughtView($thoughtID, $tagID, $args) {
+	$isPublicPage = ($args['page_name'] == 'Thought') || ($args['page_name'] == 'Page') || $args['isPublicPage'];
+	$isThoughtPage = ($args['page_name'] == 'Thought');
+	$tabLinkPageName = $isThoughtPage ? '' : $args['page_name'];
+	$thought = new Thought($thoughtID);
+	$tagObj = new Tag($tagID);
+	
+	$tags = str_replace(" ","-",$thought->tags);
+
+	$append = $i ? "," : ""; 
+	$allTags .= $append.$tags;
+	
+	$isVisible = $thought->visible;	
+	
+	$view .= "<div class='article thought' id='thought_".$thought->ID."'>";
+		
+		$view .= "<p class='article_date'>
+			".date('F j, Y',$thought->dateAdded)."
+		</p>";
+		
+		$makeTextClickable = !$thought->title;
+		$view .= "<div class='text_container".($makeTextClickable ? ' open_article' : '')."'>";
+			$title_url = ($isPublicPage ? ($isThoughtPage ? '' : getURL('thought/'.$thought->ID)) : 'home');
+			if(!$makeTextClickable) {
+				$view .= "<p class='title' href='".$title_url."'>".$thought->title."</p>";
+			}
+			if(!$args['hide_text']) {
+				$view .= "<p>".nl2br($thought->text)."</p>";
+			}
+		$view .=  "</div>";
+		
+		$view .= "<p class='para_tags'>";
+			$view .= "<span class='list'>";
+			$tags = explode(",",$thought->tags);
+			$tagCount = 0;
+			
+			foreach($tags as $tag) {
+				$delimeter = ($tagCount++) ? ", " : "";
+				$view .= $delimeter.getTagLink($args['thought_user_name'],$tag,$tabLinkPageName);
+			}	
+		$view .= "</span>
+		</p>";
+
+		if(!$isPublicPage) {
+			$view .= "<p class='delete_thought data_action' tid='".$thought->ID."'>x</p>";
+		}
+		
+		if(!$isPublicPage) {
+			$view .= "<div class='bottom'>
+				make public<input type='checkbox' ".($isVisible ? 'checked' : '')." class='visibility' disabled>
+			</div>";
+		}
+	$view .= "</div>";
+	return $view;
+}
+
+function array_flatten($array) { 
+	$return = array();
+	array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+	return $return;
+}
+
+function loadThemeInSession($themeID) {
+	if(!$themeID) return false;
+	
+	$colorPairs = Theme::getColorPairs($themeID);
+	if(!$colorPairs || empty($colorPairs) || !is_array($colorPairs)) return false;
+	
+	$theme = "	#header .contents {
+					background: [header_background];
+				}
+				
+				#header .nds {
+					color: [username_color];
+				}
+				
+				#articles .para_tags {
+					background: [selected_tab_background];
+				}
+				
+				#thought_tags a:hover,
+				#tabs li.selected:hover,
+				#tabs li.selected {
+				    background: [article_tab];
+				}
+				
+				#page_page .articles_desc span {
+					background: [articles_desc];
+					color: [articles_desc_color];
+				}";
+	
+	foreach($colorPairs as $name=>$color) {
+		$theme = str_replace("[".$name."]",$color,$theme);
+	}
+	
+	unset($_SESSION['Theme']);
+	$_SESSION['Theme'] = "<style>".$theme."</style>";
 }
 ?>

@@ -41,14 +41,14 @@ class Tag extends Model {
 		return Tag::getIDByName($name);
 	}
 	
-	public static function getAllNamesByUser($userID,$visible) {
+	public static function getAllNamesByUser($userID,$visible=null) {
 		if(!$userID) return null;
 		if(!is_null($visible)) {
 			$visibleQuery = " AND Visible = ".($visible ? 1 : 0);
 		}
 		
-		$query = "SELECT Name FROM Tag WHERE ID IN (SELECT TagID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE UserID = ".$userID.$visibleQuery."));";
-		
+		$query = "SELECT Name FROM Tag WHERE ID IN (SELECT TagID FROM ThoughtTag WHERE ThoughtID IN (SELECT ID FROM Thought WHERE UserID = ".$userID.$visibleQuery.")) ORDER BY DateAdded;";
+
 		$results = DB::query($query);
 		return $results;
 	}

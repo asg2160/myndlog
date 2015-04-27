@@ -1,5 +1,84 @@
 $(document).ready(function(){
+
 	$(document).tooltip();
+
+	/* SIGN IN */
+	$('#copy .thumbs img').click(function(){
+		var source = $(this).attr('src');
+		var heading = $(this).attr('alt');
+		$('#copy .preview img').attr('src',source);
+		$('#copy .preview .text').html(heading);
+		$('#copy .thumbs .selected').removeClass('selected');
+		$(this).addClass('selected');
+		
+		if($(this).parent().prev('li').length)
+			$('#copy .preview .left_arrow').show();
+		else
+			$('#copy .preview .left_arrow').hide();
+			
+		if($(this).parent().next('li').length)
+			$('#copy .preview .right_arrow').show();
+		else
+			$('#copy .preview .right_arrow').hide();
+	});
+	
+	 $('#copy .preview .left_arrow').click(function(){
+	 	$('#copy .thumbs img.selected').parent().prev('li').children('img').click();
+	 });
+	 
+	 $('#copy .preview .right_arrow').click(function(){
+		$('#copy .thumbs img.selected').parent().next('li').children('img').click();
+	 });
+	  
+	$("#sign_in").validate({
+		rules: {
+			email:{
+				required:true,
+				email:true
+			},password:{
+				required:true,
+				minlength:6
+			}
+		},
+		messages: {
+			email: getErrorMessage("please enter a valid email address"),
+			password: {
+				required: getErrorMessage("please enter a password"),
+				minlength: getErrorMessage("password should at least have 6 characters")
+			}
+		},errorPlacement: function(error, element) {
+			error.insertAfter(element);
+		},success: function(label) {
+			$("<span class='success_symbol'></span>").appendTo(label);
+		}
+	});
+	
+	$('#sign_in').submit(function(){
+		if($('#sign_in').valid()) {
+			$('#sign_in .submit').hide();
+		
+			if($("#sign_in input[name=remember_me]").is(':checked')) {
+				$.cookie("rememberMeOnMyndLogEmail", $('#sign_in input[name=email]').val());
+				$.cookie("rememberMeOnMyndLogPwd", $('#sign_in input[name=password]').val());
+			} else {
+				$.removeCookie("rememberMeOnMyndLogEmail");
+				$.removeCookie("rememberMeOnMyndLogPwd");
+			}
+		}
+	});
+	
+	$('#show_sign_in').click(function(){
+		$('#sign_in_wrapper').show();
+		$('#register_wrapper span').click();
+		$(this).addClass('disabled').attr('disabled','disabled');
+	});
+	
+	$('#sign_in_box .links a').click(function(){
+		$('#sign_in_box form').toggle();
+		$('#sign_in_box .links a').toggle();
+	});
+	
+	/* REGISTER */
 	
 	$("#register").validate({
 		onkeyup: function(element) {
@@ -52,7 +131,7 @@ $(document).ready(function(){
 		},errorPlacement: function(error, element) {
 			error.insertAfter(element);
 		},success: function(label) {
-			$("<span class='success_symbol'>&#10004;</span>").appendTo(label);
+			$("<span class='success_symbol'></span>").appendTo(label);
 		}
 	});
 	
@@ -104,18 +183,5 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#register_wrapper span").click(function(){
-   		$("#register_wrapper").hide();
-   		$('#show_register').removeClass('disabled').removeAttr('disabled');
-	});
-	
-	$('#show_register').click(function(){
-		$('#register_wrapper').show();
-		$('#sign_in_wrapper span').click();
-		$(this).addClass('disabled').attr('disabled','disabled');
-	});
-	
-	$('#mashup_page .sign_up').click(function(){
-		$('#show_register').click();
-	});
+	$('.thumbs img:first').click();
 });

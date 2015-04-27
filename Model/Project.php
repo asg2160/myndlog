@@ -20,22 +20,22 @@ class Project extends Model {
 		$this->dateAdded = $result['DateAdded'];
 	}
 	
-	function delete($projectID) {
-		return DB::delete('Project', $projectID);
+	function _setName($value) {
+		return $value ? $value : 'Default';
 	}
 	
-	function save($args) {
-		
-		$project = array();				
-		$project['ID'] = null;
-		$project['Name'] = $args['name'] ? $args['name'] : 'Default';
-		$project['UserID'] =  $args['userID'] ? $args['userID'] : $_SESSION['UserID'];
-		$project['DateAdded'] = time();
+	function add($userID,$name) {
+		if($projectID = Project::exists($userID,$name)) return $projectID;
 
-		if(Project::exists($project['UserID'],$project['Name'])) return false;
+		$this->setValue('UserID',$userID);
+		$this->setValue('Name',$name);
+		$this->save();
 
-		$this->ID = $this->insert($project);
 		return $this->ID;
+	}
+	
+	function delete($projectID) {
+		return DB::delete('Project', $projectID);
 	}
 	
 	public static function updateByID($data, $projectID) {
