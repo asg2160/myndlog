@@ -82,6 +82,10 @@ class Thought extends Model {
 
 	function postSaveCleanUp() {
 		$tags = $this->data['Tags'];
+		/*
+			1. MAKE INTO A FUNCTION
+			2. CHANGE varname $tags,$tag into $tagNames,$tagName
+		*/
 		foreach($tags as $tag) {
 			
 			// create tag if it does not already exist

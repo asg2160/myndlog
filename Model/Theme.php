@@ -2,7 +2,7 @@
 class Theme extends Model {
 	
 	var $table = 'Theme';
-	private static $defaultID = 1;
+	private static $defaultID = 6;
 	
 	var $fields = array('ID','header_background','username_color','selected_tab_background','article_tab','articles_desc','selected_articles_desc','articles_desc_color');
 	
