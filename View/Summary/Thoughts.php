@@ -25,8 +25,8 @@ if($newsLayout) {
 			$newArgs = array_merge($args,array('hide_text'=>true));
 			$view .= "<div class='article_main_3'>";
 				$view .= getThoughtView($args['thoughtIDs'][3], null, $newArgs);
-				$view .= getThoughtView($args['thoughtIDs'][4], null, $newArgs);
-				$view .= getThoughtView($args['thoughtIDs'][5], null, $newArgs);
+				if($thoughtCount > 4) $view .= getThoughtView($args['thoughtIDs'][4], null, $newArgs);
+				if($thoughtCount > 5) $view .= getThoughtView($args['thoughtIDs'][5], null, $newArgs);
 			$view .= '</div>';
 		}
 	$view .= "</div>";
