@@ -273,6 +273,12 @@ function loadThemeInSession($themeID) {
 				    background: [article_tab];
 				}
 				
+				#article_page #articles .text_container .title,
+				#home_page #articles .text_container .title:hover,
+				#page_page #articles .text_container .title:hover {
+					color: ".($themeID <=2 ? "#ff4f00" : "[article_tab]")."
+				}
+								
 				#page_page .articles_desc span {
 					background: [articles_desc];
 					color: [articles_desc_color];
