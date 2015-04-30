@@ -197,7 +197,7 @@ class Thought extends Model {
 		if(!$userID) return false;
 		if(!$keyword) return false;
 		
-		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND Text LIKE '%".$keyword."%' ORDER BY ID DESC", true);
+		$result = DB::query("SELECT ID FROM Thought WHERE UserID = ".$userID." AND (Text LIKE '%".$keyword."%' OR Title LIKE '%".$keyword."%') ORDER BY ID DESC", true);
 		return $result;
 	}
 	
