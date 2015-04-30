@@ -90,12 +90,15 @@ class HomeController extends Controller {
 				
 				case 'search':
 					$userID = $args['post']['tuid'];
+					$user = new User($userID);
 		
 					// THOUGHTS VIEW
 					$viewArgs = array();
+					$viewArgs['page_name'] = 'Home';
 					$viewArgs['view_action'] = $args['post']['view_action'] ? $args['post']['view_action'] : 'replace';
 					$viewArgs['keyword'] = $args['get']['q'] ? $args['get']['q'] : $args['post']['q'];
 					$viewArgs['thoughtIDs'] = Thought::getByUserAndKeyword($userID, $viewArgs['keyword']);
+					$viewArgs['thoughtIDs'] = array_merge($viewArgs['thoughtIDs'],Thought::getByUserAndTag($userID, null, $viewArgs['keyword']));
 					$viewArgs['thought_user_name'] = $user->userName;
 					$viewArgs['message'] = "No thoughts found with keyword - '".$viewArgs['keyword']."'";
 					$thoughtsView = $this->viewString($viewArgs, 'View/Summary/Thoughts.php');
