@@ -39,9 +39,12 @@ $(function() {
 });
 
 function needFixedTabs() {
-	var headerPos = $('#tabs').offset().top + $('#tabs').height();
-	console.log($(window).scrollTop() + " > " + headerPos);
-	return ($(window).scrollTop() > headerPos && !$('#tabs').hasClass('tabs_fixed'));
+	if($('#tabs').length) {
+		var headerPos = $('#tabs').offset().top + $('#tabs').height();
+		return ($(window).scrollTop() > headerPos && !$('#tabs').hasClass('tabs_fixed'));
+	} else {
+		return false;
+	}
 }
 
 function getErrorMessage(msg) {
