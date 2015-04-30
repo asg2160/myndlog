@@ -41,9 +41,8 @@ a:hover {
 
 #home {
 	margin: 0 auto;
-	min-height: 690px;
 	padding: 10px;
-	max-width: 1156px;
+	width: 1156px;
 	border-radius: 0.4em;
 }
 
@@ -61,9 +60,11 @@ a:hover {
 }
 
 #search .button {
-	background: black;
-	border: 1px solid;
-	color: orange;
+    background: #222;
+    border: 1px solid #777;
+    color: lightblue;
+    padding: 2px 10px;
+    text-transform: uppercase;
 }
 
 #search .button:hover{
@@ -102,7 +103,6 @@ a:hover {
 
 #articles .text_container .title:hover{
 	cursor: pointer;
-	color: #ff4f00;
 }
 
 #articles .edit_thought:hover {
@@ -127,7 +127,7 @@ a:hover {
 	width: 355px;
 	position: relative;
 	vertical-align: top;
-	border: 1px solid #ddd;
+	border: 1px solid #eee;
 }
 
 #articles .bottom {
@@ -188,11 +188,12 @@ a:hover {
 /* TABS */
 
 #tabs {
-	overflow: hidden;
-	position: relative;
-	margin: 0;
-	padding: 0;
 	background: #fff;
+	border: 1px solid #eee;
+	margin: 0 5px;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
 }
 
 #tabs li:hover {
@@ -220,7 +221,7 @@ a:hover {
 
 #tabs.tabs_fixed {
 	background: #fff;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid #ddd;
 	left: 0;
 	margin: 0;
 	padding: 0;

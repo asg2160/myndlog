@@ -2,11 +2,15 @@ $(function() {
 
 	$(window).scroll(function() {
 		if($('#tabs').length) {
-			var headerPos = $('#tabs').offset().top + $('#tabs').height();
-			if($(window).scrollTop() > headerPos && !$('#tabs').hasClass('tabs_fixed')) {
+			var height = parseInt($('#tabs').height());
+			var margin = parseInt($('#articles').css('margin-top'));
+			
+			if(needFixedTabs()) {
 				$('#tabs').addClass('tabs_fixed');
-			} else if($(window).scrollTop() == 0) {
-				$('#tabs').removeClass('tabs_fixed')
+				$('#articles').css('margin-top',(margin + height));
+			} else if($(window).scrollTop() == 0 && $('#tabs').hasClass('tabs_fixed')) {
+				$('#tabs').removeClass('tabs_fixed');
+				$('#articles').css('margin-top',(margin - height));
 			}
 		}
 	});
@@ -33,6 +37,12 @@ $(function() {
    	 	}
   	});
 });
+
+function needFixedTabs() {
+	var headerPos = $('#tabs').offset().top + $('#tabs').height();
+	console.log($(window).scrollTop() + " > " + headerPos);
+	return ($(window).scrollTop() > headerPos && !$('#tabs').hasClass('tabs_fixed'));
+}
 
 function getErrorMessage(msg) {
 	return "<span class='error_symbol' title='" + msg + "'>&#10008</span>";

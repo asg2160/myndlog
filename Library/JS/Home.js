@@ -329,9 +329,16 @@ $(function() {
 	}
 	
 	$('#search .clear_search').on('click', function(){
+		searchCleanup();
 		fetchSummaryForTag();
-		$(this).hide();
 	});
+	
+	function searchCleanup() {
+		if($('#search').length) {
+			$('#search .box').val('');
+			$('#search .clear_search').hide();
+		}
+	}
 	
 	function createEvents() {
 		
@@ -483,6 +490,12 @@ $(function() {
 		fetchSummaryForSearch($("#search .box").val());
 	});
 	
+	$('#search .box').on('keyup',function(e){
+		if(e.keyCode == 13) {
+			fetchSummaryForSearch($(this).val());
+		}
+	});
+	
 	function deleteCallback(thoughtID,value) {
 	    if (value) {
 			del(thoughtID);
@@ -530,9 +543,14 @@ $(function() {
 	}
 
 	function paintSummary(response) {
+	
+		searchCleanup();
+		
 		paintTabs(response.tabs);
 		paintThoughts(response.thoughts);
-
+		
+		if(needFixedTabs()) $('#tabs').addClass('tabs_fixed');
+		
 		loadSummaryViewAndBindEvents();
 		editCleanUp();
 				

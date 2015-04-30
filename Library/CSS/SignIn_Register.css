@@ -8,6 +8,7 @@
 	font-size: 17px;
 	font-style: italic;
 	text-align: center;
+	color: #d00;
 }
 
 #sign_in input[type=text],
@@ -76,7 +77,7 @@
 	background: linear-gradient(to bottom, #eee 0%, #ddd 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#ddd', GradientType=0 );
 	*/
-    background: #333;
+    background: #2274a7;
     border: 1px solid #ccc;
     box-shadow: 0 0 3px #ddd;
     color: #fff;
