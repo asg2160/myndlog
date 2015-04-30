@@ -1,5 +1,5 @@
 <div id="sign_in_page">	
-	<p class="heading">Share your news, opinions and stories.</p>
+	<p class="heading">Log, maintain and share your thoughts.</p>
 		
 	<div id="sign_in_box">
 		<p class="links">
